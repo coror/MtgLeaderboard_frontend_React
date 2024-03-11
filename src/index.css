@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Lato:wght@400;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: black;
+  color: #000000;
+  min-height: 100vh;
+}
+
+h1 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  margin: 0;
+  color: #ffffff;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.modal-actions .text-button {
+  color: #1d1a16;
+}
+
+.modal-actions .text-button:hover,
+.modal-actions .text-button:active {
+  color: #312c1d;
+}
+
+.modal {
+  background-color: #e4ddd4;
+  border-radius: 6px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+  width: 80%;
+  max-width: 40rem;
+  animation: fade-slide-up 0.3s ease-out forwards;
+}
+
+.modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.55);
+}
+
+@keyframes fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(4rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

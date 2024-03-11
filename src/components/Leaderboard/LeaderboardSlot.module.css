@@ -1,0 +1,100 @@
+.container {
+  display: flex;
+  gap: 2.5rem;
+  margin: 1rem;
+  align-items: center;
+  margin-left: 0.5rem;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 1rem;
+}
+
+.rank {
+  width: 1rem;
+  margin-right: -1.6rem;
+  font-size: 2.7rem;
+
+}
+
+.avatar {
+  width: 1rem;
+  margin: 1rem;
+}
+
+.deckName {
+  width: 100%;
+  text-align: left;
+  font-size: 1.1rem;
+}
+
+.winRate {
+  width: 1rem;
+  text-align: center;
+}
+
+.gamesWon {
+  width: 1rem;
+  color: rgb(0, 128, 0);
+  text-align: center;
+}
+
+.gamesLost {
+  width: 1rem;
+  color: rgba(255, 0, 0, 0.575);
+  text-align: center;
+}
+
+.gamesPlayed {
+  width: 1rem;
+  text-align: center;
+}
+
+@media (min-width: 40rem) and (min-height: 40rem) {
+  
+  .container {
+    height: 10rem;
+  }
+
+  .info {
+    justify-content: center;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+
+  .img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .deckName {
+    font-size: 1.5rem;
+  }
+
+  .winRate {
+    width: 100%;
+  }
+
+  .gamesPlayed {
+    width: 100%;
+  }
+
+  .gamesLost {
+    width: 100%;
+  }
+
+  .gamesWon {
+    width: 100%;
+  }
+
+}
