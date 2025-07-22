@@ -3,6 +3,7 @@ import Button from '../UI/Button';
 import classes from './UploadAvatar.module.css';
 import Parse from 'parse';
 import ResponseModal from '../UI/ResponseModal';
+import { useQueryClient } from '@tanstack/react-query';
 
 const UploadAvatar = ({ uploadFunction, className, propName, objName }) => {
   console.log(uploadFunction, className, propName, objName);
@@ -11,6 +12,8 @@ const UploadAvatar = ({ uploadFunction, className, propName, objName }) => {
   const [selectedDeck, setSelectedDeck] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const fetchDeckNames = async () => {
@@ -73,6 +76,7 @@ const UploadAvatar = ({ uploadFunction, className, propName, objName }) => {
 
       console.log(result); // Log the result if needed
       setSuccess(true);
+      queryClient.invalidateQueries({ queryKey: ['leaderboard'] });
     } catch (error) {
       console.error('Error uploading avatar:', error);
       setError('An unexpected error occurred.'); // Default error message
@@ -108,7 +112,11 @@ const UploadAvatar = ({ uploadFunction, className, propName, objName }) => {
             onChange={handleDeckChange}
             className={classes['select-field']}
           >
-            <option value=''>{uploadFunction === 'uploadEdhAvatar' ? 'Select Deck' : 'Select Player'}</option>
+            <option value=''>
+              {uploadFunction === 'uploadEdhAvatar'
+                ? 'Select Deck'
+                : 'Select Player'}
+            </option>
             {deckNames.map((deck) => (
               <option key={deck.objectId} value={deck.objectId}>
                 {deck.propName}

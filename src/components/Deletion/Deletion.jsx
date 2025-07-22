@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Button from '../UI/Button';
 import classes from './Deletion.module.css';
 import Parse from 'parse';
 import ResponseModal from '../UI/ResponseModal';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Deletion = ({ deleteFunction, className, propName, objName }) => {
   const [items, setItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -59,7 +62,7 @@ const Deletion = ({ deleteFunction, className, propName, objName }) => {
       console.error(`Error deleting ${propName}:`, error);
       setError(`Error deleting player/deck. Please try again.`);
     }
-
+    queryClient.invalidateQueries({ queryKey: ['leaderboard'] });
     // Clear the input after deletion
     setSelectedItem('');
   };
@@ -73,7 +76,9 @@ const Deletion = ({ deleteFunction, className, propName, objName }) => {
             onChange={handleItemChange}
             className={classes['select-field']}
           >
-            <option value=''>{deleteFunction === 'deleteEdh' ? 'Select Deck' : 'Select Player'}</option>
+            <option value=''>
+              {deleteFunction === 'deleteEdh' ? 'Select Deck' : 'Select Player'}
+            </option>
             {items.map((item) => (
               <option key={item.objectId} value={item.propName}>
                 {item.propName}

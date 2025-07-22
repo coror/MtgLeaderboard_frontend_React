@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Button from '../UI/Button';
 import classes from './NewUser.module.css';
 import ResponseModal from '../UI/ResponseModal';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function NewUser() {
   const [error, setError] = useState(null);
@@ -17,6 +18,8 @@ export default function NewUser() {
   };
 
   const [formData, setFormData] = useState(initialFormData);
+
+  const queryClient = useQueryClient();
 
   const inputChangeHandler = (event) => {
     const { name, value, type, checked } = event.target;
@@ -46,7 +49,12 @@ export default function NewUser() {
     setSuccess(false);
 
     try {
-      if (!formData.email || !formData.name || !formData.surname || !formData.password) {
+      if (
+        !formData.email ||
+        !formData.name ||
+        !formData.surname ||
+        !formData.password
+      ) {
         setError('Please fill in all fields.'); // Error if any field is empty
         return;
       }
@@ -77,6 +85,7 @@ export default function NewUser() {
         console.log('API Response:', data);
         setSuccess(true);
         setFormData(initialFormData); // Reset the form after successful submission
+        queryClient.invalidateQueries({ queryKey: ['leaderboard']});
       } else {
         const errorData = await response.json();
         setError(errorData.error || 'Something went wrong.'); // Set error message from API or default message
@@ -91,7 +100,6 @@ export default function NewUser() {
     setError(null);
     setSuccess(false);
   };
-
 
   return (
     <>

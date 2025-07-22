@@ -1,5 +1,10 @@
-import classes from './Footer.module.css'
-
 export default function Footer() {
-    return <footer className={classes.footer}>Mtg Footer</footer>
+  return (
+    <div className='bg-black text-sm w-full text-center mt-5 py-2 '>
+      <p>
+        Oblikoval in razvil:
+        <span> ERCO ERIN ĆORALIĆ s.p.</span>, 2024 ©
+      </p>
+    </div>
+  );
 }
