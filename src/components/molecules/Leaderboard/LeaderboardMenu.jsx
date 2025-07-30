@@ -1,4 +1,4 @@
-import { useLeaderboard } from '../../store/leaderboard-context';
+import { useLeaderboard } from '../../../store/leaderboard-context';
 
 export default function LeaderboardMenu() {
   const {

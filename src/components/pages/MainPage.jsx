@@ -9,10 +9,9 @@ import { useLeaderboard } from '../../store/leaderboard-context';
 import MenuButton from '../molecules/MenuButton';
 import BackdropModal from '../molecules/BackdropModal';
 import useViewportHeight from '../../hooks/useViewportHeight';
+import PageTemplate from '../templates/PageTemplate';
 
 export default function MainPage() {
-  useViewportHeight(); // Apply mobile-friendly vh fix. because of the url search bar
-
   const { handleLogout, userRole } = useAuth();
   const { edhLeaderboard } = useLeaderboard();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -21,17 +20,7 @@ export default function MainPage() {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <div
-      className='relative flex flex-col items-center text-white overflow-x-hidden'
-      style={{ height: 'calc(var(--vh, 1vh) * 100)' }}
-    >
-      {/* Fixed full-screen background image */}
-      <img
-        src='/assets/background13.jpg'
-        alt='Background'
-        className='fixed top-0 left-0 w-full h-full object-cover z-[-1]'
-      />
-
+    <PageTemplate>
       <MenuButton toggleMenu={toggleMenu} menuOpen={menuOpen} />
 
       <BackdropModal menuOpen={menuOpen} closeMenu={closeMenu}>
@@ -49,6 +38,6 @@ export default function MainPage() {
       </main>
 
       <Footer />
-    </div>
+    </PageTemplate>
   );
 }

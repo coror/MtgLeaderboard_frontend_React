@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import Button from '../atoms/Button';
-import ResponseModalHeader from '../atoms/ResponseModalHeader';
-import ResponseModalContent from '../atoms/ResponseModalContent';
+import ResponseModalHeader from '../atoms/ResponseModal/ResponseModalHeader';
+import ResponseModalContent from '../atoms/ResponseModal/ResponseModalContent';
 
 export default function ResponseModal({ onConfirm, title, message }) {
   const modalRef = useRef(null);

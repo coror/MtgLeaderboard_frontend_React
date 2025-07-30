@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import useLeaderBoardData from '../../hooks/useLeaderboardData';
-import Spinner from '../atoms/Spinner';
+import useLeaderBoardData from '../../../hooks/useLeaderboardData';
+import Spinner from '../../atoms/Spinner';
 import PodiumSection from './PodiumSection';
 import RegularLeaderboard from './RegularLeaderboard';
-import BackdropModal from '../molecules/BackdropModal';
-import PlayerDetails from './PlayerDetails';
+import BackdropModal from '../../molecules/BackdropModal';
+import PlayerDetails from '../PlayerDetails';
 
 const Leaderboard = ({ classDB, nameField }) => {
   const { isLoading, error, data } = useLeaderBoardData(classDB, nameField);
