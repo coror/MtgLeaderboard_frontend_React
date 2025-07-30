@@ -1,3 +1,5 @@
+import placeholderImage from '/assets/placeholderAvatar.png';
+
 export default function LeaderboardSlot({
   rank,
   avatar,
@@ -27,7 +29,7 @@ export default function LeaderboardSlot({
         }
       >
         <img
-          src={avatar}
+          src={avatar || placeholderImage}
           alt={`Avatar or ${nameField}`}
           className='w-full h-full rounded-full'
         />

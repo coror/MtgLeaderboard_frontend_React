@@ -1,4 +1,4 @@
-import LeaderboardSlot from '../molecules/LeaderboardSlot';
+import LeaderboardSlot from '../../molecules/Leaderboard/LeaderboardSlot';
 
 export default function RegularLeaderboard({ players, onPlayerClick }) {
   return (

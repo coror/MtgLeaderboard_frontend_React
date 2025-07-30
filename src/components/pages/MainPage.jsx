@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import LeaderboardMenu from '../molecules/LeaderboardMenu';
-import Leaderboard from '../organisms/Leaderboard';
+import LeaderboardMenu from '../molecules/Leaderboard/LeaderboardMenu';
+import Leaderboard from '../organisms/Leaderboard/Leaderboard';
 import AdminOptions from '../organisms/AdminOptions';
 import Button from '../atoms/Button';
 import Footer from '../layout/Footer';
@@ -8,7 +8,6 @@ import { useAuth } from '../../store/auth-context';
 import { useLeaderboard } from '../../store/leaderboard-context';
 import MenuButton from '../molecules/MenuButton';
 import BackdropModal from '../molecules/BackdropModal';
-import useViewportHeight from '../../hooks/useViewportHeight';
 import PageTemplate from '../templates/PageTemplate';
 
 export default function MainPage() {

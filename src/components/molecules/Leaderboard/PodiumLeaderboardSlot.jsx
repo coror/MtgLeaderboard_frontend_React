@@ -36,20 +36,20 @@ const getPodiumIcon = (rank) => {
 const podiumData = {
   1: {
     src: podium1,
-    height: 'h-40',
+    height: 'h-40 w-24',
     padding: undefined,
     // medal: getPodiumIcon(1),
   },
   2: {
     src: podium2,
-    height: 'h-28',
-    padding: 'pr-3',
+    height: 'h-28 w-[70px]',
+    padding: ' pt-10',
     // medal: getPodiumIcon(2),
   },
   3: {
     src: podium3,
-    height: 'h-20',
-    padding: 'pr-2',
+    height: 'h-20 w-[70px]',
+    padding: '',
     // medal: getPodiumIcon(3),
   },
 };
@@ -102,7 +102,7 @@ export default function PodiumLeaderboardSlot({
       {/* Podium Image */}
       <img
         src={src}
-        className={`${height} object-contain`}
+        className={`${height} object-fit `}
         alt={`Podium ${podiumRank}`}
       />
     </div>

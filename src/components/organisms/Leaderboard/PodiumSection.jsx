@@ -1,4 +1,4 @@
-import PodiumLeaderboardSlot from '../molecules/PodiumLeaderboardSlot';
+import PodiumLeaderboardSlot from '../../molecules/Leaderboard/PodiumLeaderboardSlot';
 
 export default function PodiumSection({ players, onPlayerClick }) {
   return (
