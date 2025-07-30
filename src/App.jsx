@@ -1,27 +1,26 @@
-import { Suspense, lazy } from 'react';
-
-import Spinner from './components/UI/Spinner';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+// eslint-disable-next-line no-unused-vars
 import { parseInitialization, parseUrl } from './parse/config';
-import MainPage from './components/MainPage';
-import useAuthState from './parse/useAuthState';
+import { Suspense, lazy } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-const Login = lazy(() => import('./components/UserLogin/Login'));
+import Spinner from './components/atoms/Spinner';
+import MainPage from './components/pages/MainPage';
+import { useAuth } from './store/auth-context';
+import AuthContextProvider from './store/auth-context';
+import LeaderboardContextProvider from './store/leaderboard-context';
+
+const Login = lazy(() => import('./components/pages/Login'));
 
 const queryClient = new QueryClient();
 
-function App() {
-  const { sessionToken, handleLogin } = useAuthState();
+function AppContent() {
+  const { sessionToken, handleLogin } = useAuth();
 
   if (!sessionToken) {
     return (
-      <>
-        {!sessionToken && (
-          <Suspense fallback={<Spinner />}>
-            <Login onLogin={handleLogin} />
-          </Suspense>
-        )}
-      </>
+      <Suspense fallback={<Spinner />}>
+        <Login onLogin={handleLogin} />
+      </Suspense>
     );
   }
 
@@ -32,4 +31,12 @@ function App() {
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <AuthContextProvider>
+      <LeaderboardContextProvider>
+        <AppContent />
+      </LeaderboardContextProvider>
+    </AuthContextProvider>
+  );
+}
