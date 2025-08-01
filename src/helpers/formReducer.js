@@ -7,9 +7,7 @@ const formReducer = (state, action) => {
   }
 
   if (action.type === 'RESET_FORM') {
-    return {
-      name: '',
-    };
+    return action.payload; // Use initial state passed in payload
   }
   return state;
 };

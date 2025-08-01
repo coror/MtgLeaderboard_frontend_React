@@ -13,6 +13,9 @@ const Leaderboard = ({ classDB, nameField }) => {
   const openDetails = (player) => setSelectedPlayer(player);
   const closeDetails = () => setSelectedPlayer(null);
 
+console.log('selectedPlayer object:', selectedPlayer);
+
+
   if (isLoading)
     return (
       <div className='flex items-center justify-center h-screen'>
@@ -39,6 +42,7 @@ const Leaderboard = ({ classDB, nameField }) => {
             gamesPlayed={selectedPlayer.gamesPlayed}
             gamesWon={selectedPlayer.gamesWon}
             winRate={selectedPlayer.winRate}
+            decklist={selectedPlayer.decklist}
           />
         )}
       </BackdropModal>

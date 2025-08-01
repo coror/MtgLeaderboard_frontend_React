@@ -31,13 +31,12 @@ export default function useNewPlayerForm(parseFunction, parseClass) {
     setErrorMessage(null);
 
     try {
-      // Use Parse SDK to call a Cloud Function
       await Parse.Cloud.run(parseFunction, {
         [parseClass]: formData.name,
       });
 
       queryClient.invalidateQueries({ queryKey: ['leaderboard'] });
-      dispatch({ type: 'RESET_FORM' });
+      dispatch({ type: 'RESET_FORM', payload: initialState });
       setStatus('success');
     } catch (error) {
       console.error(error);

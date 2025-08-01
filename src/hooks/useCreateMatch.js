@@ -1,6 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import Parse from 'parse';
 import { useQueryClient } from '@tanstack/react-query';
+import formReducer from '../helpers/formReducer';
+
+const initialFormState = {
+  selectedPlayerOne: null,
+  selectedPlayerTwo: null,
+  scoreOne: 0,
+  scoreTwo: 0,
+};
 
 export default function useCreateMatch(
   updateFunction,
@@ -9,12 +17,10 @@ export default function useCreateMatch(
   objName
 ) {
   const [players, setPlayers] = useState([]);
-  const [selectedPlayerOne, setSelectedPlayerOne] = useState(null);
-  const [selectedPlayerTwo, setSelectedPlayerTwo] = useState(null);
-  const [scoreOne, setScoreOne] = useState(0);
-  const [scoreTwo, setScoreTwo] = useState(0);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+
+  const [formState, dispatch] = useReducer(formReducer, initialFormState);
 
   const queryClient = useQueryClient();
 
@@ -44,17 +50,27 @@ export default function useCreateMatch(
       (player) => player.name === selectedPlayerName
     );
     if (playerNumber === 1) {
-      setSelectedPlayerOne(selectedPlayerObject);
+      dispatch({
+        type: 'UPDATE_FIELD',
+        field: 'selectedPlayerOne',
+        value: selectedPlayerObject,
+      });
     } else {
-      setSelectedPlayerTwo(selectedPlayerObject);
+      dispatch({
+        type: 'UPDATE_FIELD',
+        field: 'selectedPlayerTwo',
+        value: selectedPlayerObject,
+      });
     }
   };
 
-  const handleScoreChange = (playerNumber, change) => {
+  const handleScoreChange = (playerNumber, change, absolute = false) => {
     if (playerNumber === 1) {
-      setScoreOne(scoreOne + change);
+      const newScore = absolute ? change : formState.scoreOne + change;
+      dispatch({ type: 'UPDATE_FIELD', field: 'scoreOne', value: newScore });
     } else {
-      setScoreTwo(scoreTwo + change);
+      const newScore = absolute ? change : formState.scoreTwo + change;
+      dispatch({ type: 'UPDATE_FIELD', field: 'scoreTwo', value: newScore });
     }
   };
 
@@ -64,47 +80,52 @@ export default function useCreateMatch(
     setSuccess(false);
 
     try {
-      if (selectedPlayerOne && selectedPlayerTwo) {
-        const result = await Parse.Cloud.run(updateFunction, {
-          [objName + 'One']: selectedPlayerOne.objectId,
-          [objName + 'Two']: selectedPlayerTwo.objectId,
-          scoreOne,
-          scoreTwo,
-        });
+      const { selectedPlayerOne, selectedPlayerTwo, scoreOne, scoreTwo } =
+        formState;
 
-        console.log(result); // Log the result if needed
-        setSuccess(true);
-        queryClient.invalidateQueries({ queryKey: ['leaderboard'] });
-      } else {
-        setError(
-          selectedPlayerOne && selectedPlayerTwo
-            ? 'Please ensure both players and scores are valid.'
-            : 'Please select both players.'
-        );
+      if (!selectedPlayerOne || !selectedPlayerTwo) {
+        setError('Please select both players.');
+        return;
       }
+
+      if (selectedPlayerOne.objectId === selectedPlayerTwo.objectId) {
+        setError('You cannot select the same player twice.');
+        return;
+      }
+
+      await Parse.Cloud.run(updateFunction, {
+        [objName + 'One']: selectedPlayerOne.objectId,
+        [objName + 'Two']: selectedPlayerTwo.objectId,
+        scoreOne,
+        scoreTwo,
+      });
+
+      setSuccess(true);
+      queryClient.invalidateQueries({ queryKey: ['leaderboard'] });
     } catch (error) {
       console.error(`Error calling ${updateFunction}:`, error);
       setError('An error occurred while creating the match.');
     }
 
-    setScoreOne(0);
-    setScoreTwo(0);
+    dispatch({ type: 'RESET_FORM', payload: initialFormState });
+  };
+
+  const resetModalState = () => {
+    setError(null);
+    setSuccess(false);
   };
 
   return {
     handleSubmit,
-    selectedPlayerOne,
+    selectedPlayerOne: formState.selectedPlayerOne,
     handlePlayerChange,
     players,
-    selectedPlayerTwo,
+    selectedPlayerTwo: formState.selectedPlayerTwo,
     handleScoreChange,
-    scoreOne,
-    setScoreOne,
-    scoreTwo,
-    setScoreTwo,
+    scoreOne: formState.scoreOne,
+    scoreTwo: formState.scoreTwo,
     error,
-    setError,
     success,
-    setSuccess,
+    resetModalState
   };
 }

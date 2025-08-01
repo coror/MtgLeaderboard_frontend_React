@@ -1,5 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import Parse from 'parse';
+import formReducer from '../helpers/formReducer';
+
+const initialFormState = {
+  selectedDeck: '',
+  scoreChange: 0,
+};
 
 export default function useUpdateScore(
   updateFunction,
@@ -8,10 +14,10 @@ export default function useUpdateScore(
   objName
 ) {
   const [deckNames, setDeckNames] = useState([]);
-  const [selectedDeck, setSelectedDeck] = useState('');
-  const [scoreChange, setScoreChange] = useState(0);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+
+  const [formState, dispatch] = useReducer(formReducer, initialFormState);
 
   useEffect(() => {
     const fetchDeckNames = async () => {
@@ -39,11 +45,20 @@ export default function useUpdateScore(
       (deck) => deck.propName === selectedDeckName
     );
 
-    setSelectedDeck(selectedDeckObject);
+    dispatch({
+      type: 'UPDATE_FIELD',
+      field: 'selectedDeck',
+      value: selectedDeckObject,
+    });
   };
 
-  const handleScoreChange = (change) => {
-    setScoreChange(scoreChange + change);
+  const handleScoreChange = (change, absolute = false) => {
+    const newScore = absolute ? change : formState.scoreChange + change;
+    dispatch({
+      type: 'UPDATE_FIELD',
+      field: 'scoreChange',
+      value: newScore,
+    });
   };
 
   const handleSubmit = async (event) => {
@@ -52,16 +67,16 @@ export default function useUpdateScore(
     setSuccess(false);
 
     try {
-      if (selectedDeck && scoreChange !== 0) {
+      if (formState.selectedDeck && formState.scoreChange !== 0) {
         await Parse.Cloud.run(updateFunction, {
-          [objName]: selectedDeck.objectId,
-          addRemove: scoreChange,
+          [objName]: formState.selectedDeck.objectId,
+          addRemove: formState.scoreChange,
         });
 
         setSuccess(true);
       } else {
         setError(
-          selectedDeck
+          formState.selectedDeck
             ? 'Please enter a valid score.'
             : 'Please select a player.'
         );
@@ -69,24 +84,20 @@ export default function useUpdateScore(
     } catch (error) {
       console.error(`Error calling ${updateFunction}:`, error);
       setError('An error occurred while updating the score.');
-      // Handle error, show a message to the user, etc.
     }
-
-    setSelectedDeck('');
-    setScoreChange(0);
+    dispatch({ type: 'RESET_FORM', payload: initialFormState });
   };
 
   return {
     handleSubmit,
     handleScoreChange,
     handleDeckChange,
-    selectedDeck,
     deckNames,
-    scoreChange,
     error,
     success,
     setError,
     setSuccess,
-    setScoreChange,
+    selectedDeck: formState.selectedDeck,
+    scoreChange: formState.scoreChange,
   };
 }

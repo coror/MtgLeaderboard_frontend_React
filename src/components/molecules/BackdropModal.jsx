@@ -5,7 +5,7 @@ export default function BackdropModal({ children, menuOpen, closeMenu }) {
     <>
       {createPortal(
         <div
-          className={`fixed inset-0 z-40 flex justify-center items-center transition-opacity duration-300 ${
+          className={`fixed inset-0 z-[100] h-full flex justify-center items-center transition-opacity duration-300 ${
             menuOpen
               ? 'opacity-100 pointer-events-auto'
               : 'opacity-0 pointer-events-none'
@@ -14,8 +14,9 @@ export default function BackdropModal({ children, menuOpen, closeMenu }) {
         >
           <div
             className={`flex flex-col items-center justify-center bg-gradient-to-br from-amber-500/30 via-orange-600/30 to-red-500/30
-          backdrop-blur-xl rounded-xl p-6 w-80 space-y-4 border border-white/10 shadow-xl
-          transform transition-all duration-300
+    backdrop-blur-xl rounded-xl p-6 w-80 max-h-[40rem] space-y-4 border border-white/10 shadow-xl
+    overflow-y-auto box-border
+    transform transition-all duration-300
           ${
             menuOpen
               ? 'opacity-100 scale-100 translate-y-0'

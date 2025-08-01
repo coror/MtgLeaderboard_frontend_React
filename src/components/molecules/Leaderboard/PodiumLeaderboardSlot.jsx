@@ -64,6 +64,7 @@ export default function PodiumLeaderboardSlot({
   gamesPlayed,
   gamesWon,
   winRate,
+  decklist
 }) {
   const { src, height, padding, medal } = podiumData[podiumRank] || {};
 
@@ -84,6 +85,7 @@ export default function PodiumLeaderboardSlot({
               gamesPlayed,
               gamesWon,
               winRate,
+              decklist
             })
           }
         >

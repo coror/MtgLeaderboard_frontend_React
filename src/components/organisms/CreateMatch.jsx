@@ -18,13 +18,10 @@ export default function CreateMatch({
     selectedPlayerTwo,
     handleScoreChange,
     scoreOne,
-    setScoreOne,
     scoreTwo,
-    setScoreTwo,
     error,
-    setError,
     success,
-    setSuccess,
+    resetModalState,
   } = useCreateMatch(updateFunction, classDB, propName, objName);
 
   return (
@@ -39,7 +36,11 @@ export default function CreateMatch({
           >
             <option value=''>Select Player...</option>
             {players.map((player) => (
-              <option key={player.objectId} value={player.name}>
+              <option
+                key={player.objectId}
+                value={player.name}
+                disabled={selectedPlayerTwo?.objectId === player.objectId}
+              >
                 {player.name}
               </option>
             ))}
@@ -53,7 +54,11 @@ export default function CreateMatch({
           >
             <option value=''>Select Player...</option>
             {players.map((player) => (
-              <option key={player.objectId} value={player.name}>
+              <option
+                key={player.objectId}
+                value={player.name}
+                disabled={selectedPlayerOne?.objectId === player.objectId}
+              >
                 {player.name}
               </option>
             ))}
@@ -67,7 +72,9 @@ export default function CreateMatch({
             <Input
               type='number'
               value={scoreOne}
-              onChange={(e) => setScoreOne(Number(e.target.value))}
+              onChange={(e) =>
+                handleScoreChange(Number(e.target.value), 1, true)
+              }
               className='text-black'
             />
             <button type='button' onClick={() => handleScoreChange(1, 1)}>
@@ -83,7 +90,9 @@ export default function CreateMatch({
             <Input
               type='number'
               value={scoreTwo}
-              onChange={(e) => setScoreTwo(Number(e.target.value))}
+              onChange={(e) =>
+                handleScoreChange(Number(e.target.value), 2, true)
+              }
               className='text-black'
             />
             <button type='button' onClick={() => handleScoreChange(2, 1)}>
@@ -101,14 +110,14 @@ export default function CreateMatch({
         <ResponseModal
           title='Error'
           message={error}
-          onConfirm={() => setError(null)}
+          onConfirm={resetModalState}
         />
       )}
       {success && (
         <ResponseModal
           title='Success'
           message='Match created successfully'
-          onConfirm={() => setSuccess(false)}
+          onConfirm={resetModalState}
         />
       )}
     </>

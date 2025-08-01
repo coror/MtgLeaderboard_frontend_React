@@ -9,6 +9,7 @@ export default function LeaderboardSlot({
   gamesPlayed,
   gamesWon,
   winRate,
+  decklist
 }) {
   return (
     <div className='flex flex-row px-7 items-center justify-start gap-12 my-3'>
@@ -25,6 +26,7 @@ export default function LeaderboardSlot({
             gamesPlayed,
             gamesWon,
             winRate,
+            decklist
           })
         }
       >

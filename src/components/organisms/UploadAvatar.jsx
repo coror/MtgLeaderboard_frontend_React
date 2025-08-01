@@ -11,9 +11,9 @@ export default function UploadAvatar({
 }) {
   const {
     handleUpload,
-    selectedDeck,
-    handleDeckChange,
-    deckNames,
+    selectedPlayer,
+    handlePlayerChange,
+    players,
     handleFileChange,
     avatarData,
     error,
@@ -26,17 +26,18 @@ export default function UploadAvatar({
       <Form onSubmit={handleUpload}>
         <div>
           <select
-            value={selectedDeck ? selectedDeck.objectId : ''}
-            onChange={handleDeckChange}
+            value={selectedPlayer ? selectedPlayer.objectId : ''}
+            onChange={handlePlayerChange}
+            className='text-black'
           >
             <option value=''>
               {uploadFunction === 'uploadEdhAvatar'
                 ? 'Select Deck'
                 : 'Select Player'}
             </option>
-            {deckNames.map((deck) => (
-              <option key={deck.objectId} value={deck.objectId}>
-                {deck.propName}
+            {players.map((player) => (
+              <option key={player.objectId} value={player.objectId}>
+                {player.propName}
               </option>
             ))}
           </select>

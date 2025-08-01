@@ -1,6 +1,12 @@
 import Parse from 'parse';
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
+import formReducer from '../helpers/formReducer';
+
+const initialFormState = {
+  avatarData: '',
+  selectedPlayer: '',
+};
 
 export default function useUploadAvatar(
   uploadFunction,
@@ -8,32 +14,33 @@ export default function useUploadAvatar(
   propName,
   objName
 ) {
-  const [avatarData, setAvatarData] = useState('');
-  const [deckNames, setDeckNames] = useState([]);
-  const [selectedDeck, setSelectedDeck] = useState('');
+  const [players, setPlayers] = useState([]);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+
+  const [formState, dispatch] = useReducer(formReducer, initialFormState);
 
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    const fetchDeckNames = async () => {
+    const fetchPlayerNames = async () => {
       try {
-        const Edh = Parse.Object.extend(classDB);
-        const query = new Parse.Query(Edh);
+        const PlayerClass = Parse.Object.extend(classDB);
+        const query = new Parse.Query(PlayerClass);
         query.select([propName, 'objectId']);
         const results = await query.find();
-        const decks = results.map((result) => ({
-          objectId: result.id,
-          propName: result.get(propName),
-        }));
-        setDeckNames(decks);
+        setPlayers(
+          results.map((player) => ({
+            objectId: player.id,
+            propName: player.get(propName),
+          }))
+        );
       } catch (error) {
-        console.error('Error fetching deck names:', error);
+        console.error('Error fetching player/deck names:', error);
       }
     };
 
-    fetchDeckNames();
+    fetchPlayerNames();
   }, [classDB, propName]);
 
   const handleFileChange = (event) => {
@@ -42,10 +49,31 @@ export default function useUploadAvatar(
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setAvatarData(reader.result);
+        dispatch({
+          type: 'UPDATE_FIELD',
+          field: 'avatarData',
+          value: reader.result,
+        });
+      };
+
+      reader.onerror = () => {
+        console.error('Error reading file');
+        setError('Failed to read file');
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handlePlayerChange = (event) => {
+    const selectedPlayerId = event.target.value;
+    const selectedPlayerkObject = players.find(
+      (player) => player.objectId === selectedPlayerId
+    );
+    dispatch({
+      type: 'UPDATE_FIELD',
+      field: 'selectedPlayer',
+      value: selectedPlayerkObject,
+    });
   };
 
   const handleUpload = async (event) => {
@@ -54,20 +82,22 @@ export default function useUploadAvatar(
     setError(null);
     setSuccess(false);
 
+    const { selectedPlayer, avatarData } = formState;
+
     try {
-      if (!selectedDeck) {
-        setError('Please select a deck.'); // Set error message if no deck is selected
+      if (!selectedPlayer) {
+        setError('Please select a player/deck.');
         return;
       }
 
       if (!avatarData) {
-        setError('Please choose an image.'); // Set error message if no image is chosen
+        setError('Please choose an image.');
         return;
       }
 
-      const base64Data = avatarData.split(',')[1]; // Extract base64 data
+      const base64Data = avatarData.split(',')[1];
       await Parse.Cloud.run(uploadFunction, {
-        [objName]: selectedDeck.objectId,
+        [objName]: selectedPlayer.objectId,
         data: base64Data,
       });
 
@@ -75,20 +105,10 @@ export default function useUploadAvatar(
       queryClient.invalidateQueries({ queryKey: ['leaderboard'] });
     } catch (error) {
       console.error('Error uploading avatar:', error);
-      setError('An unexpected error occurred.'); // Default error message
+      setError('An unexpected error occurred.');
     }
 
-    // Clear the input after uploading
-    setAvatarData('');
-  };
-
-  const handleDeckChange = (event) => {
-    const selectedDeckId = event.target.value;
-    const selectedDeckObject = deckNames.find(
-      (deck) => deck.objectId === selectedDeckId
-    );
-
-    setSelectedDeck(selectedDeckObject);
+    dispatch({ type: 'RESET_FORM', payload: initialFormState });
   };
 
   const resetModalState = () => {
@@ -98,13 +118,13 @@ export default function useUploadAvatar(
 
   return {
     resetModalState,
-    handleDeckChange,
+    handlePlayerChange,
     handleUpload,
     handleFileChange,
     error,
     success,
-    selectedDeck,
-    deckNames,
-    avatarData,
+    selectedPlayer: formState.selectedPlayer,
+    players,
+    avatarData: formState.avatarData,
   };
 }

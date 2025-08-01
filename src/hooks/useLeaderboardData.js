@@ -18,6 +18,7 @@ export default function useLeaderBoardData(classDB, nameField) {
 
     const result = await query.find({ useMasterKey: false });
     return result.map((data) => ({
+      objectId: data.id,
       rank: data.get('rank'),
       avatar:
         data.get('avatar') && data.get('avatar').get('avatar')
@@ -28,6 +29,7 @@ export default function useLeaderBoardData(classDB, nameField) {
       gamesWon: data.get('gamesWon'),
       gamesLost: data.get('gamesLost'),
       gamesPlayed: data.get('gamesPlayed'),
+      decklist: data.get('decklist'),
     }));
   };
 

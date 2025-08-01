@@ -20,7 +20,6 @@ export default function UpdateScore({
     success,
     setError,
     setSuccess,
-    setScoreChange,
   } = useUpdateScore(updateFunction, classDB, propName, objName);
 
   return (
@@ -67,7 +66,7 @@ export default function UpdateScore({
               type='number'
               className={classes['input-field']}
               value={scoreChange}
-              onChange={(e) => setScoreChange(Number(e.target.value))}
+              onChange={(e) => handleScoreChange(Number(e.target.value), true)}
             />
             <button
               type='button'
