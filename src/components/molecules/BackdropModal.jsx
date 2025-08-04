@@ -5,7 +5,7 @@ export default function BackdropModal({ children, menuOpen, closeMenu }) {
     <>
       {createPortal(
         <div
-          className={`fixed inset-0 z-[100] h-full flex justify-center items-center transition-opacity duration-300 ${
+          className={`fixed inset-0 z-[90] h-full flex justify-center items-center transition-opacity duration-300 ${
             menuOpen
               ? 'opacity-100 pointer-events-auto'
               : 'opacity-0 pointer-events-none'

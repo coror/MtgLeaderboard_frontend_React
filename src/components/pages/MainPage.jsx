@@ -9,7 +9,6 @@ import { useLeaderboard } from '../../store/leaderboard-context';
 import MenuButton from '../molecules/MenuButton';
 import BackdropModal from '../molecules/BackdropModal';
 import PageTemplate from '../templates/PageTemplate';
-import UploadDecklist from '../organisms/UploadDecklist';
 
 export default function MainPage() {
   const { handleLogout, userRole } = useAuth();
@@ -29,7 +28,6 @@ export default function MainPage() {
       </BackdropModal>
 
       <main className='flex flex-col items-center pt-16 z-10'>
-        <UploadDecklist />
         <LeaderboardMenu />
         {edhLeaderboard ? (
           <Leaderboard classDB='Edh' nameField='deckName' />

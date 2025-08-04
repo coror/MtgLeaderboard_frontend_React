@@ -1,99 +1,72 @@
-import React, { useState, useEffect } from 'react';
-import Parse from 'parse';
+import useUploadDeck from '../../hooks/useUploadDeck';
+import Button from '../atoms/Button';
+import Form from '../molecules/Form';
+import ResponseModal from '../molecules/ResponseModal';
 
-function UploadDecklist({ onUploadSuccess }) {
-  const [decks, setDecks] = useState([]);
-  const [selectedDeckId, setSelectedDeckId] = useState('');
-  const [decklistText, setDecklistText] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  // Fetch all decks on mount WITHOUT master key
-  useEffect(() => {
-    async function fetchDecks() {
-      try {
-        const Edh = Parse.Object.extend('Edh');
-        const query = new Parse.Query(Edh);
-        query.select(['deckName', 'rank']); // select only needed fields
-        query.ascending('rank');
-        const results = await query.find(); // no masterKey here
-        setDecks(results);
-        if (results.length > 0) setSelectedDeckId(results[0].id);
-      } catch (err) {
-        setError('Failed to load decks: ' + err.message);
-      }
-    }
-
-    fetchDecks();
-  }, []);
-
-  const handleUpload = async () => {
-    if (!decklistText.trim()) {
-      setError('Decklist cannot be empty.');
-      return;
-    }
-    if (!selectedDeckId) {
-      setError('Please select a deck first.');
-      return;
-    }
-    setError(null);
-    setLoading(true);
-
-    try {
-      const Edh = Parse.Object.extend('Edh');
-      const query = new Parse.Query(Edh);
-      const deck = await query.get(selectedDeckId);
-
-      deck.set('decklist', decklistText);
-
-      await deck.save();
-
-      setLoading(false);
-      setDecklistText('');
-      if (onUploadSuccess) onUploadSuccess();
-    } catch (err) {
-      setLoading(false);
-      setError(err.message || 'Error uploading decklist');
-    }
-  };
-
+function UploadDecklist() {
+  const {
+    error,
+    selectedDeckId,
+    handleEdhChange,
+    decks,
+    decklistText,
+    handleEdhDecklist,
+    handleUpload,
+    resetModalState,
+    success,
+  } = useUploadDeck();
   return (
-    <div>
-      <h3>Upload Decklist</h3>
+    <>
+      <Form onSubmit={handleUpload}>
+        <div className='flex flex-col items-center text-white'>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+          <label className='flex flex-col text-center text-white'>
+            Select Deck:{' '}
+            <select
+              value={selectedDeckId}
+              onChange={handleEdhChange}
+              disabled={decks.length === 0}
+              className='text-black'
+            >
+              <option value=''>Select Deck</option>
+              {decks.map((deck) => (
+                <option key={deck.id} value={deck.id}>
+                  {deck.get('deckName')}
+                </option>
+              ))}
+            </select>
+          </label>
 
-      <label>
-        Select Deck:{' '}
-        <select
-          value={selectedDeckId}
-          onChange={(e) => setSelectedDeckId(e.target.value)}
-          disabled={loading || decks.length === 0}
-          className='text-black'
-        >
-          {decks.map((deck) => (
-            <option key={deck.id} value={deck.id}>
-              {deck.get('deckName')}
-            </option>
-          ))}
-        </select>
-      </label>
+          <br />
+          <textarea
+            rows={10}
+            cols={50}
+            placeholder='Paste your decklist here...'
+            value={decklistText}
+            onChange={handleEdhDecklist}
+            className='text-black w-72 m-4'
+          />
+          <br />
+          <Button type='submit'>Upload</Button>
+        </div>
+      </Form>
+      {error && (
+        <ResponseModal
+          title='Error'
+          message={error}
+          onConfirm={resetModalState}
+        />
+      )}
 
-      <br />
-      <textarea
-        rows={10}
-        cols={50}
-        placeholder='Paste your decklist here...'
-        value={decklistText}
-        onChange={(e) => setDecklistText(e.target.value)}
-        disabled={loading}
-        className='text-black'
-      />
-      <br />
-      <button onClick={handleUpload} disabled={loading}>
-        {loading ? 'Uploading...' : 'Upload'}
-      </button>
-    </div>
+      {success && (
+        <ResponseModal
+          title='Success'
+          message='Decklist uploaded successfully'
+          onConfirm={resetModalState}
+        />
+      )}
+    </>
   );
 }
 

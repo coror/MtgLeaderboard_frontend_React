@@ -35,7 +35,7 @@ export default function ResponseModal({ onConfirm, title, message }) {
       aria-labelledby='modal-title'
       tabIndex={-1}
       onClick={handleBackdropClick}
-      className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm px-5'
+      className='fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm px-5'
     >
       <div
         ref={modalRef}

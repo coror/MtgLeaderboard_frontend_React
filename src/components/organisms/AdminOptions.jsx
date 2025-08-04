@@ -5,6 +5,7 @@ import CreateMatch from './CreateMatch';
 
 const RegistrationForm = lazy(() => import('./NewPlayerForm'));
 const UploadAvatar = lazy(() => import('./UploadAvatar'));
+const UploadDecklist = lazy(() => import('./UploadDecklist'));
 const NewUser = lazy(() => import('./NewUserForm'));
 
 export default function AdminOptions() {
@@ -70,6 +71,9 @@ export default function AdminOptions() {
           >
             Delete Commander
           </Button>
+          <Button onClick={() => setActiveComponent('UploadDecklist')}>
+            Upload decklist
+          </Button>
         </>
       ) : (
         <>
@@ -85,6 +89,7 @@ export default function AdminOptions() {
                   parseClass='deckName'
                 />
               )}
+              {activeComponent === 'UploadDecklist' && <UploadDecklist />}
               {activeComponent === 'CreateNewPlayer' && (
                 <RegistrationForm
                   parseFunction='createEdhPlayer'

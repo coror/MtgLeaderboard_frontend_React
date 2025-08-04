@@ -66,13 +66,13 @@ export default function useUploadAvatar(
 
   const handlePlayerChange = (event) => {
     const selectedPlayerId = event.target.value;
-    const selectedPlayerkObject = players.find(
+    const selectedPlayerObject = players.find(
       (player) => player.objectId === selectedPlayerId
     );
     dispatch({
       type: 'UPDATE_FIELD',
       field: 'selectedPlayer',
-      value: selectedPlayerkObject,
+      value: selectedPlayerObject,
     });
   };
 
