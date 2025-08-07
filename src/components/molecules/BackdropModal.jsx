@@ -15,7 +15,7 @@ export default function BackdropModal({ children, menuOpen, closeMenu }) {
           <div
             className={`flex flex-col items-center justify-center bg-gradient-to-br from-amber-500/30 via-orange-600/30 to-red-500/30
     backdrop-blur-xl rounded-xl p-6 w-80 max-h-[40rem] space-y-4 border border-white/10 shadow-xl
-    overflow-y-auto box-border
+    overflow-y-auto box-border overflow-x-hidden
     transform transition-all duration-300
           ${
             menuOpen

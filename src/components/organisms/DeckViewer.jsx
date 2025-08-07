@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import PageTemplate from './components/templates/PageTemplate';
-import useDeckViewer from './hooks/useDeckViewer';
-import Button from './components/atoms/Button';
+import useDeckViewer from '../../hooks/useDeckViewer';
+import Button from '../atoms/Button';
+import Spinner from '../atoms/Spinner';
 
 export default function DeckViewer({ decklist, onBack }) {
   const {
@@ -14,36 +13,17 @@ export default function DeckViewer({ decklist, onBack }) {
     groupLabels,
     totalCardsCount,
     averageCMC,
+    setSelectedCard,
+    selectedCard,
+    rulings,
   } = useDeckViewer(decklist);
 
-  const [selectedCard, setSelectedCard] = useState(null);
-
-  const [rulings, setRulings] = useState(null);
-
-  // Fetch rulings when selectedCard changes
-  useEffect(() => {
-    if (!selectedCard || !selectedCard.rulings_uri) {
-      setRulings(null);
-      return;
-    }
-
-    async function fetchRulings() {
-      try {
-        const response = await fetch(selectedCard.rulings_uri);
-        if (!response.ok) throw new Error('Failed to fetch rulings');
-        const data = await response.json();
-        setRulings(data.data); // Scryfall returns rulings in data.data array
-      } catch (err) {
-        console.error('Error fetching rulings:', err);
-        setRulings(null);
-      }
-    }
-
-    fetchRulings();
-  }, [selectedCard]);
-  console.log(selectedCard);
   if (loading)
-    return <p className='text-center text-lg py-10'>Loading deck...</p>;
+    return (
+      <div className='flex items-center justify-center h-screen'>
+        <Spinner />
+      </div>
+    );
   if (error)
     return <p className='text-center text-red-600 py-10'>Error: {error}</p>;
 
@@ -56,9 +36,8 @@ export default function DeckViewer({ decklist, onBack }) {
       }}
     >
       <div className='py-4 w-screen px-8'>
-
-        <div className="mb-6">
-          <Button onClick={onBack} className="text-sm">
+        <div className='mb-6'>
+          <Button onClick={onBack} className='text-sm'>
             &larr; Back
           </Button>
         </div>
@@ -83,7 +62,7 @@ export default function DeckViewer({ decklist, onBack }) {
             return (
               <section key={key}>
                 <h2 className='text-2xl font-bold mb-4'>{groupLabels[key]}</h2>
-                <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4'>
+                <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 '>
                   {cards.map((card, index) => (
                     <div
                       key={card.name + index}
@@ -124,7 +103,7 @@ export default function DeckViewer({ decklist, onBack }) {
               </section>
             );
           })}
-          <div className='mt-6 text-center text-gray-700'>
+          <div className='mt-6 text-center text-white'>
             <p>Total cards: {totalCardsCount}</p>
             <p>Average mana cost: {averageCMC.toFixed(2)}</p>
           </div>

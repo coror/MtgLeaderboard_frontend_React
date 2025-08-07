@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import DeckViewer from '../../DeckViewer';
+import DeckViewer from './DeckViewer';
 import Button from '../atoms/Button';
 import Stat from '../atoms/Stat';
 
@@ -12,6 +12,7 @@ export default function PlayerDetails({
   gamesWon,
   winRate,
   decklist,
+  classDB
 }) {
   const [showDeckList, setShowDecklist] = useState(false);
 
@@ -19,13 +20,17 @@ export default function PlayerDetails({
     setShowDecklist((state) => !state);
   }
 
-   function closeDeckViewer() {
+  function closeDeckViewer() {
     setShowDecklist(false);
   }
 
+
   return (
-    <div >
-      {showDeckList && <DeckViewer decklist={decklist} onBack={closeDeckViewer} />}
+    <div>
+      {showDeckList && classDB === 'Edh' && decklist && (
+        <DeckViewer decklist={decklist} onBack={closeDeckViewer} />
+      )}
+      {showDeckList && !decklist && <p>No decklist for this deck</p>}
       {!showDeckList && (
         <div className='space-y-6'>
           {/* Avatar + Rank */}
@@ -51,7 +56,7 @@ export default function PlayerDetails({
 
           {/* Stats */}
           <div className='grid grid-cols-2 gap-6 text-center'>
-            <Button onClick={handleShowDecklist}>Decklist</Button>
+            {classDB === 'Edh' && <Button onClick={handleShowDecklist}>Decklist</Button>}
 
             <Stat
               label='Games Played'

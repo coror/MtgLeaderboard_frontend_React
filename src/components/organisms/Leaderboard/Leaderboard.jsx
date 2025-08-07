@@ -13,8 +13,6 @@ const Leaderboard = ({ classDB, nameField }) => {
   const openDetails = (player) => setSelectedPlayer(player);
   const closeDetails = () => setSelectedPlayer(null);
 
-console.log('selectedPlayer object:', selectedPlayer);
-
 
   if (isLoading)
     return (
@@ -43,6 +41,7 @@ console.log('selectedPlayer object:', selectedPlayer);
             gamesWon={selectedPlayer.gamesWon}
             winRate={selectedPlayer.winRate}
             decklist={selectedPlayer.decklist}
+            classDB={classDB}
           />
         )}
       </BackdropModal>
