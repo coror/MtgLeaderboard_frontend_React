@@ -1,6 +1,6 @@
 export default function MenuButton({ toggleMenu, menuOpen }) {
   return (
-    <div className='absolute top-4 right-4 z-50'>
+    <div className='absolute top-4 right-4 z-[95]'>
       <button
         onClick={toggleMenu}
         className='flex flex-col justify-center items-center w-10 h-10 group'

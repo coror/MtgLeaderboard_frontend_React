@@ -14,7 +14,7 @@ export default function AdminOptions() {
   const goBack = () => setActiveComponent(null);
 
   return (
-    <div className='flex flex-col items-center justify-center mb-5 gap-y-4'>
+    <div className='flex flex-col items-center justify-center gap-y-4'>
       {!activeComponent ? (
         <>
           <Button

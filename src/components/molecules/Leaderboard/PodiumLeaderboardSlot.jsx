@@ -9,7 +9,7 @@ const getPodiumIcon = (rank) => {
         <img
           src='./assets/1.png'
           alt='goldMedal'
-          className='w-10 h-10 absolute translate-x-14 -translate-y-[90px]'
+          className='w-10 h-10 absolute translate-x-14 -translate-y-[90px] '
         ></img>
       );
     case 2:
@@ -75,7 +75,16 @@ export default function PodiumLeaderboardSlot({
       {/* Avatar + Name */}
       <div className='flex flex-col items-center gap-3 mb-4'>
         <div
-          className='w-20 h-20 lg:w-20 lg:h-20 shadow-2xl shadow-stone-100 rounded-full'
+       className={`
+    w-20 h-20 lg:w-20 lg:h-20
+    rounded-full relative cursor-pointer
+    p-[1px]
+    bg-gradient-to-br from-amber-400 via-orange-500 to-red-500
+    shadow-[0_0_15px_rgba(255,180,50,0.7)]
+    hover:scale-105
+    active:translate-y-[3px] active:shadow-[0_0_8px_rgba(255,180,50,0.8)]
+    animate-pulse-slow
+  `}
           onClick={() =>
             onPlayerClick({
               nameField,
@@ -92,7 +101,7 @@ export default function PodiumLeaderboardSlot({
           <img
             src={avatar}
             alt={`Avatar of ${nameField}`}
-            className='w-full h-full rounded-full object-cover object-top '
+            className='w-full h-full rounded-full object-cover object-top  '
           />
           <div>{medal}</div>
         </div>
