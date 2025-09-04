@@ -2,6 +2,7 @@ import Button from '../atoms/Button';
 import ResponseModal from '../molecules/ResponseModal';
 import useUploadAvatar from '../../hooks/useUploadAvatar';
 import Form from '../molecules/Form';
+import Select from '../atoms/Select';
 
 export default function UploadAvatar({
   uploadFunction,
@@ -25,10 +26,9 @@ export default function UploadAvatar({
     <>
       <Form onSubmit={handleUpload}>
         <div>
-          <select
+          <Select
             value={selectedPlayer ? selectedPlayer.objectId : ''}
             onChange={handlePlayerChange}
-            className='text-black'
           >
             <option value=''>
               {uploadFunction === 'uploadEdhAvatar'
@@ -40,7 +40,7 @@ export default function UploadAvatar({
                 {player.propName}
               </option>
             ))}
-          </select>
+          </Select>
         </div>
         <div>
           <input type='file' accept='image/*' onChange={handleFileChange} />

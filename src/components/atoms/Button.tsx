@@ -1,11 +1,11 @@
-export default function Button({
-  children,
-  onClick,
-  type,
-  disabled,
-  isActive,
-  className,
-}) {
+const Button: React.FC<{
+  children?: React.ReactNode;
+  onClick: () => void;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  isActive?: boolean;
+  className?: string;
+}> = ({ children, onClick, type, disabled, isActive, className }) => {
   const baseStyles = `
     w-44 px-5 py-3 min-h-12
     rounded-2xl
@@ -51,4 +51,6 @@ export default function Button({
       {children}
     </button>
   );
-}
+};
+
+export default Button;

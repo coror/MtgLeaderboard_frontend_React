@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import Parse from 'parse';
+import Parse from 'parse/dist/parse.min.js';
+
 
 import { useAuth } from '../store/auth-context';
 

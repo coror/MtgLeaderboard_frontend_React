@@ -1,4 +1,6 @@
-import Parse from 'parse';
+import Parse from 'parse/dist/parse.min.js';
+
+
 
 const PARSE_APPLICATION_ID = import.meta.env
   .VITE_REACT_APP_PARSE_APPLICATION_ID;

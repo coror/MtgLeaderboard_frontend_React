@@ -1,5 +1,6 @@
 import useUploadDeck from '../../hooks/useUploadDeck';
 import Button from '../atoms/Button';
+import Select from '../atoms/Select';
 import Form from '../molecules/Form';
 import ResponseModal from '../molecules/ResponseModal';
 
@@ -23,11 +24,10 @@ function UploadDecklist() {
 
           <label className='flex flex-col text-center text-white'>
             Select Deck:{' '}
-            <select
+            <Select
               value={selectedDeckId}
               onChange={handleEdhChange}
               disabled={decks.length === 0}
-              className='text-black'
             >
               <option value=''>Select Deck</option>
               {decks.map((deck) => (
@@ -35,7 +35,7 @@ function UploadDecklist() {
                   {deck.get('deckName')}
                 </option>
               ))}
-            </select>
+            </Select>
           </label>
 
           <br />

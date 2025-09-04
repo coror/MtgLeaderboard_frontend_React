@@ -2,6 +2,7 @@ import Button from '../atoms/Button';
 import classes from './UpdateScore.module.css';
 import ResponseModal from '../molecules/ResponseModal';
 import useUpdateScore from '../../hooks/useUpdateScore';
+import Select from '../atoms/Select';
 
 export default function UpdateScore({
   updateFunction,
@@ -33,7 +34,7 @@ export default function UpdateScore({
               : 'Select Commander Player'}
             :
           </div>
-          <select
+          <Select
             className={classes['select-field']}
             value={selectedDeck ? selectedDeck.propName : ''}
             onChange={handleDeckChange}
@@ -44,7 +45,7 @@ export default function UpdateScore({
                 {deck.propName}
               </option>
             ))}
-          </select>
+          </Select>
           <div>
             {updateFunction === 'edhGameWonAddRemove'
               ? 'Update Wins'

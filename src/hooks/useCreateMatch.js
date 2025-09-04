@@ -1,5 +1,6 @@
 import { useState, useEffect, useReducer } from 'react';
-import Parse from 'parse';
+import Parse from 'parse/dist/parse.min.js';
+
 import { useQueryClient } from '@tanstack/react-query';
 import formReducer from '../helpers/formReducer';
 

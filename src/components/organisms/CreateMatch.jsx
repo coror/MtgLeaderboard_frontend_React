@@ -3,6 +3,7 @@ import ResponseModal from '../molecules/ResponseModal';
 import useCreateMatch from '../../hooks/useCreateMatch';
 import Form from '../molecules/Form';
 import Input from '../atoms/Input';
+import Select from '../atoms/Select';
 
 export default function CreateMatch({
   updateFunction,
@@ -29,10 +30,9 @@ export default function CreateMatch({
       <Form onSubmit={handleSubmit}>
         <div>
           <div>Select Player 1:</div>
-          <select
+          <Select
             value={selectedPlayerOne ? selectedPlayerOne.name : ''}
             onChange={(e) => handlePlayerChange(e, 1)}
-            className='text-black'
           >
             <option value=''>Select Player...</option>
             {players.map((player) => (
@@ -44,10 +44,10 @@ export default function CreateMatch({
                 {player.name}
               </option>
             ))}
-          </select>
+          </Select>
 
           <div>Select Player 2:</div>
-          <select
+          <Select
             value={selectedPlayerTwo ? selectedPlayerTwo.name : ''}
             onChange={(e) => handlePlayerChange(e, 2)}
             className='text-black'
@@ -62,7 +62,7 @@ export default function CreateMatch({
                 {player.name}
               </option>
             ))}
-          </select>
+          </Select>
 
           <div>Score for Player 1:</div>
           <div>

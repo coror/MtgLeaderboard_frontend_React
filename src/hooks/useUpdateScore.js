@@ -1,5 +1,6 @@
 import { useEffect, useReducer, useState } from 'react';
-import Parse from 'parse';
+import Parse from 'parse/dist/parse.min.js';
+
 import formReducer from '../helpers/formReducer';
 
 const initialFormState = {

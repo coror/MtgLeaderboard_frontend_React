@@ -1,13 +1,18 @@
-import Parse from 'parse';
+import Parse from 'parse/dist/parse.min.js';
 import { useEffect, useState } from 'react';
 
+interface AuthState {
+  sessionToken: string | null;
+  userRole: string | null;
+}
+
 export default function useAuthState() {
-  const [state, setState] = useState({
+  const [state, setState] = useState<AuthState>({
     sessionToken: localStorage.getItem('sessionToken') || null,
     userRole: null,
   });
 
-  const login = async (email, password) => {
+  const login = async (email: string, password: string): Promise<void> => {
     try {
       const user = await Parse.User.logIn(email, password);
       const token = user.getSessionToken();
@@ -17,21 +22,22 @@ export default function useAuthState() {
         userRole: user.get('roleName') || null,
       });
     } catch (error) {
-      throw new Error('Invalid email or password');
+      throw new Error(
+        `Invalid email or password: ${(error as Error).message || error}`
+      );
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = (): void => {
     setState({
       sessionToken: null,
       userRole: null,
     });
-
     localStorage.removeItem('sessionToken');
     Parse.User.logOut();
   };
 
-  const fetchUserRole = async () => {
+  const fetchUserRole = async (): Promise<void> => {
     try {
       const user = Parse.User.current();
       if (user) {
@@ -60,7 +66,6 @@ export default function useAuthState() {
         }
       }
     };
-
     restoreSession();
   }, []);
 

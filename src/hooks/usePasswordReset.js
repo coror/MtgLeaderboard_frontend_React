@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import Parse from 'parse';
+import Parse from 'parse/dist/parse.min.js';
+
 
 export default function usePasswordReset(togglePasswordResetEmail) {
   const [email, setEmail] = useState('');

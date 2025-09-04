@@ -1,6 +1,6 @@
 import { useLeaderboard } from '../../../store/leaderboard-context';
 
-export default function LeaderboardMenu() {
+const LeaderboardMenu:React.FC = () => {
   const {
     edhLeaderboard,
     edhPlayerLeaderboard,
@@ -49,3 +49,5 @@ export default function LeaderboardMenu() {
     </div>
   );
 }
+
+export default LeaderboardMenu

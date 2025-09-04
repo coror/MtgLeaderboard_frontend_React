@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-import { parseInitialization, parseUrl } from './parse/config';
+import './parse/config';
 import { Suspense, lazy } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -8,7 +7,6 @@ import MainPage from './components/pages/MainPage';
 import { useAuth } from './store/auth-context';
 import AuthContextProvider from './store/auth-context';
 import LeaderboardContextProvider from './store/leaderboard-context';
-
 
 const Login = lazy(() => import('./components/pages/Login'));
 

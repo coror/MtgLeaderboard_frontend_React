@@ -1,6 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import Parse from 'parse';
+import Parse from 'parse/dist/parse.min.js';
+
 
 export default function useDeletePlayer(
   deleteFunction,

@@ -1,5 +1,6 @@
 import useDeckViewer from '../../hooks/useDeckViewer';
 import Button from '../atoms/Button';
+import Select from '../atoms/Select';
 import Spinner from '../atoms/Spinner';
 
 export default function DeckViewer({ decklist, onBack }) {
@@ -44,14 +45,12 @@ export default function DeckViewer({ decklist, onBack }) {
         {/* Group Toggle */}
         <div className='mb-6 flex items-center gap-4 justify-center'>
           <label className='text-sm font-semibold'>Group By:</label>
-          <select
+          <Select
             value={groupBy}
-            onChange={(e) => setGroupBy(e.target.value)}
-            className='border border-gray-300 text-black rounded px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400'
-          >
+            onChange={(e) => setGroupBy(e.target.value)} >
             <option value='type'>Card Type</option>
             <option value='cmc'>Mana Cost (CMC)</option>
-          </select>
+          </Select>
         </div>
 
         <div className='space-y-1'>

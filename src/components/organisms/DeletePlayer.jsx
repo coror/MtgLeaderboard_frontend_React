@@ -2,6 +2,7 @@ import Button from '../atoms/Button';
 import ResponseModal from '../molecules/ResponseModal';
 import useDeletePlayer from '../../hooks/useDeletePlayer';
 import Form from '../molecules/Form';
+import Select from '../atoms/Select';
 
 export default function DeletePlayer({
   deleteFunction,
@@ -23,10 +24,9 @@ export default function DeletePlayer({
   return (
     <>
       <Form onSubmit={handleDeletion}>
-        <select
+        <Select
           value={selectedItem ? selectedItem.propName : ''}
           onChange={handleItemChange}
-          className='text-black w-full p-3 rounded'
         >
           <option value=''>
             {deleteFunction === 'deleteEdh' ? 'Select Deck' : 'Select Player'}
@@ -36,7 +36,7 @@ export default function DeletePlayer({
               {item.propName}
             </option>
           ))}
-        </select>
+        </Select>
         <Button type='submit' className='mt-10'>
           Delete
         </Button>
