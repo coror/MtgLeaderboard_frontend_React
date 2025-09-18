@@ -5,14 +5,19 @@ import PodiumSection from './PodiumSection';
 import RegularLeaderboard from './RegularLeaderboard';
 import BackdropModal from '../../molecules/BackdropModal';
 import PlayerDetails from '../PlayerDetails';
+import { Player } from '../../../models/player';
 
-const Leaderboard = ({ classDB, nameField }) => {
+type LeaderboardProps = {
+  classDB: string;
+  nameField: string;
+};
+
+export default function Leaderboard({ classDB, nameField }: LeaderboardProps) {
   const { isLoading, error, data } = useLeaderBoardData(classDB, nameField);
-  const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
 
-  const openDetails = (player) => setSelectedPlayer(player);
+  const openDetails = (player: Player) => setSelectedPlayer(player);
   const closeDetails = () => setSelectedPlayer(null);
-
 
   if (isLoading)
     return (
@@ -47,6 +52,4 @@ const Leaderboard = ({ classDB, nameField }) => {
       </BackdropModal>
     </div>
   );
-};
-
-export default Leaderboard;
+}

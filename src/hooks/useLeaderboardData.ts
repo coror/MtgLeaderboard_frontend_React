@@ -1,13 +1,17 @@
-import { useQuery } from '@tanstack/react-query';
+import { QueryFunctionContext, useQuery } from '@tanstack/react-query';
+// @ts-expect-error it works, but i dont know why it shows no module found
 import Parse from 'parse/dist/parse.min.js';
 
-
 import { useAuth } from '../store/auth-context';
+import { Player } from '../models/player';
 
-export default function useLeaderBoardData(classDB, nameField) {
+export default function useLeaderBoardData(classDB: string, nameField: string) {
   const { sessionToken } = useAuth();
-  const fetchLeaderboardData = async ({ queryKey }) => {
-    const [_key, className, sessionToken] = queryKey;
+
+  const fetchLeaderboardData = async ({
+    queryKey,
+  }: QueryFunctionContext): Promise<Player[]> => {
+    const [, className, sessionToken] = queryKey;
 
     if (!sessionToken) {
       throw new Error('No session token available');
@@ -18,7 +22,8 @@ export default function useLeaderBoardData(classDB, nameField) {
     query.include('avatar');
 
     const result = await query.find({ useMasterKey: false });
-    return result.map((data) => ({
+
+    return result.map((data: Parse.Object) => ({
       objectId: data.id,
       rank: data.get('rank'),
       avatar:
@@ -38,7 +43,7 @@ export default function useLeaderBoardData(classDB, nameField) {
     data = [],
     isLoading,
     error,
-  } = useQuery({
+  } = useQuery<Player[], Error>({
     queryKey: ['leaderboard', classDB, sessionToken],
     queryFn: fetchLeaderboardData,
     enabled: !!sessionToken, // Only fetch if sessionToken exists

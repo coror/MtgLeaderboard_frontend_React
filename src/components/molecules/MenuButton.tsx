@@ -1,4 +1,9 @@
-export default function MenuButton({ toggleMenu, menuOpen }) {
+type MenuButtonProps = {
+  toggleMenu: () => void;
+  menuOpen: boolean;
+};
+
+export default function MenuButton({ toggleMenu, menuOpen }: MenuButtonProps) {
   return (
     <div className='absolute top-4 right-4 z-[95]'>
       <button

@@ -16,14 +16,7 @@ export default function NewPlayerForm({ parseFunction, parseClass }) {
 
   return (
     <>
-      <Form
-        onSubmit={handleSubmit}
-        title={
-          parseFunction === 'createEdh'
-            ? 'New Commander'
-            : 'New Commander Player'
-        }
-      >
+      <Form onSubmit={handleSubmit}>
         <Input
           type='text'
           name='name'

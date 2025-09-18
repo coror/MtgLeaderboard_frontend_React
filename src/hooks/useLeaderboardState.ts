@@ -8,9 +8,9 @@ export type LeaderboardState = {
 };
 
 export default function useLeaderboardState(): LeaderboardState {
-  const [edhLeaderboard, setEdhLeaderboard] = useState<boolean>(false);
+  const [edhLeaderboard, setEdhLeaderboard] = useState<boolean>(true);
   const [edhPlayerLeaderboard, setEdhPlayerLeaderboard] =
-    useState<boolean>(true);
+    useState<boolean>(false);
 
   const handleEdhLeaderboard = () => {
     setEdhLeaderboard(true);
