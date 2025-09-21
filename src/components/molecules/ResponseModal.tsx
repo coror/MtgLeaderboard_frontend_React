@@ -8,7 +8,7 @@ import useResponseModal from '../../hooks/useResponseModal';
 type ResponseModalProps = {
   onConfirm: () => void;
   title: string;
-  message: string;
+  message: string | null;
 };
 
 export default function ResponseModal({
@@ -32,7 +32,7 @@ export default function ResponseModal({
         className='bg-white dark:bg-gray-800 rounded-2xl shadow-lg max-w-md w-full px-6 py-4 text-center space-y-4'
       >
         <ResponseModalHeader title={title} />
-        <ResponseModalContent message={message} />
+        <ResponseModalContent message={message || ''} />
         <div className='flex justify-center'>
           <Button onClick={onConfirm} isActive={true}>
             Ok

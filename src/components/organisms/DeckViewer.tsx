@@ -1,9 +1,15 @@
-import useDeckViewer from '../../hooks/useDeckViewer';
+import { FC, useMemo } from 'react';
+import useDeckViewer, { Card, Ruling } from '../../hooks/useDeckViewer';
 import Button from '../atoms/Button';
 import Select from '../atoms/Select';
 import Spinner from '../atoms/Spinner';
 
-export default function DeckViewer({ decklist, onBack }) {
+type DeckViewerProps = {
+  decklist: string;
+  onBack: () => void;
+};
+
+const DeckViewer: FC<DeckViewerProps> = ({ decklist, onBack }) => {
   const {
     cardsByGroup,
     groupBy,
@@ -18,6 +24,11 @@ export default function DeckViewer({ decklist, onBack }) {
     selectedCard,
     rulings,
   } = useDeckViewer(decklist);
+
+  // Type-safe check for selectedCard and rulings
+  const cardHasRulings = useMemo(() => {
+    return selectedCard && rulings && rulings.length > 0;
+  }, [selectedCard, rulings]);
 
   if (loading)
     return (
@@ -42,12 +53,16 @@ export default function DeckViewer({ decklist, onBack }) {
             &larr; Back
           </Button>
         </div>
+
         {/* Group Toggle */}
         <div className='mb-6 flex items-center gap-4 justify-center'>
           <label className='text-sm font-semibold'>Group By:</label>
           <Select
             value={groupBy}
-            onChange={(e) => setGroupBy(e.target.value)} >
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setGroupBy(e.target.value as 'type' | 'cmc')
+            }
+          >
             <option value='type'>Card Type</option>
             <option value='cmc'>Mana Cost (CMC)</option>
           </Select>
@@ -61,12 +76,12 @@ export default function DeckViewer({ decklist, onBack }) {
             return (
               <section key={key}>
                 <h2 className='text-2xl font-bold mb-4'>{groupLabels[key]}</h2>
-                <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 '>
-                  {cards.map((card, index) => (
+                <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3'>
+                  {cards.map((card: Card, index: number) => (
                     <div
                       key={card.name + index}
                       onClick={() => setSelectedCard(card)}
-                      className={`relative flex flex-col items-center justify-center bg-white rounded-lg shadow-md overflow-hidden  cursor-pointer xl:hover:scale-[1.02] xl:transition-transform xl:duration-150 ${
+                      className={`relative flex flex-col items-center justify-center bg-white rounded-lg shadow-md overflow-hidden cursor-pointer xl:hover:scale-[1.02] xl:transition-transform xl:duration-150 ${
                         card.isCommander
                           ? 'border border-yellow-400 ring-2 ring-yellow-300'
                           : ''
@@ -84,7 +99,6 @@ export default function DeckViewer({ decklist, onBack }) {
                         </div>
                       )}
 
-                      {/* Quantity badge if more than 1 */}
                       {card.quantity > 1 && (
                         <div className='absolute top-1 right-1 bg-black bg-opacity-70 text-white text-xs font-bold rounded px-2 py-0.5 select-none pointer-events-none'>
                           x{card.quantity}
@@ -92,7 +106,7 @@ export default function DeckViewer({ decklist, onBack }) {
                       )}
 
                       {card.isCommander && (
-                        <span className=' text-xs text-yellow-700 font-semibold'>
+                        <span className='text-xs text-yellow-700 font-semibold'>
                           Commander
                         </span>
                       )}
@@ -102,17 +116,17 @@ export default function DeckViewer({ decklist, onBack }) {
               </section>
             );
           })}
+
           <div className='mt-6 text-center text-white'>
             <p>Total cards: {totalCardsCount}</p>
             <p>Average mana cost: {averageCMC.toFixed(2)}</p>
           </div>
         </div>
 
-        {/* Fullscreen modal */}
         {selectedCard && (
           <div
             onClick={() => setSelectedCard(null)}
-            className='fixed inset-0 bg-black bg-opacity-80 flex items-start justify-center z-[80] cursor-pointer overflow-hidden '
+            className='fixed inset-0 bg-black bg-opacity-80 flex items-start justify-center z-[80] cursor-pointer overflow-hidden'
           >
             <div
               onClick={(e) => e.stopPropagation()}
@@ -134,7 +148,11 @@ export default function DeckViewer({ decklist, onBack }) {
                 <p>Quantity: {selectedCard.quantity}</p>
                 <p>CMC: {selectedCard.cmc ?? 'N/A'}</p>
                 <p>Type: {selectedCard.type_line ?? 'N/A'}</p>
-                <p> {'$' + selectedCard.prices.usd ?? 'N/A'}</p>
+                <p>
+                  {selectedCard.prices?.usd
+                    ? `$${selectedCard.prices.usd}`
+                    : 'N/A'}
+                </p>
 
                 {selectedCard.oracle_text && (
                   <p className='mt-4 whitespace-pre-line text-left text-sm text-gray-800'>
@@ -142,11 +160,11 @@ export default function DeckViewer({ decklist, onBack }) {
                   </p>
                 )}
 
-                {rulings && rulings.length > 0 && (
+                {cardHasRulings && (
                   <div className='mt-6 text-left'>
                     <h3 className='text-lg font-semibold mb-2'>Rulings</h3>
-                    <ul className='list-disc list-inside text-sm text-gray-700 '>
-                      {rulings.map((ruling, i) => (
+                    <ul className='list-disc list-inside text-sm text-gray-700'>
+                      {rulings?.map((ruling: Ruling, i: number) => (
                         <li key={i} className='mb-1'>
                           {ruling.comment}
                         </li>
@@ -154,9 +172,10 @@ export default function DeckViewer({ decklist, onBack }) {
                     </ul>
                   </div>
                 )}
+
                 <Button
                   onClick={() => setSelectedCard(null)}
-                  className=' text-gray-700 hover:text-black text-2xl font-bold'
+                  className='text-gray-700 hover:text-black text-2xl font-bold'
                   aria-label='Close'
                 >
                   Back
@@ -168,4 +187,6 @@ export default function DeckViewer({ decklist, onBack }) {
       </div>
     </div>
   );
-}
+};
+
+export default DeckViewer;

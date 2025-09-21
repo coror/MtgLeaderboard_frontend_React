@@ -4,12 +4,19 @@ import useDeletePlayer from '../../hooks/useDeletePlayer';
 import Form from '../molecules/Form';
 import Select from '../atoms/Select';
 
+type DeletePlayerProps = {
+  deleteFunction: string;
+  classDB: string;
+  propName: string;
+  objName: string;
+};
+
 export default function DeletePlayer({
   deleteFunction,
   classDB,
   propName,
   objName,
-}) {
+}: DeletePlayerProps) {
   const {
     handleDeletion,
     selectedItem,

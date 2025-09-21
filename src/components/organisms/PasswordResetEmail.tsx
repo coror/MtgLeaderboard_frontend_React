@@ -1,10 +1,15 @@
+import { FC } from 'react';
 import Button from '../atoms/Button';
 import ResponseModal from '../molecules/ResponseModal';
 import usePasswordReset from '../../hooks/usePasswordReset';
 import Form from '../molecules/Form';
 import Input from '../atoms/Input';
 
-export default function PasswordResetEmail({ togglePasswordResetEmail }) {
+interface PasswordResetEmailProps {
+  togglePasswordResetEmail: () => void;
+}
+
+const PasswordResetEmail: FC<PasswordResetEmailProps> = ({ togglePasswordResetEmail }) => {
   const {
     emailSent,
     handleSubmit,
@@ -15,7 +20,7 @@ export default function PasswordResetEmail({ togglePasswordResetEmail }) {
     modalMessage,
     setIsModalOpen,
     handleReturnToLogin,
-  } = usePasswordReset();
+  } = usePasswordReset(togglePasswordResetEmail);
 
   return (
     <div id='form'>
@@ -45,4 +50,6 @@ export default function PasswordResetEmail({ togglePasswordResetEmail }) {
       )}
     </div>
   );
-}
+};
+
+export default PasswordResetEmail;

@@ -1,6 +1,6 @@
 const Button: React.FC<{
   children?: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   isActive?: boolean;

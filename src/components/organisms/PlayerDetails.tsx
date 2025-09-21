@@ -1,9 +1,21 @@
-import { useState } from 'react';
+import { useState, FC } from 'react';
 import DeckViewer from './DeckViewer';
 import Button from '../atoms/Button';
 import Stat from '../atoms/Stat';
 
-export default function PlayerDetails({
+interface PlayerDetailsProps {
+  nameField: string;
+  avatar: string;
+  rank: number;
+  gamesLost: number;
+  gamesPlayed: number;
+  gamesWon: number;
+  winRate: number;
+  decklist?: string;
+  classDB: string;
+}
+
+const PlayerDetails: FC<PlayerDetailsProps> = ({
   nameField,
   avatar,
   rank,
@@ -13,17 +25,16 @@ export default function PlayerDetails({
   winRate,
   decklist,
   classDB
-}) {
-  const [showDeckList, setShowDecklist] = useState(false);
+}) => {
+  const [showDeckList, setShowDecklist] = useState<boolean>(false);
 
-  function handleShowDecklist() {
+  function handleShowDecklist(): void {
     setShowDecklist((state) => !state);
   }
 
-  function closeDeckViewer() {
+  function closeDeckViewer(): void {
     setShowDecklist(false);
   }
-
 
   return (
     <div>
@@ -41,7 +52,7 @@ export default function PlayerDetails({
                 alt={`Avatar of ${nameField}`}
                 className='w-full h-full rounded-full object-cover object-top'
               />
-              <div className='absolute -bottom-1 -right-1 px-2 py-0.5  font-bold rounded-full bg-gradient-to-br from-amber-400 via-orange-500 to-red-400 text-zinc-900 shadow-lg'>
+              <div className='absolute -bottom-1 -right-1 px-2 py-0.5 font-bold rounded-full bg-gradient-to-br from-amber-400 via-orange-500 to-red-400 text-zinc-900 shadow-lg'>
                 #{rank}
               </div>
             </div>
@@ -56,7 +67,9 @@ export default function PlayerDetails({
 
           {/* Stats */}
           <div className='grid grid-cols-2 gap-6 text-center'>
-            {classDB === 'Edh' && <Button onClick={handleShowDecklist}>Decklist</Button>}
+            {classDB === 'Edh' && (
+              <Button onClick={handleShowDecklist}>Decklist</Button>
+            )}
 
             <Stat
               label='Games Played'
@@ -75,4 +88,6 @@ export default function PlayerDetails({
       )}
     </div>
   );
-}
+};
+
+export default PlayerDetails;

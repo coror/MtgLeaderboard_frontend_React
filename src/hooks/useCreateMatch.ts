@@ -1,10 +1,18 @@
 import { useState, useEffect, useReducer } from 'react';
+// @ts-expect-error it works, but i dont know why it shows no module found
 import Parse from 'parse/dist/parse.min.js';
-
 import { useQueryClient } from '@tanstack/react-query';
 import formReducer from '../helpers/formReducer';
+import { Player } from '../models/player';
 
-const initialFormState = {
+type FormState = {
+  selectedPlayerOne: Player | null;
+  selectedPlayerTwo: Player | null;
+  scoreOne: number;
+  scoreTwo: number;
+};
+
+const initialFormState: FormState = {
   selectedPlayerOne: null,
   selectedPlayerTwo: null,
   scoreOne: 0,
@@ -12,60 +20,64 @@ const initialFormState = {
 };
 
 export default function useCreateMatch(
-  updateFunction,
-  classDB,
-  propName,
-  objName
+  updateFunction: string,
+  classDB: string,
+  propName: string,
+  objName: string
 ) {
-  const [players, setPlayers] = useState([]);
-  const [error, setError] = useState(null);
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
   const [formState, dispatch] = useReducer(formReducer, initialFormState);
-
   const queryClient = useQueryClient();
 
   useEffect(() => {
+    let mounted = true;
     const fetchPlayers = async () => {
       try {
         const PlayerClass = Parse.Object.extend(classDB);
         const query = new Parse.Query(PlayerClass);
         query.select([propName, 'objectId']);
         const results = await query.find();
-        setPlayers(
-          results.map((player) => ({
-            objectId: player.id,
-            name: player.get(propName),
-          }))
-        );
+        if (mounted) {
+          setPlayers(
+            results.map((player: Parse.Object) => ({
+              objectId: player.id,
+              name: player.get(propName) as string,
+            }))
+          );
+        }
       } catch (error) {
         console.error('Error fetching players:', error);
       }
     };
     fetchPlayers();
+    return () => {
+      mounted = false;
+    };
   }, [classDB, propName]);
 
-  const handlePlayerChange = (event, playerNumber) => {
+  const handlePlayerChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+    playerNumber: 1 | 2
+  ) => {
     const selectedPlayerName = event.target.value;
-    const selectedPlayerObject = players.find(
-      (player) => player.name === selectedPlayerName
-    );
-    if (playerNumber === 1) {
-      dispatch({
-        type: 'UPDATE_FIELD',
-        field: 'selectedPlayerOne',
-        value: selectedPlayerObject,
-      });
-    } else {
-      dispatch({
-        type: 'UPDATE_FIELD',
-        field: 'selectedPlayerTwo',
-        value: selectedPlayerObject,
-      });
-    }
+    const selectedPlayerObject =
+      players.find((player) => player.name === selectedPlayerName) || null;
+
+    dispatch({
+      type: 'UPDATE_FIELD',
+      field: playerNumber === 1 ? 'selectedPlayerOne' : 'selectedPlayerTwo',
+      value: selectedPlayerObject,
+    });
   };
 
-  const handleScoreChange = (playerNumber, change, absolute = false) => {
+  const handleScoreChange = (
+    playerNumber: 1 | 2,
+    change: number,
+    absolute = false
+  ) => {
     if (playerNumber === 1) {
       const newScore = absolute ? change : formState.scoreOne + change;
       dispatch({ type: 'UPDATE_FIELD', field: 'scoreOne', value: newScore });
@@ -75,7 +87,7 @@ export default function useCreateMatch(
     }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
     setSuccess(false);
@@ -95,8 +107,8 @@ export default function useCreateMatch(
       }
 
       await Parse.Cloud.run(updateFunction, {
-        [objName + 'One']: selectedPlayerOne.objectId,
-        [objName + 'Two']: selectedPlayerTwo.objectId,
+        [`${objName}One`]: selectedPlayerOne.objectId,
+        [`${objName}Two`]: selectedPlayerTwo.objectId,
         scoreOne,
         scoreTwo,
       });
@@ -127,6 +139,6 @@ export default function useCreateMatch(
     scoreTwo: formState.scoreTwo,
     error,
     success,
-    resetModalState
+    resetModalState,
   };
 }

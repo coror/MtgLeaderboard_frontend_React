@@ -8,4 +8,5 @@ export type Player = {
   gamesWon: number;
   winRate: number;
   decklist?: string;
+  name?: string;
 };

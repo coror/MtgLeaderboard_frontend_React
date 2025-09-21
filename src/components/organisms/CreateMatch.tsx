@@ -5,12 +5,19 @@ import Form from '../molecules/Form';
 import Input from '../atoms/Input';
 import Select from '../atoms/Select';
 
+type CreateMatchProps = {
+  updateFunction: string;
+  classDB: string;
+  propName: string;
+  objName: string;
+};
+
 export default function CreateMatch({
   updateFunction,
   classDB,
   propName,
   objName,
-}) {
+}: CreateMatchProps) {
   const {
     handleSubmit,
     selectedPlayerOne,
@@ -73,7 +80,7 @@ export default function CreateMatch({
               type='number'
               value={scoreOne}
               onChange={(e) =>
-                handleScoreChange(Number(e.target.value), 1, true)
+                handleScoreChange(1, Number(e.target.value), true)
               }
               className='text-black'
             />
@@ -91,7 +98,7 @@ export default function CreateMatch({
               type='number'
               value={scoreTwo}
               onChange={(e) =>
-                handleScoreChange(Number(e.target.value), 2, true)
+                handleScoreChange(2, Number(e.target.value), true)
               }
               className='text-black'
             />

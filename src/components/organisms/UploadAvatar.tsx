@@ -1,15 +1,23 @@
+import { FC } from 'react';
 import Button from '../atoms/Button';
 import ResponseModal from '../molecules/ResponseModal';
 import useUploadAvatar from '../../hooks/useUploadAvatar';
 import Form from '../molecules/Form';
 import Select from '../atoms/Select';
 
-export default function UploadAvatar({
+interface UploadAvatarProps {
+  uploadFunction: string;
+  classDB: string;
+  propName: string;
+  objName: string;
+}
+
+const UploadAvatar: FC<UploadAvatarProps> = ({
   uploadFunction,
   classDB,
   propName,
   objName,
-}) {
+}) => {
   const {
     handleUpload,
     selectedPlayer,
@@ -44,7 +52,10 @@ export default function UploadAvatar({
         </div>
         <div>
           <input type='file' accept='image/*' onChange={handleFileChange} />
-          {avatarData && <img src={avatarData} alt='Preview' />}
+          {/* Add a type guard here to ensure avatarData is a string */}
+          {avatarData && typeof avatarData === 'string' && (
+            <img src={avatarData} alt='Preview' />
+          )}
         </div>
         <Button type='submit' className='mt-10'>
           Upload
@@ -53,11 +64,10 @@ export default function UploadAvatar({
       {error && (
         <ResponseModal
           title='Error'
-          message={error}
+          message={error || 'An unexpected error occurred.'}
           onConfirm={resetModalState}
         />
       )}
-
       {success && (
         <ResponseModal
           title='Success'
@@ -67,4 +77,6 @@ export default function UploadAvatar({
       )}
     </>
   );
-}
+};
+
+export default UploadAvatar;

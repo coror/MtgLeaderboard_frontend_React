@@ -1,9 +1,18 @@
-import ResponseModal from '../UI/ResponseModal';
+import { FC } from 'react';
+import ResponseModal from '../molecules/ResponseModal';
 import useRegistartionForm from '../../hooks/useNewPlayerForm';
-import Form from '../UI/Form';
-import Input from '../UI/Input';
+import Form from '../molecules/Form';
+import Input from '../atoms/Input';
 
-const RegistrationForm = ({ parseFunction, parseClass }) => {
+interface RegistrationFormProps {
+  parseFunction: string;
+  parseClass: string;
+}
+
+const RegistrationForm: FC<RegistrationFormProps> = ({
+  parseFunction,
+  parseClass,
+}) => {
   const {
     formData,
     handleSubmit,
@@ -34,7 +43,7 @@ const RegistrationForm = ({ parseFunction, parseClass }) => {
       {status === 'error' && (
         <ResponseModal
           title='Error'
-          message={errorMessage}
+          message={errorMessage || 'An unknown error occurred.'} // Added fallback for message
           onConfirm={resetStatus}
         />
       )}

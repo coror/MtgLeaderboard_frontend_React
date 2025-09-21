@@ -1,9 +1,31 @@
-export function parseDeckList(deckText) {
+export type ParsedCard = {
+  name: string;
+  quantity: number;
+};
+
+type ScryfallCard = {
+  name: string;
+  cmc?: number;
+  type_line?: string;
+  type?: string;
+  isCommander?: boolean;
+  image_uris?: {
+    normal?: string;
+  };
+  card_faces?: Array<{
+    image_uris?: { normal?: string };
+  }>;
+  prices?: { usd?: string };
+  oracle_text?: string;
+  rulings_uri?: string;
+};
+
+export function parseDeckList(deckText: string): ParsedCard[] {
   if (!deckText) return [];
   const lines = deckText.split('\n');
   const cards = [];
 
-  for (let line of lines) {
+  for (const line of lines) {
     const match = line.match(/^\s*(\d+)\s+(.+?)\s+\(.+?\)/);
     if (match) {
       const quantity = parseInt(match[1]);
@@ -15,7 +37,7 @@ export function parseDeckList(deckText) {
   return cards;
 }
 
-export async function fetchCardData(cardName) {
+export async function fetchCardData(cardName: string): Promise<ScryfallCard> {
   const response = await fetch(
     `https://api.scryfall.com/cards/named?exact=${encodeURIComponent(cardName)}`
   );
@@ -23,7 +45,7 @@ export async function fetchCardData(cardName) {
   return await response.json();
 }
 
-export function getPrimaryType(card) {
+export function getPrimaryType(card: { type_line?: string }): string {
   const typeLine = card.type_line || '';
   if (typeLine.includes('Land')) return 'Land';
   if (typeLine.includes('Creature')) return 'Creature';

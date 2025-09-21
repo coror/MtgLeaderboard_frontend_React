@@ -1,10 +1,16 @@
+import { FC } from 'react';
 import ResponseModal from '../molecules/ResponseModal';
 import useNewPlayerForm from '../../hooks/useNewPlayerForm';
 import Form from '../molecules/Form';
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
 
-export default function NewPlayerForm({ parseFunction, parseClass }) {
+interface NewPlayerFormProps {
+  parseFunction: string;
+  parseClass: string;
+}
+
+const NewPlayerForm: FC<NewPlayerFormProps> = ({ parseFunction, parseClass }) => {
   const {
     formData,
     handleSubmit,
@@ -45,4 +51,6 @@ export default function NewPlayerForm({ parseFunction, parseClass }) {
       )}
     </>
   );
-}
+};
+
+export default NewPlayerForm;
