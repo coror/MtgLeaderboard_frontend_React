@@ -4,13 +4,7 @@ import ResponseModal from '../molecules/ResponseModal';
 import useUploadAvatar from '../../hooks/useUploadAvatar';
 import Form from '../molecules/Form';
 import Select from '../atoms/Select';
-
-interface UploadAvatarProps {
-  uploadFunction: string;
-  classDB: string;
-  propName: string;
-  objName: string;
-}
+import { UploadAvatarProps } from '../../models/uploadAvatar';
 
 const UploadAvatar: FC<UploadAvatarProps> = ({
   uploadFunction,

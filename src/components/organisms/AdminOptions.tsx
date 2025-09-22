@@ -2,24 +2,12 @@ import { Suspense, lazy, useState } from 'react';
 import Button from '../atoms/Button';
 import Deletion from './DeletePlayer';
 import CreateMatch from './CreateMatch';
+import { AdminOptionsProps } from '../../models/admin.ts';
 
 const RegistrationForm = lazy(() => import('./NewPlayerForm.tsx'));
 const UploadAvatar = lazy(() => import('./UploadAvatar.tsx'));
 const UploadDecklist = lazy(() => import('./UploadDecklist'));
 const NewUser = lazy(() => import('./NewUserForm.tsx'));
-
-type AdminOptionsProps =
-  | null
-  | 'NewUser'
-  | 'CreatePlayerMatch'
-  | 'CreateNewPlayer'
-  | 'UploadPlayerAvatar'
-  | 'DeletePlayer'
-  | 'CreateCommanderMatch'
-  | 'CreateNewCommander'
-  | 'UploadCommanderAvatar'
-  | 'DeleteCommander'
-  | 'UploadDecklist';
 
 export default function AdminOptions() {
   const [activeComponent, setActiveComponent] =

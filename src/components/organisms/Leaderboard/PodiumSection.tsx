@@ -1,10 +1,5 @@
-import { Player } from '../../../models/player';
 import PodiumLeaderboardSlot from '../../molecules/Leaderboard/PodiumLeaderboardSlot';
-
-type PodiumSectionProps = {
-  players: Player[];
-  onPlayerClick: (player: Player) => void;
-};
+import { PodiumSectionProps } from '../../../models/leaderboard';
 
 export default function PodiumSection({
   players,

@@ -3,13 +3,7 @@ import ResponseModal from '../molecules/ResponseModal';
 import useDeletePlayer from '../../hooks/useDeletePlayer';
 import Form from '../molecules/Form';
 import Select from '../atoms/Select';
-
-type DeletePlayerProps = {
-  deleteFunction: string;
-  classDB: string;
-  propName: string;
-  objName: string;
-};
+import { DeletePlayerProps } from '../../models/deletePlayer';
 
 export default function DeletePlayer({
   deleteFunction,

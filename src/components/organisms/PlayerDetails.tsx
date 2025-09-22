@@ -5,7 +5,7 @@ import Stat from '../atoms/Stat';
 
 interface PlayerDetailsProps {
   nameField: string;
-  avatar: string;
+  avatar?: string;
   rank: number;
   gamesLost: number;
   gamesPlayed: number;

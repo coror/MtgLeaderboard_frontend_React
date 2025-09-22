@@ -3,11 +3,7 @@ import ResponseModal from '../molecules/ResponseModal';
 import useRegistartionForm from '../../hooks/useNewPlayerForm';
 import Form from '../molecules/Form';
 import Input from '../atoms/Input';
-
-interface RegistrationFormProps {
-  parseFunction: string;
-  parseClass: string;
-}
+import { RegistrationFormProps } from '../../models/registrationForm';
 
 const RegistrationForm: FC<RegistrationFormProps> = ({
   parseFunction,

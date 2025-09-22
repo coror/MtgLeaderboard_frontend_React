@@ -4,13 +4,7 @@ import useCreateMatch from '../../hooks/useCreateMatch';
 import Form from '../molecules/Form';
 import Input from '../atoms/Input';
 import Select from '../atoms/Select';
-
-type CreateMatchProps = {
-  updateFunction: string;
-  classDB: string;
-  propName: string;
-  objName: string;
-};
+import { CreateMatchProps } from '../../models/createMatch';
 
 export default function CreateMatch({
   updateFunction,

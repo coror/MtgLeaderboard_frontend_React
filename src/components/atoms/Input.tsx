@@ -1,6 +1,4 @@
-type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  className?: string;
-};
+import { InputProps } from '../../models/input';
 
 const Input: React.FC<InputProps> = ({
   type = 'text',

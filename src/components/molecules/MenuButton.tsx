@@ -1,7 +1,4 @@
-type MenuButtonProps = {
-  toggleMenu: () => void;
-  menuOpen: boolean;
-};
+import { MenuButtonProps } from '../../models/menuButton';
 
 export default function MenuButton({ toggleMenu, menuOpen }: MenuButtonProps) {
   return (

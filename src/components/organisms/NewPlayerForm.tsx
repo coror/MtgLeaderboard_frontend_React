@@ -4,13 +4,12 @@ import useNewPlayerForm from '../../hooks/useNewPlayerForm';
 import Form from '../molecules/Form';
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
+import { NewPlayerFormProps } from '../../models/newPlayerForm';
 
-interface NewPlayerFormProps {
-  parseFunction: string;
-  parseClass: string;
-}
-
-const NewPlayerForm: FC<NewPlayerFormProps> = ({ parseFunction, parseClass }) => {
+const NewPlayerForm: FC<NewPlayerFormProps> = ({
+  parseFunction,
+  parseClass,
+}) => {
   const {
     formData,
     handleSubmit,

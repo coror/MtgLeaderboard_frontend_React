@@ -3,11 +3,7 @@ import useDeckViewer, { Card, Ruling } from '../../hooks/useDeckViewer';
 import Button from '../atoms/Button';
 import Select from '../atoms/Select';
 import Spinner from '../atoms/Spinner';
-
-type DeckViewerProps = {
-  decklist: string;
-  onBack: () => void;
-};
+import { DeckViewerProps } from '../../models/deckViewer';
 
 const DeckViewer: FC<DeckViewerProps> = ({ decklist, onBack }) => {
   const {

@@ -1,10 +1,5 @@
 import { createPortal } from 'react-dom';
-
-type BackdropModalProps = {
-  menuOpen: boolean;
-  closeMenu: () => void;
-  children: React.ReactNode;
-};
+import { BackdropModalProps } from '../../models/backdropModal';
 
 const BackdropModal: React.FC<BackdropModalProps> = ({
   children,

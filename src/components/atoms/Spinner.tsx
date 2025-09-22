@@ -1,7 +1,4 @@
-type SpinnerProps = {
-  size?: number;
-  color?: string;
-};
+import { SpinnerProps } from '../../models/spinner';
 
 const Spinner: React.FC<SpinnerProps> = ({
   size = 48,

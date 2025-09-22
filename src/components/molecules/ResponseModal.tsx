@@ -4,12 +4,7 @@ import Button from '../atoms/Button';
 import ResponseModalHeader from '../atoms/ResponseModal/ResponseModalHeader';
 import ResponseModalContent from '../atoms/ResponseModal/ResponseModalContent';
 import useResponseModal from '../../hooks/useResponseModal';
-
-type ResponseModalProps = {
-  onConfirm: () => void;
-  title: string;
-  message: string | null;
-};
+import { ResponseModalProps } from '../../models/responseModal';
 
 export default function ResponseModal({
   onConfirm,

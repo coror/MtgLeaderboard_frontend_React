@@ -6,11 +6,7 @@ import RegularLeaderboard from './RegularLeaderboard';
 import BackdropModal from '../../molecules/BackdropModal';
 import PlayerDetails from '../PlayerDetails';
 import { Player } from '../../../models/player';
-
-type LeaderboardProps = {
-  classDB: string;
-  nameField: string;
-};
+import { LeaderboardProps } from '../../../models/leaderboard';
 
 export default function Leaderboard({ classDB, nameField }: LeaderboardProps) {
   const { isLoading, error, data } = useLeaderBoardData(classDB, nameField);

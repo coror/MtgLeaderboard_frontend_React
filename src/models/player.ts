@@ -1,5 +1,5 @@
 export type Player = {
-  objectId: string;
+  objectId?: string;
   rank: number;
   avatar?: string;
   nameField: string;

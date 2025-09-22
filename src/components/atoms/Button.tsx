@@ -1,11 +1,13 @@
-const Button: React.FC<{
-  children?: React.ReactNode;
-  onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
-  disabled?: boolean;
-  isActive?: boolean;
-  className?: string;
-}> = ({ children, onClick, type, disabled, isActive, className }) => {
+import { ButtonProps } from '../../models/button';
+
+const Button: React.FC<ButtonProps> = ({
+  children,
+  onClick,
+  type,
+  disabled,
+  isActive,
+  className,
+}) => {
   const baseStyles = `
     w-44 px-5 py-3 min-h-12
     rounded-2xl

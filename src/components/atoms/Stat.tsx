@@ -1,11 +1,4 @@
-import React from 'react';
-
-type StatProps = {
-  label: string;
-  value: number | string;
-  accent?: string;
-  className?: string;
-};
+import { StatProps } from '../../models/stat';
 
 const Stat: React.FC<StatProps> = ({
   label,

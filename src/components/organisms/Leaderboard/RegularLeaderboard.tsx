@@ -1,10 +1,5 @@
 import LeaderboardSlot from '../../molecules/Leaderboard/LeaderboardSlot';
-import { Player } from '../../../models/player';
-
-type RegularLeaderboardProps = {
-  players: Player[];
-  onPlayerClick: (player: Player) => void;
-};
+import { RegularLeaderboardProps } from '../../../models/leaderboard';
 
 export default function RegularLeaderboard({
   players,
