@@ -1,6 +1,8 @@
+import React, { PropsWithChildren } from 'react';
 import useViewportHeight from '../../hooks/useViewportHeight';
 
-export default function PageTemplate({ children }) {
+// Type the component using PropsWithChildren
+const PageTemplate: React.FC<PropsWithChildren> = ({ children }) => {
   useViewportHeight();
 
   return (
@@ -22,4 +24,6 @@ export default function PageTemplate({ children }) {
       {children}
     </div>
   );
-}
+};
+
+export default PageTemplate;

@@ -1,7 +1,7 @@
 import Button from '../atoms/Button';
 import classes from './UpdateScore.module.css';
 import ResponseModal from '../molecules/ResponseModal';
-import useUpdateScore from '../../hooks/useUpdateScore';
+import useUpdateScore from '../../hooks/useUpdateScoreOLD';
 import Select from '../atoms/Select';
 
 export default function UpdateScore({

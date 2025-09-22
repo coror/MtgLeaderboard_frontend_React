@@ -4,7 +4,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useReducer, useState, ChangeEvent, FormEvent } from 'react';
 
 // NOTE: You'll need to create this file if you haven't already.
-// For now, let's assume it exists and is typed.
+// Import the generic reducer and action types
+import { formReducer, FormAction } from '../helpers/formReducer';
 
 // Type definitions for the data structures
 interface Player {
@@ -15,6 +16,7 @@ interface Player {
 interface FormState {
   avatarData: string | ArrayBuffer | null;
   selectedPlayer: Player | null;
+  [key: string]: unknown; // Add this line
 }
 
 interface UseUploadAvatarResult {
@@ -29,25 +31,9 @@ interface UseUploadAvatarResult {
   avatarData: string | ArrayBuffer | null;
 }
 
-// Action types for the reducer
-type FormAction =
-  | { type: 'UPDATE_FIELD'; field: keyof FormState; value: FormState[keyof FormState] }
-  | { type: 'RESET_FORM'; payload: FormState };
-
 const initialFormState: FormState = {
   avatarData: null,
   selectedPlayer: null,
-};
-
-const formReducer = (state: FormState, action: FormAction): FormState => {
-  switch (action.type) {
-    case 'UPDATE_FIELD':
-      return { ...state, [action.field]: action.value };
-    case 'RESET_FORM':
-      return action.payload;
-    default:
-      return state;
-  }
 };
 
 export default function useUploadAvatar(
@@ -60,7 +46,10 @@ export default function useUploadAvatar(
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
-  const [formState, dispatch] = useReducer(formReducer, initialFormState);
+  // Explicitly type the dispatch function to use FormAction<FormState>
+  const [formState, dispatch] = useReducer<
+    (state: FormState, action: FormAction<FormState>) => FormState
+  >(formReducer, initialFormState);
 
   const queryClient = useQueryClient();
 

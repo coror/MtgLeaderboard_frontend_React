@@ -2,7 +2,7 @@ import { useState, useEffect, useReducer } from 'react';
 // @ts-expect-error it works, but i dont know why it shows no module found
 import Parse from 'parse/dist/parse.min.js';
 import { useQueryClient } from '@tanstack/react-query';
-import formReducer from '../helpers/formReducer';
+import { formReducer, FormAction } from '../helpers/formReducer';
 import { Player } from '../models/player';
 
 type FormState = {
@@ -29,7 +29,11 @@ export default function useCreateMatch(
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const [formState, dispatch] = useReducer(formReducer, initialFormState);
+  // The correct way to explicitly type useReducer with a generic reducer.
+  const [formState, dispatch] = useReducer<
+    (state: FormState, action: FormAction<FormState>) => FormState
+  >(formReducer, initialFormState);
+
   const queryClient = useQueryClient();
 
   useEffect(() => {

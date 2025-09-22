@@ -1,32 +1,24 @@
-import { Player } from '../models/player';
+// formReducer.ts
 
-type FormState = {
-  selectedPlayerOne: Player | null;
-  selectedPlayerTwo: Player | null;
-  scoreOne: number;
-  scoreTwo: number;
-};
+export type FormAction<T> =
+  | { type: 'UPDATE_FIELD'; field: keyof T; value: T[keyof T] }
+  | { type: 'RESET_FORM'; payload: T };
 
-type Action =
-  | {
-      type: 'UPDATE_FIELD';
-      field: keyof FormState;
-      value: FormState[keyof FormState];
-    }
-  | { type: 'RESET_FORM'; payload: FormState };
-
-const formReducer = (state: FormState, action: Action): FormState => {
-  if (action.type === 'UPDATE_FIELD') {
-    return {
-      ...state,
-      [action.field]: action.value,
-    };
+export const formReducer = <T extends Record<string, unknown>>(
+  state: T,
+  action: FormAction<T>
+): T => {
+  switch (action.type) {
+    case 'UPDATE_FIELD':
+      // The `as T[keyof T]` is needed for type safety because TypeScript can't
+      // guarantee `action.value` matches `state[action.field]` at compile time
+      return {
+        ...state,
+        [action.field]: action.value as T[keyof T],
+      };
+    case 'RESET_FORM':
+      return action.payload;
+    default:
+      return state;
   }
-
-  if (action.type === 'RESET_FORM') {
-    return action.payload; // Use initial state passed in payload
-  }
-  return state;
 };
-
-export default formReducer;
