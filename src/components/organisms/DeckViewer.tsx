@@ -43,7 +43,7 @@ const DeckViewer: FC<DeckViewerProps> = ({ decklist, onBack }) => {
         height: 'calc(var(--vh, 1vh) * 100)',
       }}
     >
-      <div className='py-4 w-screen px-8'>
+      <div className='py-4 w-full'>
         <div className='mb-6'>
           <Button onClick={onBack} className='text-sm'>
             &larr; Back
