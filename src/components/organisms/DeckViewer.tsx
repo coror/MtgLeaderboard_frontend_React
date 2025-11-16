@@ -50,13 +50,13 @@ const DeckViewer: FC<DeckViewerProps> = ({ decklist, onBack }) => {
 
   return (
     <div
-      className='relative text-white overflow-x-hidden pt-10'
+      className='relative text-white overflow-x-hidden '
       style={{
         minHeight: 'calc(var(--vh, 1vh) * 100)',
         height: 'calc(var(--vh, 1vh) * 100)',
       }}
     >
-      <div className='py-4 w-full'>
+      <div className=' w-full'>
         <div className='mb-6'>
           <Button onClick={onBack} className='text-sm'>
             &larr; Back
@@ -141,52 +141,52 @@ const DeckViewer: FC<DeckViewerProps> = ({ decklist, onBack }) => {
           >
             <div
               onClick={(e) => e.stopPropagation()}
-              className='relative max-w-lg w-full max-h-[90vh] overflow-y-auto bg-white rounded-lg shadow-2xl cursor-default'
+              className='relative max-w-lg w-full max-h-[90vh] overflow-y-auto bg-gradient-to-br from-slate-900 via-slate-800 to-zinc-900 rounded-lg shadow-2xl cursor-default border border-white/20'
             >
               {selectedCard.image ? (
                 <img
                   src={selectedCard.image}
                   alt={selectedCard.name}
-                  className='w-full object-contain rounded-t-lg'
+                  className='w-full object-contain rounded-2xl'
                 />
               ) : (
-                <div className='w-full h-[450px] bg-gray-100 flex items-center justify-center text-lg text-red-500'>
+                <div className='w-full h-[450px] bg-slate-700 flex items-center justify-center text-lg text-red-400'>
                   No image available
                 </div>
               )}
-              <div className='p-6 text-center text-black'>
+              <div className='p-6 text-center text-white'>
                 <h2 className='text-xl font-bold mb-4'>{selectedCard.name}</h2>
                 <div className='space-y-2 text-sm'>
                   <p>
-                    <span className='font-semibold'>Quantity:</span>{' '}
+                    <span className='font-semibold text-amber-300'>Quantity:</span>{' '}
                     {selectedCard.quantity}
                   </p>
                   <p>
-                    <span className='font-semibold'>CMC:</span>{' '}
+                    <span className='font-semibold text-amber-300'>CMC:</span>{' '}
                     {selectedCard.cmc ?? 'N/A'}
                   </p>
                   <p>
-                    <span className='font-semibold'>Type:</span>{' '}
+                    <span className='font-semibold text-amber-300'>Type:</span>{' '}
                     {selectedCard.type_line ?? 'N/A'}
                   </p>
                   <p>
-                    <span className='font-semibold'>Price:</span>{' '}
+                    <span className='font-semibold text-amber-300'>Price:</span>{' '}
                     {selectedCard.prices?.usd ? `$${selectedCard.prices.usd}` : 'N/A'}
                   </p>
                 </div>
 
                 {selectedCard.oracle_text && (
-                  <div className='mt-4 p-4 bg-gray-50 rounded-lg'>
-                    <p className='whitespace-pre-line text-left text-sm text-gray-800'>
+                  <div className='mt-4 p-4 bg-slate-800/50 rounded-lg border border-white/10'>
+                    <p className='whitespace-pre-line text-left text-sm text-gray-200'>
                       {selectedCard.oracle_text}
                     </p>
                   </div>
                 )}
 
                 {cardHasRulings && (
-                  <div className='mt-6 p-4 bg-gray-50 rounded-lg text-left'>
-                    <h3 className='text-lg font-semibold mb-2'>Rulings</h3>
-                    <ul className='list-disc list-inside text-sm text-gray-700 space-y-1'>
+                  <div className='mt-6 p-4 bg-slate-800/50 rounded-lg border border-white/10 text-left'>
+                    <h3 className='text-lg font-semibold mb-2 text-amber-300'>Rulings</h3>
+                    <ul className='list-disc list-inside text-sm text-gray-300 space-y-1'>
                       {rulings?.map((ruling: Ruling, i: number) => (
                         <li key={i}>{ruling.comment}</li>
                       ))}

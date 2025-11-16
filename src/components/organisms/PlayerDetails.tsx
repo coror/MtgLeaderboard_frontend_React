@@ -57,7 +57,7 @@ const PlayerDetails: FC<PlayerDetailsProps> = ({
               </div>
             </div>
             <div className='flex flex-col w-32'>
-              <h1 className='text-xl font-semibold text-center tracking-tight drop-shadow-sm'>
+              <h1 className='text-xl text-white font-semibold text-center tracking-tight drop-shadow-sm'>
                 {nameField}
               </h1>
             </div>
