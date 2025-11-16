@@ -27,7 +27,7 @@ export default function MainPage() {
         <Button onClick={handleLogout}>Logout</Button>
       </BackdropModal>
 
-      <main className='flex flex-col items-center pt-16 z-10'>
+      <main className='flex flex-col items-center pt-16 z-10 overflow-visible'>
         <LeaderboardMenu />
         {edhLeaderboard ? (
           <Leaderboard classDB='Edh' nameField='deckName' />

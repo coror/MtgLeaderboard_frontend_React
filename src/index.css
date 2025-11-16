@@ -2,14 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Add this style for the loading spinner */
+/* Spinner */
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-/* Center the loading spinner vertically and horizontally */
 .loading-spinner {
   display: inline-block;
   width: 20px;
@@ -18,4 +17,114 @@
   border-radius: 50%;
   border-top-color: #9a9a9abb;
   animation: spin 1s linear infinite;
+}
+
+/* ===========================================
+   🔥 CONSTANT FIRE EFFECT (NO STUTTER / NO REVERSE)
+   =========================================== */
+
+/* Smooth infinite fire flow */
+@keyframes fireFlow {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -300px -300px;
+  }
+}
+
+/* Pulse glow */
+@keyframes fireGlow {
+  0% {
+    box-shadow: 0 0 22px #ff4500, inset 0 0 22px #ff2200;
+  }
+  25% {
+    box-shadow: 0 0 30px #ff6a00, inset 0 0 24px #ff3300;
+  }
+  50% {
+    box-shadow: 0 0 20px #ff2200, inset 0 0 20px #ff5500;
+  }
+  75% {
+    box-shadow: 0 0 36px #ff6a00, inset 0 0 32px #ff3300;
+  }
+  100% {
+    box-shadow: 0 0 22px #ff4500, inset 0 0 22px #ff2200;
+  }
+}
+
+.fire-ring-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  contain: none;
+}
+
+/* === NEW: True smooth fire flow === */
+.fire-circle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: visible !important;
+  contain: none;
+}
+
+/* The glowing ring */
+.fire-circle::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0px;
+  height: 0px;
+  border: 26px solid transparent;
+  border-radius: 50%;
+  animation: fireGlow 3.5s ease-in-out infinite;
+}
+
+/* Fire texture ring */
+.fire-circle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  /* Size of outer fire ring */
+  width: 84px;
+  height: 84px;
+
+  border-radius: 50%;
+
+  /* Fire texture */
+  background: url('/fire-noise.png') repeat;
+  background-size: 200px 200px;
+  animation: fireFlow 10s linear infinite;
+
+  /* Glow & soft blur */
+  filter: blur(3px) brightness(1);
+
+  /* Place outside the avatar */
+  z-index: 2;
+}
+
+.fire-circle-2 {
+  animation-delay: -1.5s;
+}
+
+.fire-ring-container img {
+  position: relative;
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  z-index: 10;
+  object-fit: cover;
+  object-position: top;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
 }

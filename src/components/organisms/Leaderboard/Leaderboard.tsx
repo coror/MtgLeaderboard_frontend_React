@@ -27,7 +27,7 @@ export default function Leaderboard({ classDB, nameField }: LeaderboardProps) {
   const others = data.slice(3);
 
   return (
-    <div className='flex flex-col w-screen md:max-w-[45rem] items-center'>
+    <div className='flex flex-col w-screen md:max-w-[45rem] items-center overflow-visible'>
       <PodiumSection players={topThree} onPlayerClick={openDetails} />
       <RegularLeaderboard players={others} onPlayerClick={openDetails} />
 

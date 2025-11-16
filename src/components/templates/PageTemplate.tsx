@@ -7,7 +7,7 @@ const PageTemplate: React.FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <div
-      className='relative text-white overflow-x-hidden'
+      className='relative text-white'
       style={{
         minHeight: 'calc(var(--vh, 1vh) * 100)',
         height: 'calc(var(--vh, 1vh) * 100)',

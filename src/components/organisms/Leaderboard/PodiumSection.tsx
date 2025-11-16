@@ -6,7 +6,7 @@ export default function PodiumSection({
   onPlayerClick,
 }: PodiumSectionProps) {
   return (
-    <div className='flex flex-row mt-24 mb-10 gap-2'>
+    <div className='flex flex-row mt-24 mb-10 gap-2 overflow-visible'>
       {players[1] && (
         <PodiumLeaderboardSlot
           {...players[1]}
