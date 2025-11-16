@@ -14,13 +14,16 @@ export default function MainPage() {
   const { handleLogout, userRole } = useAuth();
   const { edhLeaderboard } = useLeaderboard();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [playerModalOpen, setPlayerModalOpen] = useState(false);
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const closeMenu = () => setMenuOpen(false);
 
   return (
     <PageTemplate>
-      <MenuButton toggleMenu={toggleMenu} menuOpen={menuOpen} />
+      {!playerModalOpen && (
+        <MenuButton toggleMenu={toggleMenu} menuOpen={menuOpen} />
+      )}
 
       <BackdropModal menuOpen={menuOpen} closeMenu={closeMenu}>
         {userRole === 'admin' && <AdminOptions />}
@@ -30,9 +33,17 @@ export default function MainPage() {
       <main className='flex flex-col items-center pt-16 z-10 overflow-visible'>
         <LeaderboardMenu />
         {edhLeaderboard ? (
-          <Leaderboard classDB='Edh' nameField='deckName' />
+          <Leaderboard
+            classDB='Edh'
+            nameField='deckName'
+            onModalChange={setPlayerModalOpen}
+          />
         ) : (
-          <Leaderboard classDB='EdhPlayer' nameField='edhPlayerName' />
+          <Leaderboard
+            classDB='EdhPlayer'
+            nameField='edhPlayerName'
+            onModalChange={setPlayerModalOpen}
+          />
         )}
       </main>
 

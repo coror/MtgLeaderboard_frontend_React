@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useLeaderBoardData from '../../../hooks/useLeaderboardData';
 import Spinner from '../../atoms/Spinner';
 import PodiumSection from './PodiumSection';
@@ -8,12 +8,20 @@ import PlayerDetails from '../PlayerDetails';
 import { Player } from '../../../models/player';
 import { LeaderboardProps } from '../../../models/leaderboard';
 
-export default function Leaderboard({ classDB, nameField }: LeaderboardProps) {
+export default function Leaderboard({
+  classDB,
+  nameField,
+  onModalChange,
+}: LeaderboardProps & { onModalChange?: (isOpen: boolean) => void }) {
   const { isLoading, error, data } = useLeaderBoardData(classDB, nameField);
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
 
   const openDetails = (player: Player) => setSelectedPlayer(player);
   const closeDetails = () => setSelectedPlayer(null);
+
+  useEffect(() => {
+    onModalChange?.(!!selectedPlayer);
+  }, [selectedPlayer, onModalChange]);
 
   if (isLoading)
     return (
