@@ -65,12 +65,17 @@ const PlayerDetails: FC<PlayerDetailsProps> = ({
 
           <hr className='border-white/10' />
 
-          {/* Stats */}
-          <div className='grid grid-cols-2 gap-6 text-center'>
-            {classDB === 'Edh' && (
-              <Button onClick={handleShowDecklist}>Decklist</Button>
-            )}
+          {/* Decklist Button */}
+          {classDB === 'Edh' && (
+            <div className='flex justify-center'>
+              <Button onClick={handleShowDecklist} className='w-full max-w-xs'>
+                View Decklist
+              </Button>
+            </div>
+          )}
 
+          {/* Stats */}
+          <div className='grid grid-cols-2 gap-4 text-center'>
             <Stat
               label='Games Played'
               value={gamesPlayed}
