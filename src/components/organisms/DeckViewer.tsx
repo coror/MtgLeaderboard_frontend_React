@@ -58,19 +58,20 @@ const DeckViewer: FC<DeckViewerProps> = ({ decklist, onBack }) => {
     >
       <div className=' w-full'>
         <div className='mb-6'>
-          <Button onClick={onBack} className='text-sm'>
-            &larr; Back
+          <Button onClick={onBack} >
+            Back
           </Button>
         </div>
 
         {/* Group Toggle */}
         <div className='mb-6 flex items-center gap-4 justify-center'>
-          <label className='text-sm font-semibold'>Group By:</label>
+          <label className='font-semibold'>Group By:</label>
           <Select
             value={groupBy}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
               setGroupBy(e.target.value as 'type' | 'cmc')
             }
+            className='w-auto'
           >
             <option value='type'>Card Type</option>
             <option value='cmc'>Mana Cost (CMC)</option>
@@ -100,7 +101,7 @@ const DeckViewer: FC<DeckViewerProps> = ({ decklist, onBack }) => {
                         <img
                           src={card.image}
                           alt={card.name}
-                          className='w-full object-cover h-48'
+                          className='w-full object-contain'
                         />
                       ) : (
                         <div className='w-full h-[350px] bg-gray-100 flex items-center justify-center text-sm text-red-500'>
@@ -114,11 +115,6 @@ const DeckViewer: FC<DeckViewerProps> = ({ decklist, onBack }) => {
                         </div>
                       )}
 
-                      {card.isCommander && (
-                        <span className='text-xs text-yellow-700 font-semibold'>
-                          Commander
-                        </span>
-                      )}
                     </div>
                   ))}
                 </div>

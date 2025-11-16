@@ -154,3 +154,43 @@ html, body {
 .fire-ring-container.small .fire-circle::before {
   border: 5px solid transparent;
 }
+
+/* Shield-shaped fire effect */
+.fire-shield .fire-circle::after {
+  width: 60px;
+  height: 72px;
+}
+
+.fire-shield .fire-circle::before {
+  width: 65px;
+  height: 78px;
+  border: 8px solid transparent;
+}
+
+/* Fire border animation for shield */
+@keyframes fireShieldBorder {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -400;
+  }
+}
+
+.fire-shield-border {
+
+  filter: brightness(1.2) contrast(1.1);
+}
+
+.fire-shield-svg #firePattern {
+  animation: firePatternMove 4s linear infinite;
+}
+
+@keyframes firePatternMove {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-100px, -100px);
+  }
+}

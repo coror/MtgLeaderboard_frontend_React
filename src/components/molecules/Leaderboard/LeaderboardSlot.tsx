@@ -37,8 +37,8 @@ const LeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
           })
         }
       >
-        <div className='fire-circle'></div>
-        <div className='fire-circle fire-circle-2'></div>
+        {/* <div className='fire-circle'></div>
+        <div className='fire-circle fire-circle-2'></div> */}
         <img
           src={avatar || placeholderImage}
           alt={`Avatar or ${nameField}`}
