@@ -1,4 +1,5 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import useDeckViewer, { Card, Ruling } from '../../hooks/useDeckViewer';
 import Button from '../atoms/Button';
 import Select from '../atoms/Select';
@@ -25,6 +26,18 @@ const DeckViewer: FC<DeckViewerProps> = ({ decklist, onBack }) => {
   const cardHasRulings = useMemo(() => {
     return selectedCard && rulings && rulings.length > 0;
   }, [selectedCard, rulings]);
+
+  // Prevent body scroll when card modal is open
+  useEffect(() => {
+    if (selectedCard) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedCard]);
 
   if (loading)
     return (
@@ -118,69 +131,79 @@ const DeckViewer: FC<DeckViewerProps> = ({ decklist, onBack }) => {
             <p>Average mana cost: {averageCMC.toFixed(2)}</p>
           </div>
         </div>
+      </div>
 
-        {selectedCard && (
+      {selectedCard &&
+        createPortal(
           <div
             onClick={() => setSelectedCard(null)}
-            className='fixed inset-0 bg-black bg-opacity-80 flex items-start justify-center z-[80] cursor-pointer overflow-hidden'
+            className='fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-[100] cursor-pointer p-4'
           >
             <div
               onClick={(e) => e.stopPropagation()}
-              className='relative max-w-lg w-full h-full overflow-y-auto bg-white rounded-lg shadow-lg pt-5'
+              className='relative max-w-lg w-full max-h-[90vh] overflow-y-auto bg-white rounded-lg shadow-2xl cursor-default'
             >
               {selectedCard.image ? (
                 <img
                   src={selectedCard.image}
                   alt={selectedCard.name}
-                  className='w-full object-contain rounded'
+                  className='w-full object-contain rounded-t-lg'
                 />
               ) : (
                 <div className='w-full h-[450px] bg-gray-100 flex items-center justify-center text-lg text-red-500'>
                   No image available
                 </div>
               )}
-              <div className='mt-4 text-center text-black'>
-                <h2 className='text-xl font-bold mb-2'>{selectedCard.name}</h2>
-                <p>Quantity: {selectedCard.quantity}</p>
-                <p>CMC: {selectedCard.cmc ?? 'N/A'}</p>
-                <p>Type: {selectedCard.type_line ?? 'N/A'}</p>
-                <p>
-                  {selectedCard.prices?.usd
-                    ? `$${selectedCard.prices.usd}`
-                    : 'N/A'}
-                </p>
+              <div className='p-6 text-center text-black'>
+                <h2 className='text-xl font-bold mb-4'>{selectedCard.name}</h2>
+                <div className='space-y-2 text-sm'>
+                  <p>
+                    <span className='font-semibold'>Quantity:</span>{' '}
+                    {selectedCard.quantity}
+                  </p>
+                  <p>
+                    <span className='font-semibold'>CMC:</span>{' '}
+                    {selectedCard.cmc ?? 'N/A'}
+                  </p>
+                  <p>
+                    <span className='font-semibold'>Type:</span>{' '}
+                    {selectedCard.type_line ?? 'N/A'}
+                  </p>
+                  <p>
+                    <span className='font-semibold'>Price:</span>{' '}
+                    {selectedCard.prices?.usd ? `$${selectedCard.prices.usd}` : 'N/A'}
+                  </p>
+                </div>
 
                 {selectedCard.oracle_text && (
-                  <p className='mt-4 whitespace-pre-line text-left text-sm text-gray-800'>
-                    {selectedCard.oracle_text}
-                  </p>
+                  <div className='mt-4 p-4 bg-gray-50 rounded-lg'>
+                    <p className='whitespace-pre-line text-left text-sm text-gray-800'>
+                      {selectedCard.oracle_text}
+                    </p>
+                  </div>
                 )}
 
                 {cardHasRulings && (
-                  <div className='mt-6 text-left'>
+                  <div className='mt-6 p-4 bg-gray-50 rounded-lg text-left'>
                     <h3 className='text-lg font-semibold mb-2'>Rulings</h3>
-                    <ul className='list-disc list-inside text-sm text-gray-700'>
+                    <ul className='list-disc list-inside text-sm text-gray-700 space-y-1'>
                       {rulings?.map((ruling: Ruling, i: number) => (
-                        <li key={i} className='mb-1'>
-                          {ruling.comment}
-                        </li>
+                        <li key={i}>{ruling.comment}</li>
                       ))}
                     </ul>
                   </div>
                 )}
 
-                <Button
-                  onClick={() => setSelectedCard(null)}
-                  className='text-gray-700 hover:text-black text-2xl font-bold'
-                  aria-label='Close'
-                >
-                  Back
-                </Button>
+                <div className='mt-6'>
+                  <Button onClick={() => setSelectedCard(null)} className='w-full'>
+                    Close
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
+          </div>,
+          document.getElementById('backdrop-root')!
         )}
-      </div>
     </div>
   );
 };
