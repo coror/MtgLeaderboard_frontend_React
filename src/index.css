@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prevent mobile overscroll/bounce that causes background issues */
+html, body {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+  overflow-x: hidden;
+}
+
 /* Spinner */
 @keyframes spin {
   to {
@@ -60,7 +68,6 @@
   align-items: center;
   justify-content: center;
   overflow: visible;
-  contain: none;
 }
 
 /* === NEW: True smooth fire flow === */
@@ -71,7 +78,6 @@
   top: 0;
   left: 0;
   overflow: visible !important;
-  contain: none;
 }
 
 /* The glowing ring */
@@ -83,9 +89,9 @@
   transform: translate(-50%, -50%);
   width: 0px;
   height: 0px;
-  border: 26px solid transparent;
+  border: 30px solid transparent;
   border-radius: 50%;
-  animation: fireGlow 3.5s ease-in-out infinite;
+  animation: fireGlow 5s ease-in-out infinite;
 }
 
 /* Fire texture ring */
@@ -108,7 +114,7 @@
   animation: fireFlow 10s linear infinite;
 
   /* Glow & soft blur */
-  filter: blur(3px) brightness(1);
+  filter: blur(3px) brightness(0.7);
 
   /* Place outside the avatar */
   z-index: 2;
