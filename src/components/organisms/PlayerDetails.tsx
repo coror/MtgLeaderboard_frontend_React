@@ -1,7 +1,9 @@
 import { useState, FC } from 'react';
 import DeckViewer from './DeckViewer';
+import PlayerStats from './PlayerStats';
 import Button from '../atoms/Button';
 import Stat from '../atoms/Stat';
+import usePlayerStats from '../../hooks/usePlayerStats';
 
 interface PlayerDetailsProps {
   nameField: string;
@@ -13,6 +15,7 @@ interface PlayerDetailsProps {
   winRate: number;
   decklist?: string;
   classDB: string;
+  playerId?: string;
 }
 
 const PlayerDetails: FC<PlayerDetailsProps> = ({
@@ -25,8 +28,11 @@ const PlayerDetails: FC<PlayerDetailsProps> = ({
   winRate,
   decklist,
   classDB,
+  playerId,
 }) => {
   const [showDeckList, setShowDecklist] = useState<boolean>(false);
+  const [showStats, setShowStats] = useState<boolean>(false);
+  const { stats, isLoading, error, fetchStats, resetStats } = usePlayerStats();
 
   function handleShowDecklist(): void {
     setShowDecklist((state) => !state);
@@ -36,13 +42,35 @@ const PlayerDetails: FC<PlayerDetailsProps> = ({
     setShowDecklist(false);
   }
 
+  function handleShowStats(): void {
+    if (playerId && (classDB === 'EdhPlayer' || classDB === 'Edh')) {
+      setShowStats(true);
+      fetchStats(playerId, classDB);
+    }
+  }
+
+  function closeStats(): void {
+    setShowStats(false);
+    resetStats();
+  }
+
   return (
     <div>
       {showDeckList && classDB === 'Edh' && decklist && (
         <DeckViewer decklist={decklist} onBack={closeDeckViewer} />
       )}
       {showDeckList && !decklist && <p>No decklist for this deck</p>}
-      {!showDeckList && (
+      {showStats && (classDB === 'EdhPlayer' || classDB === 'Edh') && (
+        <PlayerStats
+          playerName={nameField}
+          playerAvatar={avatar || ''}
+          matchups={stats?.matchups || null}
+          isLoading={isLoading}
+          error={error}
+          onBack={closeStats}
+        />
+      )}
+      {!showDeckList && !showStats && (
         <div className='space-y-6'>
           {/* Avatar + Rank */}
           <div className='flex items-center gap-2'>
@@ -116,6 +144,15 @@ const PlayerDetails: FC<PlayerDetailsProps> = ({
             <div className='flex justify-center'>
               <Button onClick={handleShowDecklist} className='w-full max-w-xs'>
                 View Decklist
+              </Button>
+            </div>
+          )}
+
+          {/* Check Stats Button */}
+          {(classDB === 'EdhPlayer' || classDB === 'Edh') && playerId && (
+            <div className='flex justify-center'>
+              <Button onClick={handleShowStats} className='w-full max-w-xs'>
+                Check Stats
               </Button>
             </div>
           )}

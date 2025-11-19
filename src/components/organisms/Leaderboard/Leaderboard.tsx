@@ -51,6 +51,7 @@ export default function Leaderboard({
             winRate={selectedPlayer.winRate}
             decklist={selectedPlayer.decklist}
             classDB={classDB}
+            playerId={selectedPlayer.objectId}
           />
         )}
       </BackdropModal>

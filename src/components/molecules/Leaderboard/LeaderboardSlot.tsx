@@ -15,6 +15,7 @@ const LeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
   gamesWon,
   winRate,
   decklist,
+  objectId,
 }) => {
   return (
     <div className='flex flex-row px-7 items-center justify-start gap-10 my-3'>
@@ -34,6 +35,7 @@ const LeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
             gamesWon,
             winRate,
             decklist,
+            objectId,
           })
         }
       >

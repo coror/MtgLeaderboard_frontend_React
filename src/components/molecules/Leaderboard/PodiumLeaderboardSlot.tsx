@@ -37,6 +37,7 @@ const PodiumLeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
   gamesWon,
   winRate,
   decklist,
+  objectId,
 }) => {
   const { src, height, padding } = podiumData[podiumRank] || {};
 
@@ -59,6 +60,7 @@ const PodiumLeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
                 gamesWon,
                 winRate,
                 decklist,
+                objectId,
               })
             }
           >
