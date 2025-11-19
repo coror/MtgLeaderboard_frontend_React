@@ -64,12 +64,37 @@ const PodiumLeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
               })
             }
           >
-            <div className='fire-circle'></div>
-            <div
-              className={`fire-circle ${
-                podiumRank === 2 ? 'fire-circle-2' : ''
-              }`}
-            ></div>
+            <svg
+              viewBox='0 0 100 100'
+              className='fire-ring-svg'
+            >
+              <defs>
+                <pattern
+                  id={`firePatternCirclePodium-${podiumRank}`}
+                  x='0'
+                  y='0'
+                  width='100'
+                  height='100'
+                  patternUnits='userSpaceOnUse'
+                >
+                  <image
+                    href='/fire-noise.png'
+                    x='0'
+                    y='0'
+                    width='100'
+                    height='100'
+                  />
+                </pattern>
+              </defs>
+              <circle
+                cx='50'
+                cy='50'
+                r='42'
+                fill='none'
+                stroke={`url(#firePatternCirclePodium-${podiumRank})`}
+                strokeWidth='2'
+              />
+            </svg>
             <img
               src={avatar}
               alt={`Avatar of ${nameField}`}

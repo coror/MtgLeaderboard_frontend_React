@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import Button from '../atoms/Button';
-import Spinner from '../atoms/Spinner';
 import placeholderImage from '/assets/placeholderAvatar.png';
 
 interface PlayerMatchup {
@@ -33,8 +32,8 @@ const PlayerStats: FC<PlayerStatsProps> = ({
   if (isLoading) {
     return (
       <div className='flex flex-col items-center justify-center space-y-4 py-8'>
-        <Spinner />
         <p className='text-white/70'>Loading stats...</p>
+        <div className='loading-spinner'></div>
       </div>
     );
   }
