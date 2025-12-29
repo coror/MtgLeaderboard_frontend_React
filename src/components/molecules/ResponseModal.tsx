@@ -24,7 +24,7 @@ export default function ResponseModal({
     >
       <div
         ref={modalRef}
-        className='bg-white dark:bg-gray-800 rounded-2xl shadow-lg max-w-md w-full px-6 py-4 text-center space-y-4'
+        className='bg-gradient-to-br from-black/95 via-red-950/30 to-black/95 rounded-2xl shadow-lg max-w-md w-full px-6 py-4 text-center space-y-4'
       >
         <ResponseModalHeader title={title} />
         <ResponseModalContent message={message || ''} />

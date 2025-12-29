@@ -18,13 +18,12 @@ const LeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
   objectId,
 }) => {
   return (
-    <div className='flex flex-row px-7 items-center justify-start gap-10 my-3'>
-      <div className='w-1'>{rank}</div>
+    <div className='flex flex-row px-7 items-center justify-start gap-4 my-3'>
+      <div className='w-6 text-center rank-glow'>{rank}</div>
 
       <div
-  className='fire-ring-container small cursor-pointer hover:scale-110 active:translate-y-[2px]'
-  style={{ width: '48px', height: '48px' }}
-
+        className='fire-ring-container small cursor-pointer hover:scale-110 active:translate-y-[2px] flex-shrink-0'
+        style={{ width: '48px', height: '48px' }}
         onClick={() =>
           onPlayerClick({
             nameField,
@@ -39,17 +38,32 @@ const LeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
           })
         }
       >
-        {/* <div className='fire-circle'></div>
-        <div className='fire-circle fire-circle-2'></div> */}
         <img
           src={avatar || placeholderImage}
-          alt={`Avatar or ${nameField}`}
+          alt={`Avatar of ${nameField}`}
           className='object-cover object-top'
           style={{ width: '46px', height: '46px', borderRadius: '50%', position: 'relative', zIndex: 10, objectFit: 'cover', objectPosition: 'top', boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)' }}
         />
       </div>
 
-      <div className='text-xs lg:text-lg text-center'>{nameField}</div>
+      <div
+        className='flex-1 text-xs lg:text-lg text-left name-shimmer cursor-pointer hover:scale-105 transition-transform'
+        onClick={() =>
+          onPlayerClick({
+            nameField,
+            avatar,
+            rank,
+            gamesLost,
+            gamesPlayed,
+            gamesWon,
+            winRate,
+            decklist,
+            objectId,
+          })
+        }
+      >
+        {nameField}
+      </div>
     </div>
   );
 };

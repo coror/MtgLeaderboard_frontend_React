@@ -6,27 +6,33 @@ export default function PodiumSection({
   onPlayerClick,
 }: PodiumSectionProps) {
   return (
-    <div className='flex flex-row mt-24 mb-10 gap-2 overflow-visible'>
+    <div className='flex flex-row mt-24 mb-10 gap-2 overflow-visible podium-section-animate'>
       {players[1] && (
-        <PodiumLeaderboardSlot
-          {...players[1]}
-          podiumRank={2}
-          onPlayerClick={onPlayerClick}
-        />
+        <div className='podium-animate' style={{ animationDelay: '0.2s' }}>
+          <PodiumLeaderboardSlot
+            {...players[1]}
+            podiumRank={2}
+            onPlayerClick={onPlayerClick}
+          />
+        </div>
       )}
       {players[0] && (
-        <PodiumLeaderboardSlot
-          {...players[0]}
-          podiumRank={1}
-          onPlayerClick={onPlayerClick}
-        />
+        <div className='podium-animate' style={{ animationDelay: '0s' }}>
+          <PodiumLeaderboardSlot
+            {...players[0]}
+            podiumRank={1}
+            onPlayerClick={onPlayerClick}
+          />
+        </div>
       )}
       {players[2] && (
-        <PodiumLeaderboardSlot
-          {...players[2]}
-          podiumRank={3}
-          onPlayerClick={onPlayerClick}
-        />
+        <div className='podium-animate' style={{ animationDelay: '0.4s' }}>
+          <PodiumLeaderboardSlot
+            {...players[2]}
+            podiumRank={3}
+            onPlayerClick={onPlayerClick}
+          />
+        </div>
       )}
     </div>
   );

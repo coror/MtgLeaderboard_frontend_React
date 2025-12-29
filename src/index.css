@@ -215,3 +215,167 @@ html, body {
 .fire-ring-svg pattern {
   animation: firePatternMove 4s linear infinite;
 }
+
+/* ===========================================
+   🎮 LEADERBOARD ANIMATIONS
+   =========================================== */
+
+/* Staggered fade-in and slide-up for leaderboard entries */
+@keyframes slideUpFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.leaderboard-slot-animate {
+  animation: slideUpFadeIn 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+/* Podium dramatic rise effect */
+@keyframes podiumRise {
+  0% {
+    opacity: 0;
+    transform: translateY(100px) scale(0.8);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.podium-animate {
+  animation: podiumRise 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+}
+
+/* Floating animation for #1 */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.podium-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Rank number glow pulse */
+@keyframes rankGlow {
+  0%, 100% {
+    text-shadow: 0 0 5px rgba(248, 113, 113, 0.5), 0 0 10px rgba(248, 113, 113, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(248, 113, 113, 0.8), 0 0 20px rgba(248, 113, 113, 0.5), 0 0 30px rgba(248, 113, 113, 0.3);
+  }
+}
+
+.rank-glow {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 200, 150, 1) 25%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 200, 150, 1) 75%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+/* Shimmer effect on names */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.name-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 200, 150, 1) 25%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 200, 150, 1) 75%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+/* Crown bounce for #1 */
+@keyframes crownBounce {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-3px) rotate(-3deg);
+  }
+  75% {
+    transform: translateY(-3px) rotate(3deg);
+  }
+}
+
+.crown-animate {
+  animation: crownBounce 2s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* Podium section entrance */
+@keyframes podiumSectionFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.podium-section-animate {
+  animation: podiumSectionFade 0.3s ease-out forwards;
+}
+
+/* Hover scale with glow for slots */
+.slot-hover-glow {
+  transition: all 0.3s ease;
+}
+
+.slot-hover-glow:hover {
+  transform: scale(1.02);
+  filter: drop-shadow(0 0 10px rgba(248, 113, 113, 0.4));
+}
+
+/* Menu bar shimmer effect */
+.menu-bar-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 200, 150, 1) 25%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 200, 150, 1) 75%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
