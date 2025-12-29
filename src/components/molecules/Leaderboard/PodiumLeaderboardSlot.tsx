@@ -101,7 +101,22 @@ const PodiumLeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
               className='object-cover object-top'
             />
           </div>
-          <h1 className='h-[38px] lg:h-12 text-center text-sm  lg:text-lg flex items-center justify-center text-wrap text-ellipsis overflow-hidden'>
+          <h1
+            className='h-[38px] lg:h-12 text-center text-sm lg:text-lg flex items-center justify-center text-wrap text-ellipsis overflow-hidden name-shimmer cursor-pointer hover:scale-105 transition-transform'
+            onClick={() =>
+              onPlayerClick({
+                nameField,
+                avatar,
+                rank,
+                gamesLost,
+                gamesPlayed,
+                gamesWon,
+                winRate,
+                decklist,
+                objectId,
+              })
+            }
+          >
             {nameField}
           </h1>
         </div>

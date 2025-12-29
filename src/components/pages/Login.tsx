@@ -20,10 +20,8 @@ export default function Login() {
 
   return (
     <PageTemplate>
-      <div className='flex flex-col gap-16 items-center  max-w-md w-full pt-40 mt-16 px-6'>
-        <h1 className='text-4xl font-bold text-center'>MTG Leaderboard</h1>
-
-        <div className='bg-black/40 backdrop-blur-sm p-10 rounded-lg shadow-lg w-full'>
+      <div className='flex flex-col items-center justify-end max-w-md w-full h-[100dvh] px-6 pb-8'>
+        <div className='bg-black/40 backdrop-blur-sm p-8 rounded-lg shadow-lg w-full'>
           {showPasswordResetEmail ? (
             <PasswordResetEmail
               togglePasswordResetEmail={togglePasswordResetEmail}
@@ -68,7 +66,7 @@ export default function Login() {
                 <div className='text-center'>
                   <span
                     onClick={togglePasswordResetEmail}
-                    className='text-blue-800 cursor-pointer hover:underline text-xs'
+                    className='text-red-500 cursor-pointer hover:underline text-xs'
                   >
                     Forgot your password?
                   </span>
