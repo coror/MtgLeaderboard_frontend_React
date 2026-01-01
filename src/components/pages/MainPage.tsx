@@ -15,6 +15,7 @@ export default function MainPage() {
   const { edhLeaderboard } = useLeaderboard();
   const [menuOpen, setMenuOpen] = useState(false);
   const [playerModalOpen, setPlayerModalOpen] = useState(false);
+  const [adminOptionOpen, setAdminOptionOpen] = useState(false);
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const closeMenu = () => setMenuOpen(false);
@@ -26,8 +27,8 @@ export default function MainPage() {
       )}
 
       <BackdropModal menuOpen={menuOpen} closeMenu={closeMenu}>
-        {userRole === 'admin' && <AdminOptions />}
-        <Button onClick={handleLogout}>Logout</Button>
+        {userRole === 'admin' && <AdminOptions onOptionChange={setAdminOptionOpen} />}
+        {!adminOptionOpen && <Button onClick={handleLogout}>Logout</Button>}
       </BackdropModal>
 
       <main className='flex flex-col items-center pt-16 z-10 overflow-visible'>
