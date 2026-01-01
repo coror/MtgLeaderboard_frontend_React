@@ -1,4 +1,4 @@
-import { Suspense, lazy, useState } from 'react';
+import { Suspense, lazy, useState, useEffect } from 'react';
 import Button from '../atoms/Button';
 import Deletion from './DeletePlayer';
 import CreateMatch from './CreateMatch';
@@ -9,9 +9,17 @@ const UploadAvatar = lazy(() => import('./UploadAvatar.tsx'));
 const UploadDecklist = lazy(() => import('./UploadDecklist'));
 const NewUser = lazy(() => import('./NewUserForm.tsx'));
 
-export default function AdminOptions() {
+type Props = {
+  onOptionChange?: (isOpen: boolean) => void;
+};
+
+export default function AdminOptions({ onOptionChange }: Props) {
   const [activeComponent, setActiveComponent] =
     useState<AdminOptionsProps>(null);
+
+  useEffect(() => {
+    onOptionChange?.(!!activeComponent);
+  }, [activeComponent, onOptionChange]);
 
   const goBack = () => setActiveComponent(null);
 
@@ -19,36 +27,6 @@ export default function AdminOptions() {
     <div className='flex flex-col items-center justify-center gap-y-4'>
       {!activeComponent ? (
         <>
-          <Button
-            onClick={() => setActiveComponent('NewUser')}
-            className='w-44'
-          >
-            New User
-          </Button>
-          <Button
-            onClick={() => setActiveComponent('CreatePlayerMatch')}
-            className='w-44'
-          >
-            Create Player Match
-          </Button>
-          <Button
-            onClick={() => setActiveComponent('CreateNewPlayer')}
-            className='w-44'
-          >
-            Create New Player
-          </Button>
-          <Button
-            onClick={() => setActiveComponent('UploadPlayerAvatar')}
-            className='w-44'
-          >
-            Upload Player Avatar
-          </Button>
-          <Button
-            onClick={() => setActiveComponent('DeletePlayer')}
-            className='w-44'
-          >
-            Delete Player
-          </Button>
           <Button
             onClick={() => setActiveComponent('CreateCommanderMatch')}
             className='w-44'
@@ -77,16 +55,62 @@ export default function AdminOptions() {
             onClick={() => setActiveComponent('UploadDecklist')}
             className='w-44'
           >
-            Upload decklist
+            Upload Decklist
+          </Button>
+          <Button
+            onClick={() => setActiveComponent('CreatePlayerMatch')}
+            className='w-44'
+          >
+            Create Player Match
+          </Button>
+          <Button
+            onClick={() => setActiveComponent('CreateNewPlayer')}
+            className='w-44'
+          >
+            Create New Player
+          </Button>
+          <Button
+            onClick={() => setActiveComponent('UploadPlayerAvatar')}
+            className='w-44'
+          >
+            Upload Player Avatar
+          </Button>
+          <Button
+            onClick={() => setActiveComponent('DeletePlayer')}
+            className='w-44'
+          >
+            Delete Player
+          </Button>
+          <Button
+            onClick={() => setActiveComponent('NewUser')}
+            className='w-44'
+          >
+            New User
           </Button>
         </>
       ) : (
         <>
-          <Button onClick={goBack} className='w-44'>
-            Back
-          </Button>
-          <div className='mt-4'>
-            <Suspense fallback={<p>Loading...</p>}>
+          <button
+            onClick={goBack}
+            className='self-start -mt-2 mb-2 p-2 text-white/70 hover:text-white transition-colors hover:scale-110 active:scale-95'
+            aria-label='Go back'
+          >
+            <svg
+              className='w-6 h-6'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M15 19l-7-7 7-7'
+              />
+            </svg>
+          </button>
+          <div>
+            <Suspense fallback={<div className='loading-spinner' style={{ width: 32, height: 32 }} />}>
               {activeComponent === 'NewUser' && <NewUser />}
               {activeComponent === 'CreateNewCommander' && (
                 <RegistrationForm

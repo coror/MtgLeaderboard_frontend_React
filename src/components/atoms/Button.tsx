@@ -21,7 +21,7 @@ const Button: React.FC<ButtonProps> = ({
 
   // Clean dark fantasy gradient
   const gradientBg = `
-    bg-gradient-to-br from-red-800 via-red-950 to-black
+    bg-gradient-to-br from-orange-900 via-red-950 to-black
   `;
 
   // Clean shadow definition without visible border
