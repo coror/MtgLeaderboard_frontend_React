@@ -119,7 +119,7 @@ const PlayerDetails: FC<PlayerDetailsProps> = ({
                     className='relative font-bold text-lg'
                     style={{
                       color: '#c0c0c0',
-                      textShadow: '0 0 6px rgba(139, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 0.9)',
+                      textShadow: '0 0 6px rgba(201, 169, 89, 0.6), 0 2px 4px rgba(0, 0, 0, 0.9)',
                       fontFamily: 'Georgia, serif',
                       letterSpacing: '0.5px',
                       zIndex: 20
@@ -165,11 +165,11 @@ const PlayerDetails: FC<PlayerDetailsProps> = ({
               accent='text-[#ffffff]'
             />
             <Stat label='Wins' value={gamesWon} accent='text-[#3C6127]' />
-            <Stat label='Losses' value={gamesLost} accent='text-[#960202]' />
+            <Stat label='Losses' value={gamesLost} accent='text-[#b05050]' />
             <Stat
               label='Win Rate'
               value={`${winRate}%`}
-              accent='text-[#967B02]'
+              accent='text-[#c9a959]'
             />
           </div>
         </div>

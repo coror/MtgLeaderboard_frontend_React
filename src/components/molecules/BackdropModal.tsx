@@ -17,9 +17,9 @@ const BackdropModal: React.FC<BackdropModalProps> = ({
     >
       <div
         className={`flex flex-col items-center justify-start
-              bg-gradient-to-br from-black/95 via-red-950/30 to-black/95
+              bg-gradient-to-br from-[#1a1812]/98 via-[#0f0e0b] to-[#1a1812]/98
               backdrop-blur-xl rounded-2xl px-6 py-4 w-[90%] max-w-sm space-y-3
-              border border-white/20 shadow-2xl
+              border border-[rgba(201,169,89,0.2)] shadow-2xl
               max-h-[80dvh] overflow-y-auto my-auto
               transform transition-all duration-300
               ${

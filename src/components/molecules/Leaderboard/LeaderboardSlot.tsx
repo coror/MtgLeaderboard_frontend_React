@@ -31,15 +31,12 @@ const LeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
         <div className='w-6 text-center rank-glow text-base lg:text-lg'>{rank}</div>
 
         <div
-          className='fire-ring-container small cursor-pointer hover:scale-110 active:translate-y-[2px] flex-shrink-0'
-          style={{ width: '48px', height: '48px' }}
+          className='gold-ring-sm cursor-pointer hover:scale-110 active:translate-y-[2px] flex-shrink-0'
           onClick={() => onPlayerClick(playerData)}
         >
           <img
             src={avatar || placeholderImage}
             alt={`Avatar of ${nameField}`}
-            className='object-cover object-top'
-            style={{ width: '46px', height: '46px', borderRadius: '50%', position: 'relative', zIndex: 10, objectFit: 'cover', objectPosition: 'top', boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)' }}
           />
         </div>
 
