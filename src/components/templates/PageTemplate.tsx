@@ -20,6 +20,9 @@ const PageTemplate: React.FC<PropsWithChildren> = ({ children }) => {
         className='fixed top-0 left-0 w-full h-full object-cover z-[-1]'
       />
 
+      {/* Slow-moving ambient gradient overlay */}
+      <div className='living-darkness' />
+
       {/* Centered content */}
       {children}
     </div>
