@@ -6,6 +6,7 @@ const Button: React.FC<ButtonProps> = ({
   type,
   disabled,
   isActive,
+  loading,
   className,
 }) => {
   const baseStyles = `
@@ -74,9 +75,14 @@ const Button: React.FC<ButtonProps> = ({
       `}
       onClick={onClick}
       type={type || 'button'}
-      disabled={disabled}
+      disabled={disabled || loading}
     >
-      <span className={textLayer}>{children}</span>
+      <span className={`${textLayer} ${loading ? 'invisible' : ''}`}>{children}</span>
+      {loading && (
+        <span className='absolute inset-0 flex items-center justify-center z-10'>
+          <span className='loading-spinner-sm' />
+        </span>
+      )}
     </button>
   );
 };
