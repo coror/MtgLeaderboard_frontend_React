@@ -24,70 +24,100 @@ html, body {
   display: none; /* Chrome, Safari, Opera */
 }
 
-/* Spinner — Gold / MTG themed */
+/* Spinner — Triple arc gold spinner */
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-@keyframes gold-pulse {
-  0%, 100% {
-    box-shadow:
-      0 0 6px rgba(201, 169, 89, 0.3),
-      0 0 18px rgba(201, 169, 89, 0.15),
-      inset 0 0 6px rgba(201, 169, 89, 0.1);
-    filter: brightness(1);
-  }
-  50% {
-    box-shadow:
-      0 0 12px rgba(201, 169, 89, 0.5),
-      0 0 35px rgba(201, 169, 89, 0.25),
-      0 0 60px rgba(201, 169, 89, 0.1),
-      inset 0 0 10px rgba(201, 169, 89, 0.15);
-    filter: brightness(1.1);
-  }
-}
-
-@keyframes gold-pulse-sm {
-  0%, 100% {
-    filter: drop-shadow(0 0 2px rgba(201, 169, 89, 0.4));
-  }
-  50% {
-    filter: drop-shadow(0 0 6px rgba(201, 169, 89, 0.6));
+@keyframes spin-reverse {
+  to {
+    transform: rotate(-360deg);
   }
 }
 
 .loading-spinner {
   display: inline-block;
+  position: relative;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  border: 3px solid rgba(201, 169, 89, 0.15);
-  border-top-color: #c9a959;
-  border-right-color: #e8d5a3;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0%,
-    rgba(201, 169, 89, 0.06) 40%,
-    transparent 60%
-  );
-  animation:
-    spin 0.9s cubic-bezier(0.4, 0.15, 0.6, 0.85) infinite,
-    gold-pulse 1.8s ease-in-out infinite;
 }
 
+/* Outer arc */
+.loading-spinner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: #c9a959;
+  border-right-color: rgba(201, 169, 89, 0.3);
+  animation: spin 1s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite;
+}
+
+/* Inner arc — spins opposite */
+.loading-spinner::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-bottom-color: #e8d5a3;
+  border-left-color: rgba(232, 213, 163, 0.3);
+  animation: spin-reverse 0.75s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite;
+}
+
+/* Small spinner — single clean arc */
 .loading-spinner-sm {
   display: inline-block;
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 2.5px solid rgba(201, 169, 89, 0.15);
+  border: 2px solid rgba(201, 169, 89, 0.12);
   border-top-color: #c9a959;
-  border-right-color: #e8d5a3;
-  animation:
-    spin 0.75s cubic-bezier(0.4, 0.15, 0.6, 0.85) infinite,
-    gold-pulse-sm 1.8s ease-in-out infinite;
+  animation: spin 0.7s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite;
+}
+
+/* ===========================================
+   NEXT MATCH LOADER
+   =========================================== */
+
+@keyframes match-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes match-ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.next-match-loader {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: match-pulse 2s ease-in-out infinite;
+}
+
+.next-match-loader::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(201, 169, 89, 0.1);
+  border-top-color: rgba(201, 169, 89, 0.5);
+  animation: match-ring-spin 1.5s linear infinite;
 }
 
 /* ===========================================

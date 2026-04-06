@@ -9,6 +9,8 @@ import { useLeaderboard } from '../../store/leaderboard-context';
 import MenuButton from '../molecules/MenuButton';
 import BackdropModal from '../molecules/BackdropModal';
 import PageTemplate from '../templates/PageTemplate';
+import NextMatchModal from '../molecules/NextMatchModal';
+import { GiCrossedSwords } from 'react-icons/gi';
 
 export default function MainPage() {
   const { handleLogout, userRole } = useAuth();
@@ -16,6 +18,7 @@ export default function MainPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [playerModalOpen, setPlayerModalOpen] = useState(false);
   const [adminOptionOpen, setAdminOptionOpen] = useState(false);
+  const [nextMatchOpen, setNextMatchOpen] = useState(false);
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const closeMenu = () => setMenuOpen(false);
@@ -23,7 +26,20 @@ export default function MainPage() {
   return (
     <PageTemplate>
       {!playerModalOpen && (
-        <MenuButton toggleMenu={toggleMenu} menuOpen={menuOpen} />
+        <>
+          <MenuButton toggleMenu={toggleMenu} menuOpen={menuOpen} />
+          <button
+            onClick={() => setNextMatchOpen(true)}
+            className='fixed top-4 left-4 z-[95] p-2 transition-all duration-300 hover:scale-110 active:scale-95'
+            aria-label='Next match'
+          >
+            <GiCrossedSwords size={28} color='#c9a959' />
+          </button>
+        </>
+      )}
+
+      {nextMatchOpen && (
+        <NextMatchModal onClose={() => setNextMatchOpen(false)} />
       )}
 
       <BackdropModal menuOpen={menuOpen} closeMenu={closeMenu}>
