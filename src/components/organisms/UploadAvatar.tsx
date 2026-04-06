@@ -3,7 +3,7 @@ import Button from '../atoms/Button';
 import ResponseModal from '../molecules/ResponseModal';
 import useUploadAvatar from '../../hooks/useUploadAvatar';
 import Form from '../molecules/Form';
-import Select from '../atoms/Select';
+import CustomSelect from '../atoms/CustomSelect';
 import { UploadAvatarProps } from '../../models/uploadAvatar';
 
 const UploadAvatar: FC<UploadAvatarProps> = ({
@@ -26,32 +26,28 @@ const UploadAvatar: FC<UploadAvatarProps> = ({
 
   return (
     <>
-      <Form onSubmit={handleUpload}>
-        <div>
-          <Select
+      <Form onSubmit={handleUpload} className='w-[280px]'>
+        <div className='w-full'>
+          <CustomSelect
             value={selectedPlayer ? selectedPlayer.objectId : ''}
-            onChange={handlePlayerChange}
-          >
-            <option value=''>
-              {uploadFunction === 'uploadEdhAvatar'
-                ? 'Select Deck'
-                : 'Select Player'}
-            </option>
-            {players.map((player) => (
-              <option key={player.objectId} value={player.objectId}>
-                {player.propName}
-              </option>
-            ))}
-          </Select>
+            onChange={(value) => handlePlayerChange({ target: { value } } as React.ChangeEvent<HTMLSelectElement>)}
+            placeholder={uploadFunction === 'uploadEdhAvatar' ? 'Select Deck' : 'Select Player'}
+            options={players.map((player) => ({
+              value: player.objectId,
+              label: player.propName,
+            }))}
+          />
         </div>
-        <div>
-          <input type='file' accept='image/*' onChange={handleFileChange} />
-          {/* Add a type guard here to ensure avatarData is a string */}
+        <div className='mt-4 w-full'>
+          <label className='flex flex-col items-center gap-2 cursor-pointer bg-[#1a1812]/80 border border-[rgba(201,169,89,0.2)] rounded-lg p-4 text-[#e0d7c8]/50 text-sm hover:border-[rgba(201,169,89,0.4)] transition-all'>
+            <span>{avatarData ? 'Change image' : 'Choose image'}</span>
+            <input type='file' accept='image/*' onChange={handleFileChange} className='hidden' />
+          </label>
           {avatarData && typeof avatarData === 'string' && (
-            <img src={avatarData} alt='Preview' />
+            <img src={avatarData} alt='Preview' className='mt-3 rounded-lg max-h-32 mx-auto' />
           )}
         </div>
-        <Button type='submit' className='mt-10'>
+        <Button type='submit' className='mt-8'>
           Upload
         </Button>
       </Form>

@@ -26,14 +26,14 @@ const PasswordResetEmail: FC<PasswordResetEmailProps> = ({ togglePasswordResetEm
     <div id='form'>
       {!emailSent ? (
         <Form onSubmit={handleSubmit}>
-          <label>Enter your email:</label>
+          <label className='text-[#e0d7c8]/70 text-sm'>Enter your email:</label>
           <Input
             type='email'
             value={email}
             onChange={handleEmailChange}
             required
           />
-          <div className='bg-black'>
+          <div className='flex flex-col gap-3 mt-6'>
             <Button type='submit'>Send Email</Button>
             <Button onClick={togglePasswordResetEmail}>Back to Login</Button>
           </div>

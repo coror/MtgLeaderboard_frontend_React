@@ -5,6 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 // Import the generic reducer and action types
 import { formReducer, FormAction } from '../helpers/formReducer';
+import { isMoxfieldUrl } from '../helpers/moxfield';
 
 // Assuming Player is defined in '../models/player'
 // It appears to be used for decks as well.
@@ -101,11 +102,32 @@ export default function useUploadDeck(): UseUploadDeckResult {
     setError(null);
 
     try {
+      let decklistToStore = decklistText;
+
+      // If it's a Moxfield URL, fetch via Cloudflare Worker proxy and convert to JSON
+      if (isMoxfieldUrl(decklistText)) {
+        const match = decklistText.trim().match(/moxfield\.com\/decks\/([A-Za-z0-9_-]+)/);
+        if (!match) throw new Error('Invalid Moxfield URL');
+        const deckId = match[1];
+
+        const moxResponse = await fetch(
+          `https://moxfield-proxy.coralic-erin.workers.dev/?deckId=${deckId}`
+        );
+        if (!moxResponse.ok) {
+          throw new Error('Failed to fetch deck from Moxfield');
+        }
+        const moxData = await moxResponse.json();
+
+        // Convert to storable JSON
+        const { parseMoxfieldResponse } = await import('../helpers/moxfield');
+        decklistToStore = parseMoxfieldResponse(moxData);
+      }
+
       const Edh = Parse.Object.extend('Edh');
       const query = new Parse.Query(Edh);
       const deck = await query.get(selectedDeckId);
 
-      deck.set('decklist', decklistText);
+      deck.set('decklist', decklistToStore);
 
       await deck.save();
       setSuccess(true);
