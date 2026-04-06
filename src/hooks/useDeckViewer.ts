@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { parseDeckList, fetchCardData } from '../helpers/parseDecklist';
+import { isMoxfieldJson, parseMoxfieldJson } from '../helpers/moxfield';
 
 // --- Type Definitions ---
 export interface Card {
@@ -64,6 +65,20 @@ useEffect(() => {
     setLoading(true);
     setError(null);
 
+    if (isMoxfieldJson(decklist)) {
+      // Stored Moxfield JSON — parse directly, no API calls needed
+      try {
+        const moxCards = parseMoxfieldJson(decklist);
+        setCards(moxCards);
+      } catch (err) {
+        console.error('Error parsing Moxfield JSON:', err);
+        setError('Failed to parse stored decklist.');
+      }
+      setLoading(false);
+      return;
+    }
+
+    // Legacy: raw text decklist
     const parsed = parseDeckList(decklist);
     if (!parsed || parsed.length === 0) {
       setError('No cards found in the decklist.');
@@ -71,14 +86,12 @@ useEffect(() => {
       return;
     }
 
-    // Isolate the commander from the rest of the decklist
     const commanderData = parsed[0];
     const otherCardsData = parsed.slice(1);
 
     async function fetchCards() {
       const fetchedCards: Card[] = [];
 
-      // 1. Fetch the commander first, and wait for it
       try {
         const commanderAPIResponse = await fetchCardData(commanderData.name);
         const commanderImage =
@@ -89,7 +102,7 @@ useEffect(() => {
           ...commanderData,
           image: commanderImage,
           ...commanderAPIResponse,
-          isCommander: true, // Explicitly set as commander
+          isCommander: true,
         };
         fetchedCards.push(fetchedCommander);
       } catch (err) {
@@ -98,7 +111,6 @@ useEffect(() => {
         fetchedCards.push(errorCard);
       }
 
-      // 2. Fetch all other cards in parallel
       const otherPromises = otherCardsData.map(async (card) => {
         try {
           const data = await fetchCardData(card.name);
@@ -117,7 +129,6 @@ useEffect(() => {
         .filter((result) => result.status === 'fulfilled')
         .map((result) => (result as PromiseFulfilledResult<Card>).value);
 
-      // 3. Combine commander with the rest of the cards and update state
       const finalCards = [...fetchedCards, ...otherFetchedCards];
       setCards(finalCards);
       setLoading(false);

@@ -17,7 +17,7 @@ export default function NewUserForm() {
   return (
     <>
       <Form onSubmit={submitHandler}>
-        <div>Create New User:</div>
+        <div className='text-[#c9a959] font-semibold text-sm'>Create New User:</div>
         <Input
           type='email'
           name='email'
@@ -46,26 +46,32 @@ export default function NewUserForm() {
           value={formData.password}
           onChange={inputChangeHandler}
         />
-        <div className='m-1 felx flex-row space-x-2'>
-          <Input
-            type='checkbox'
-            id='user'
-            name='roleName'
-            value='user'
-            checked={formData.roleName === 'user'}
-            onChange={inputChangeHandler}
-          />
-          <label htmlFor='user'>User</label>
+        <div className='m-1 flex flex-row space-x-4 mt-4'>
+          <label htmlFor='user' className='flex items-center gap-2 text-[#e0d7c8] text-sm cursor-pointer'>
+            <input
+              type='checkbox'
+              id='user'
+              name='roleName'
+              value='user'
+              checked={formData.roleName === 'user'}
+              onChange={inputChangeHandler}
+              className='accent-[#c9a959] w-4 h-4'
+            />
+            User
+          </label>
 
-          <Input
-            type='checkbox'
-            id='admin'
-            name='roleName'
-            value='admin'
-            checked={formData.roleName === 'admin'}
-            onChange={inputChangeHandler}
-          />
-          <label htmlFor='admin'>Admin</label>
+          <label htmlFor='admin' className='flex items-center gap-2 text-[#e0d7c8] text-sm cursor-pointer'>
+            <input
+              type='checkbox'
+              id='admin'
+              name='roleName'
+              value='admin'
+              checked={formData.roleName === 'admin'}
+              onChange={inputChangeHandler}
+              className='accent-[#c9a959] w-4 h-4'
+            />
+            Admin
+          </label>
         </div>
         <div>
           <Button type='submit' className='mt-8'>
