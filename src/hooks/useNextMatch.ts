@@ -69,48 +69,30 @@ export default function useNextMatch() {
         }
       }
 
-      // 3. Priority 1: Find commanders with fewest total games played
-      const minTotalGames = Math.min(...commanders.map((c) => c.gamesPlayed));
-      const leastPlayed = commanders.filter(
-        (c) => c.gamesPlayed === minTotalGames
+      // 3. Build all pairs, scored by:
+      //    - Primary: lowest sum of total games (equalizes games fastest)
+      //    - Secondary: fewest head-to-head games (equalizes matchups)
+      const pairs: { c1: Commander; c2: Commander; h2h: number; totalSum: number }[] = [];
+
+      for (let i = 0; i < commanders.length; i++) {
+        for (let j = i + 1; j < commanders.length; j++) {
+          const h2h = matchupMap[commanders[i].objectId][commanders[j].objectId] || 0;
+          const totalSum = commanders[i].gamesPlayed + commanders[j].gamesPlayed;
+          pairs.push({ c1: commanders[i], c2: commanders[j], h2h, totalSum });
+        }
+      }
+
+      // 4. Sort: lowest totalSum first (catch up inactive commanders), then fewest h2h (equalize matchups)
+      pairs.sort((a, b) => {
+        if (a.totalSum !== b.totalSum) return a.totalSum - b.totalSum;
+        return a.h2h - b.h2h;
+      });
+
+      // 5. Pick randomly from all pairs tied for the best score
+      const best = pairs[0];
+      const candidates = pairs.filter(
+        (p) => p.totalSum === best.totalSum && p.h2h === best.h2h
       );
-
-      // 4. Build candidate pairs — prefer pairs where BOTH have fewest total games.
-      //    If only one has fewest, pair them with the next-lowest opponent.
-      let candidatePool: Commander[];
-      if (leastPlayed.length >= 2) {
-        candidatePool = leastPlayed;
-      } else {
-        // One commander has fewer games — they must play next.
-        // Find their best opponent: the one they've played least against.
-        candidatePool = commanders;
-      }
-
-      // 5. Among candidate pool, build pairwise matchup counts
-      const pairs: { c1: Commander; c2: Commander; games: number }[] = [];
-
-      if (leastPlayed.length >= 2) {
-        // Both from the least-played pool
-        for (let i = 0; i < candidatePool.length; i++) {
-          for (let j = i + 1; j < candidatePool.length; j++) {
-            const games =
-              matchupMap[candidatePool[i].objectId][candidatePool[j].objectId] || 0;
-            pairs.push({ c1: candidatePool[i], c2: candidatePool[j], games });
-          }
-        }
-      } else {
-        // One specific commander needs a game — find who they've played least against
-        const focal = leastPlayed[0];
-        for (const opp of commanders) {
-          if (opp.objectId === focal.objectId) continue;
-          const games = matchupMap[focal.objectId][opp.objectId] || 0;
-          pairs.push({ c1: focal, c2: opp, games });
-        }
-      }
-
-      // 6. Pick pair with fewest head-to-head games, randomize ties
-      const minH2H = Math.min(...pairs.map((p) => p.games));
-      const candidates = pairs.filter((p) => p.games === minH2H);
       const pick = candidates[Math.floor(Math.random() * candidates.length)];
 
       // Check if all pairs across the full roster are equal (new round)
@@ -127,7 +109,7 @@ export default function useNextMatch() {
       setSuggestion({
         commander1: pick.c1,
         commander2: pick.c2,
-        gamesPlayed: pick.games,
+        gamesPlayed: pick.h2h,
         isNewRound: allEqual && allPairGames[0] > 0,
       });
     } catch (err) {
