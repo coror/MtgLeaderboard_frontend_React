@@ -37,6 +37,7 @@ export default function Leaderboard({
   return (
     <div className='flex flex-col w-screen md:max-w-[45rem] items-center overflow-visible'>
       <PodiumSection players={topThree} onPlayerClick={openDetails} />
+      {others.length > 0 && <div className='mtg-divider' />}
       <RegularLeaderboard players={others} onPlayerClick={openDetails} />
 
       <BackdropModal menuOpen={!!selectedPlayer} closeMenu={closeDetails}>

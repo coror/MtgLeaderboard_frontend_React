@@ -6,7 +6,7 @@ export default function RegularLeaderboard({
   onPlayerClick,
 }: RegularLeaderboardProps) {
   return (
-    <ul className='list-none p-0 my-1 mb-4 w-full'>
+    <ul className='list-none p-0 my-1 mb-4 w-full space-y-2'>
       {players.map((player, index) => (
         <li
           key={player.nameField}
