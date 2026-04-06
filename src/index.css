@@ -410,6 +410,7 @@ html, body {
 }
 
 .slot-hover-glow:hover {
+  transform: scale(1.02);
   filter: drop-shadow(0 0 10px rgba(201, 169, 89, 0.4));
 }
 
@@ -423,13 +424,7 @@ html, body {
   border-radius: 8px;
   background: linear-gradient(135deg, #1a1812 0%, #0f0e0b 50%, #1a1812 100%);
   border: 1px solid rgba(201, 169, 89, 0.15);
-  border-left: 3px solid transparent;
-  transition: all 0.3s ease, border-left-color 0.2s ease;
-}
-
-.leaderboard-card:hover {
-  border-left-color: #c9a959;
-  transform: translateX(4px);
+  transition: all 0.3s ease;
 }
 
 .leaderboard-card::before {
@@ -589,183 +584,6 @@ body::after {
   background:
     radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.4) 100%);
   mix-blend-mode: multiply;
-}
-
-/* ===========================================
-   FLOATING EMBER PARTICLES
-   =========================================== */
-
-@keyframes ember-rise {
-  0% {
-    transform: translateY(0) translateX(0) scale(1);
-    opacity: 0;
-  }
-  5% {
-    opacity: var(--ember-opacity, 0.4);
-  }
-  50% {
-    transform: translateY(calc(var(--ember-travel, -200px) * 0.5)) translateX(var(--ember-sway, 15px)) scale(0.9);
-    opacity: var(--ember-opacity, 0.4);
-  }
-  95% {
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(var(--ember-travel, -200px)) translateX(calc(var(--ember-sway, 15px) * -0.5)) scale(0.3);
-    opacity: 0;
-  }
-}
-
-.ember-particles {
-  position: absolute;
-  inset: -40px -60px;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 0;
-}
-
-.ember {
-  position: absolute;
-  bottom: 20%;
-  border-radius: 50%;
-  will-change: transform, opacity;
-  animation: ember-rise linear infinite;
-}
-
-/* ===========================================
-   PODIUM RANK AURAS
-   =========================================== */
-
-@keyframes aura-gold {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(201, 169, 89, 0.2), 0 0 40px rgba(255, 185, 50, 0.1);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(201, 169, 89, 0.4), 0 0 60px rgba(255, 185, 50, 0.2), 0 0 80px rgba(201, 169, 89, 0.1);
-  }
-}
-
-@keyframes aura-silver {
-  0%, 100% {
-    box-shadow: 0 0 15px rgba(180, 200, 220, 0.15), 0 0 30px rgba(160, 180, 200, 0.08);
-  }
-  50% {
-    box-shadow: 0 0 25px rgba(180, 200, 220, 0.3), 0 0 50px rgba(160, 180, 200, 0.15);
-  }
-}
-
-@keyframes aura-bronze {
-  0%, 100% {
-    box-shadow: 0 0 12px rgba(180, 120, 60, 0.15), 0 0 25px rgba(160, 100, 40, 0.08);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(180, 120, 60, 0.25), 0 0 40px rgba(160, 100, 40, 0.12);
-  }
-}
-
-.podium-aura-gold {
-  animation: aura-gold 3s ease-in-out infinite;
-  border-radius: 50%;
-}
-
-.podium-aura-silver {
-  animation: aura-silver 3.5s ease-in-out infinite;
-  border-radius: 50%;
-}
-
-.podium-aura-bronze {
-  animation: aura-bronze 4s ease-in-out infinite;
-  border-radius: 50%;
-}
-
-/* ===========================================
-   LEGENDARY SPINNING RING (#1)
-   =========================================== */
-
-@property --ring-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes legendary-spin {
-  to {
-    --ring-angle: 360deg;
-  }
-}
-
-.legendary-ring {
-  position: relative;
-}
-
-.legendary-ring::before {
-  content: '';
-  position: absolute;
-  inset: -5px;
-  border-radius: 50%;
-  background: conic-gradient(
-    from var(--ring-angle),
-    #c9a959,
-    #ff6a00,
-    #c9a959,
-    #e8d5a3,
-    #c9a959
-  );
-  animation: legendary-spin 3s linear infinite;
-  z-index: 1;
-  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
-  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
-}
-
-/* Enhanced hover is applied via .leaderboard-card below */
-
-/* ===========================================
-   EMBOSSED RANK NUMBERS
-   =========================================== */
-
-.rank-emboss {
-  text-shadow:
-    0 1px 0 rgba(0, 0, 0, 0.8),
-    0 -1px 0 rgba(201, 169, 89, 0.15);
-}
-
-/* ===========================================
-   LIVING DARKNESS BACKGROUND
-   =========================================== */
-
-@keyframes bg-shift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-.living-darkness {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: linear-gradient(135deg,
-    rgba(10, 9, 8, 0.4),
-    rgba(26, 16, 8, 0.3),
-    rgba(10, 9, 8, 0.4),
-    rgba(15, 10, 18, 0.3)
-  );
-  background-size: 400% 400%;
-  animation: bg-shift 45s ease-in-out infinite;
-}
-
-/* ===========================================
-   CROWN ICON FOR #1
-   =========================================== */
-
-.crown-icon {
-  display: inline-block;
-  animation: crownBounce 2s ease-in-out infinite;
-  filter: drop-shadow(0 0 4px rgba(201, 169, 89, 0.5));
-  margin-bottom: -2px;
 }
 
 /* Menu bar shimmer effect */

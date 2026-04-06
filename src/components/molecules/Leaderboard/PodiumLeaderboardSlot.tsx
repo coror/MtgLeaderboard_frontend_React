@@ -26,12 +26,6 @@ type LeaderboardSlotProps = Player & {
   podiumRank: 1 | 2 | 3;
 };
 
-const auraClass: Record<number, string> = {
-  1: 'podium-aura-gold',
-  2: 'podium-aura-silver',
-  3: 'podium-aura-bronze',
-};
-
 const PodiumLeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
   nameField,
   avatar,
@@ -47,7 +41,6 @@ const PodiumLeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
 }) => {
   const { src, height, padding } = podiumData[podiumRank] || {};
   const playerData = { nameField, avatar, rank, gamesLost, gamesPlayed, gamesWon, winRate, decklist, objectId };
-  const isFirst = podiumRank === 1;
 
   return (
     <>
@@ -57,7 +50,7 @@ const PodiumLeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
         {/* Avatar + Name */}
         <div className='flex flex-col items-center gap-3 mb-4 overflow-visible'>
           <div
-            className={`fire-ring-container cursor-pointer hover:scale-105 active:translate-y-[3px] ${auraClass[podiumRank]} ${isFirst ? 'legendary-ring' : ''}`}
+            className='fire-ring-container cursor-pointer hover:scale-105 active:translate-y-[3px]'
             onClick={() => onPlayerClick(playerData)}
           >
             <svg
