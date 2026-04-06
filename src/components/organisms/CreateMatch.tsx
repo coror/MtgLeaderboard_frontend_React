@@ -23,6 +23,7 @@ export default function CreateMatch({
     scoreTwo,
     error,
     success,
+    loading,
     resetModalState,
   } = useCreateMatch(updateFunction, classDB, propName, objName);
 
@@ -136,7 +137,7 @@ export default function CreateMatch({
         </div>
 
         <div className='flex justify-center mt-8'>
-          <Button type='submit'>
+          <Button type='submit' loading={loading}>
             Submit Match
           </Button>
         </div>

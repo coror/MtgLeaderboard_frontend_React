@@ -84,7 +84,7 @@ export default function Login() {
                   className='w-full rounded-3xl h-12 text-xl'
                 >
                   {isLoggingIn ? (
-                    <span className='loading-spinner'></span>
+                    <span className='loading-spinner-sm'></span>
                   ) : (
                     'Login'
                   )}

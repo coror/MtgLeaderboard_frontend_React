@@ -28,6 +28,7 @@ export default function useCreateMatch(
   const [players, setPlayers] = useState<Player[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // The correct way to explicitly type useReducer with a generic reducer.
   const [formState, dispatch] = useReducer<
@@ -95,6 +96,7 @@ export default function useCreateMatch(
     event.preventDefault();
     setError(null);
     setSuccess(false);
+    setLoading(true);
 
     try {
       const { selectedPlayerOne, selectedPlayerTwo, scoreOne, scoreTwo } =
@@ -122,6 +124,8 @@ export default function useCreateMatch(
     } catch (error) {
       console.error(`Error calling ${updateFunction}:`, error);
       setError('An error occurred while creating the match.');
+    } finally {
+      setLoading(false);
     }
 
     dispatch({ type: 'RESET_FORM', payload: initialFormState });
@@ -143,6 +147,7 @@ export default function useCreateMatch(
     scoreTwo: formState.scoreTwo,
     error,
     success,
+    loading,
     resetModalState,
   };
 }

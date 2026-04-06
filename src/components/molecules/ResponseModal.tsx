@@ -20,11 +20,11 @@ export default function ResponseModal({
       aria-labelledby='modal-title'
       tabIndex={-1}
       onClick={handleBackdropClick}
-      className='fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm px-5'
+      className='fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm px-5'
     >
       <div
         ref={modalRef}
-        className='bg-gradient-to-br from-black/95 via-red-950/30 to-black/95 rounded-2xl shadow-lg max-w-md w-full px-6 py-4 text-center space-y-4'
+        className='bg-gray-900 rounded-2xl shadow-2xl border border-gray-700 max-w-md w-full px-6 py-6 text-center space-y-4 text-white'
       >
         <ResponseModalHeader title={title} />
         <ResponseModalContent message={message || ''} />
