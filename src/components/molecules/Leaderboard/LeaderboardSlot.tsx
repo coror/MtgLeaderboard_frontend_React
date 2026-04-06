@@ -28,7 +28,7 @@ const LeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
   return (
     <div className={`leaderboard-card ${getRarityClass(rank)}`}>
       <div className='flex flex-row px-5 py-3 items-center justify-start gap-4'>
-        <div className='w-6 text-center rank-glow text-base lg:text-lg'>{rank}</div>
+        <div className='w-6 text-center rank-glow rank-emboss text-base lg:text-lg'>{rank}</div>
 
         <div
           className='fire-ring-container small cursor-pointer hover:scale-110 active:translate-y-[2px] flex-shrink-0'
