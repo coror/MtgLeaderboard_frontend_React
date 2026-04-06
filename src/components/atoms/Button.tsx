@@ -20,14 +20,15 @@ const Button: React.FC<ButtonProps> = ({
     touch-manipulation
   `;
 
-  // Clean dark fantasy gradient
+  // Warm amber gradient — slightly richer than backgrounds
   const gradientBg = `
-    bg-gradient-to-br from-orange-900 via-red-950 to-black
+    bg-gradient-to-br from-[#352a1a] via-[#241c10] to-[#15110a]
   `;
 
-  // Clean shadow definition without visible border
+  // Gold-accented shadow
   const borderStyle = `
-    shadow-[0_4px_16px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.05),inset_0_-1px_0_rgba(0,0,0,0.5)]
+    shadow-[0_4px_16px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(201,169,89,0.08),inset_0_-1px_0_rgba(0,0,0,0.5)]
+    border border-[rgba(201,169,89,0.25)]
   `;
 
   // Subtle inner glow for depth
@@ -37,15 +38,16 @@ const Button: React.FC<ButtonProps> = ({
     after:inset-[1px]
     after:rounded-lg
     after:bg-gradient-to-br
-    after:from-red-500/5
+    after:from-[rgba(201,169,89,0.05)]
     after:to-transparent
     after:pointer-events-none
   `;
 
   // Hover state (desktop only)
   const hoverState = `
-    md:hover:shadow-[0_6px_24px_rgba(220,38,38,0.4),inset_0_1px_0_rgba(248,113,113,0.15),inset_0_-1px_0_rgba(0,0,0,0.5)]
+    md:hover:shadow-[0_6px_24px_rgba(201,169,89,0.25),inset_0_1px_0_rgba(201,169,89,0.12),inset_0_-1px_0_rgba(0,0,0,0.5)]
     md:hover:brightness-110
+    md:hover:border-[rgba(201,169,89,0.4)]
   `;
 
   // Active state
@@ -56,8 +58,8 @@ const Button: React.FC<ButtonProps> = ({
 
   // Clean text with subtle glow on active
   const textColor = isActive
-    ? 'text-red-300 drop-shadow-[0_0_8px_rgba(248,113,113,0.5)]'
-    : 'text-slate-100 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]';
+    ? 'text-[#e8d5a3] drop-shadow-[0_0_8px_rgba(201,169,89,0.5)]'
+    : 'text-[#e0d7c8] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]';
 
   const textLayer = 'relative z-10';
 

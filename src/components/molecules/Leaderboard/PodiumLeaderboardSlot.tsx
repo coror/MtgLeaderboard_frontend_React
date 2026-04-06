@@ -50,44 +50,14 @@ const PodiumLeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
         {/* Avatar + Name */}
         <div className='flex flex-col items-center gap-3 mb-4 overflow-visible'>
           <div
-            className='fire-ring-container cursor-pointer hover:scale-105 active:translate-y-[3px]'
+            className='gold-ring-container cursor-pointer hover:scale-105 active:translate-y-[3px]'
             onClick={() => onPlayerClick(playerData)}
           >
-            <svg
-              viewBox='0 0 100 100'
-              className='fire-ring-svg'
-            >
-              <defs>
-                <pattern
-                  id={`firePatternCirclePodium-${podiumRank}`}
-                  x='0'
-                  y='0'
-                  width='100'
-                  height='100'
-                  patternUnits='userSpaceOnUse'
-                >
-                  <image
-                    href='/fire-noise.png'
-                    x='0'
-                    y='0'
-                    width='100'
-                    height='100'
-                  />
-                </pattern>
-              </defs>
-              <circle
-                cx='50'
-                cy='50'
-                r='42'
-                fill='none'
-                stroke={`url(#firePatternCirclePodium-${podiumRank})`}
-                strokeWidth='2'
-              />
-            </svg>
+            <div className='gold-ring-border' />
             <img
               src={avatar}
               alt={`Avatar of ${nameField}`}
-              className='object-cover object-top'
+              className='gold-ring-avatar'
             />
           </div>
           <h1

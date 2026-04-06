@@ -21,7 +21,7 @@ export default function Login() {
   return (
     <PageTemplate>
       <div className='flex flex-col items-center justify-end max-w-md w-full h-[100dvh] px-6 pb-8'>
-        <div className='bg-black/40 backdrop-blur-sm p-8 rounded-lg shadow-lg w-full'>
+        <div className='bg-[#1a1812]/80 backdrop-blur-sm p-8 rounded-lg shadow-lg w-full border border-[rgba(201,169,89,0.15)]'>
           {showPasswordResetEmail ? (
             <PasswordResetEmail
               togglePasswordResetEmail={togglePasswordResetEmail}
@@ -38,7 +38,7 @@ export default function Login() {
                     className={`w-full rounded-t-xl p-[10px] bg-white/70 transition-all 
                     ${
                       loginAttempted && loginError
-                        ? 'border-[1px] border-red-500'
+                        ? 'border-[1px] border-[#c9a959]'
                         : ''
                     }
                     focus:outline-none focus:ring-2 focus:ring-black focus:border-black
@@ -55,7 +55,7 @@ export default function Login() {
                     className={`w-full rounded-b-xl p-[10px] bg-white/70 transition-all 
                     ${
                       loginAttempted && loginError
-                        ? 'border-[1px] border-red-500'
+                        ? 'border-[1px] border-[#c9a959]'
                         : ''
                     }
                     focus:outline-none focus:ring-2 focus:ring-black focus:border-black
@@ -66,7 +66,7 @@ export default function Login() {
                 <div className='text-center'>
                   <span
                     onClick={togglePasswordResetEmail}
-                    className='text-red-500 cursor-pointer hover:underline text-xs'
+                    className='text-[#c9a959] cursor-pointer hover:underline text-xs'
                   >
                     Forgot your password?
                   </span>
@@ -74,7 +74,7 @@ export default function Login() {
               </div>
 
               <div>
-                {loginError && <p className='text-red-500'>{loginError}</p>}
+                {loginError && <p className='text-[#b05050]'>{loginError}</p>}
               </div>
 
               <div className='w-44'>

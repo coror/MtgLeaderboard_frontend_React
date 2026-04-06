@@ -76,7 +76,7 @@ export default function CreateMatch({
                 <button
                   type='button'
                   onClick={() => handleScoreChange(1, -1)}
-                  className='w-7 h-7 rounded-md bg-gradient-to-br from-orange-900/80 via-red-950/80 to-black/80 text-white font-bold text-base hover:brightness-110 active:scale-95 transition-all border border-white/10'
+                  className='w-7 h-7 rounded-md bg-gradient-to-br from-[#3a3020] via-[#2a2318] to-[#1a1610] text-[#e8d5a3] font-bold text-base hover:brightness-125 active:scale-95 transition-all border border-[rgba(201,169,89,0.2)]'
                 >
                   -
                 </button>
@@ -86,12 +86,12 @@ export default function CreateMatch({
                   onChange={(e) =>
                     handleScoreChange(1, Number(e.target.value), true)
                   }
-                  className='w-9 h-7 text-center bg-black/40 border border-white/20 text-white rounded-md !mt-0 !p-1 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-orange-900/50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  className='w-9 h-7 text-center bg-black/40 border border-white/20 text-white rounded-md !mt-0 !p-1 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[rgba(201,169,89,0.4)] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                 />
                 <button
                   type='button'
                   onClick={() => handleScoreChange(1, 1)}
-                  className='w-7 h-7 rounded-md bg-gradient-to-br from-orange-900/80 via-red-950/80 to-black/80 text-white font-bold text-base hover:brightness-110 active:scale-95 transition-all border border-white/10'
+                  className='w-7 h-7 rounded-md bg-gradient-to-br from-[#3a3020] via-[#2a2318] to-[#1a1610] text-[#e8d5a3] font-bold text-base hover:brightness-125 active:scale-95 transition-all border border-[rgba(201,169,89,0.2)]'
                 >
                   +
                 </button>
@@ -112,7 +112,7 @@ export default function CreateMatch({
                 <button
                   type='button'
                   onClick={() => handleScoreChange(2, -1)}
-                  className='w-7 h-7 rounded-md bg-gradient-to-br from-orange-900/80 via-red-950/80 to-black/80 text-white font-bold text-base hover:brightness-110 active:scale-95 transition-all border border-white/10'
+                  className='w-7 h-7 rounded-md bg-gradient-to-br from-[#3a3020] via-[#2a2318] to-[#1a1610] text-[#e8d5a3] font-bold text-base hover:brightness-125 active:scale-95 transition-all border border-[rgba(201,169,89,0.2)]'
                 >
                   -
                 </button>
@@ -122,12 +122,12 @@ export default function CreateMatch({
                   onChange={(e) =>
                     handleScoreChange(2, Number(e.target.value), true)
                   }
-                  className='w-9 h-7 text-center bg-black/40 border border-white/20 text-white rounded-md !mt-0 !p-1 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-orange-900/50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                  className='w-9 h-7 text-center bg-black/40 border border-white/20 text-white rounded-md !mt-0 !p-1 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[rgba(201,169,89,0.4)] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                 />
                 <button
                   type='button'
                   onClick={() => handleScoreChange(2, 1)}
-                  className='w-7 h-7 rounded-md bg-gradient-to-br from-orange-900/80 via-red-950/80 to-black/80 text-white font-bold text-base hover:brightness-110 active:scale-95 transition-all border border-white/10'
+                  className='w-7 h-7 rounded-md bg-gradient-to-br from-[#3a3020] via-[#2a2318] to-[#1a1610] text-[#e8d5a3] font-bold text-base hover:brightness-125 active:scale-95 transition-all border border-[rgba(201,169,89,0.2)]'
                 >
                   +
                 </button>

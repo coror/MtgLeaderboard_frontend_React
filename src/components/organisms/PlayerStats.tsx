@@ -41,7 +41,7 @@ const PlayerStats: FC<PlayerStatsProps> = ({
   if (error) {
     return (
       <div className='space-y-4'>
-        <p className='text-red-500 text-center'>{error}</p>
+        <p className='text-[#b05050] text-center'>{error}</p>
         <Button onClick={onBack} className='w-full'>
           Back
         </Button>
@@ -72,24 +72,10 @@ const PlayerStats: FC<PlayerStatsProps> = ({
   return (
     <div className='space-y-6'>
       <div className='flex items-center gap-3'>
-        <div
-          className='fire-ring-container small'
-          style={{ width: '48px', height: '48px' }}
-        >
+        <div className='gold-ring-sm'>
           <img
             src={playerAvatar || placeholderImage}
             alt={`Avatar of ${playerName}`}
-            className='object-cover object-top'
-            style={{
-              width: '46px',
-              height: '46px',
-              borderRadius: '50%',
-              position: 'relative',
-              zIndex: 10,
-              objectFit: 'cover',
-              objectPosition: 'top',
-              boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-            }}
           />
         </div>
         <h2 className='text-xl text-white font-semibold'>VS</h2>
@@ -104,31 +90,17 @@ const PlayerStats: FC<PlayerStatsProps> = ({
             className='bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10'
           >
             <div className='flex justify-between items-start mb-2'>
-              <div
-                className='fire-ring-container small'
-                style={{ width: '40px', height: '40px' }}
-              >
+              <div className='gold-ring-sm' style={{ width: '40px', height: '40px' }}>
                 <img
                   src={matchup.opponentAvatar || placeholderImage}
                   alt={`Avatar of ${matchup.opponentName}`}
-                  className='object-cover object-top'
-                  style={{
-                    width: '38px',
-                    height: '38px',
-                    borderRadius: '50%',
-                    position: 'relative',
-                    zIndex: 10,
-                    objectFit: 'cover',
-                    objectPosition: 'top',
-                    boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-                  }}
                 />
               </div>
               <span
                 className={`text-sm font-semibold ${
                   parseFloat(matchup.winRate) >= 50
                     ? 'text-[#3C6127]'
-                    : 'text-[#960202]'
+                    : 'text-[#b05050]'
                 }`}
               >
                 {matchup.winRate}% Win Rate
@@ -144,7 +116,7 @@ const PlayerStats: FC<PlayerStatsProps> = ({
               </div>
               <div className='bg-white/5 rounded p-2'>
                 <p className='text-white/50 text-xs'>Losses</p>
-                <p className='text-[#960202] font-bold text-lg'>
+                <p className='text-[#b05050] font-bold text-lg'>
                   {matchup.losses}
                 </p>
               </div>
