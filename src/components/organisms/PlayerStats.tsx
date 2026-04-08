@@ -188,8 +188,8 @@ const PlayerStats: FC<PlayerStatsProps> = ({
               const sinceLosses = (gamesLost || 0) - (localLossesAtUpdate || 0);
               const sinceGames = sinceWins + sinceLosses;
               const sinceWinRate = sinceGames > 0
-                ? ((sinceWins / sinceGames) * 100).toFixed(1)
-                : '0.0';
+                ? Math.round((sinceWins / sinceGames) * 100)
+                : 0;
 
               return (
                 <div className='grid grid-cols-3 gap-2 text-center'>
@@ -243,7 +243,7 @@ const PlayerStats: FC<PlayerStatsProps> = ({
                     : 'text-[#8a7060]'
                 }`}
               >
-                {matchup.winRate}% Win Rate
+                {Math.round(parseFloat(matchup.winRate))}% Win Rate
               </span>
             </div>
 

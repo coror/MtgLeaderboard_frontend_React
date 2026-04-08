@@ -186,7 +186,7 @@ const PlayerDetails: FC<PlayerDetailsProps> = ({
             <Stat label='Losses' value={gamesLost} accent='text-[#8a7060]' />
             <Stat
               label='Win Rate'
-              value={`${winRate}%`}
+              value={`${Math.round(winRate)}%`}
               accent='text-[#c9a959]'
             />
           </div>
