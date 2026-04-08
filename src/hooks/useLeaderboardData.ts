@@ -36,6 +36,11 @@ export default function useLeaderBoardData(classDB: string, nameField: string) {
       gamesLost: data.get('gamesLost'),
       gamesPlayed: data.get('gamesPlayed'),
       decklist: data.get('decklist'),
+      moxfieldUrl: data.get('moxfieldUrl'),
+      deckUpdatedAt: data.get('deckUpdatedAt'),
+      deckChanges: data.get('deckChanges'),
+      winsAtLastUpdate: data.get('winsAtLastUpdate'),
+      lossesAtLastUpdate: data.get('lossesAtLastUpdate'),
     }));
   };
 

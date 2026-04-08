@@ -44,7 +44,7 @@ const LeaderboardMenu:React.FC = () => {
             : 'text-white/50 hover:text-white/80'
         }`}
       >
-        Commanders
+        EDH
       </button>
     </div>
   );

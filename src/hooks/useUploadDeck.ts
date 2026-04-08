@@ -102,9 +102,10 @@ export default function useUploadDeck(): UseUploadDeckResult {
     setError(null);
 
     try {
-      let decklistToStore = decklistText;
+      const Edh = Parse.Object.extend('Edh');
+      const query = new Parse.Query(Edh);
+      const deck = await query.get(selectedDeckId);
 
-      // If it's a Moxfield URL, fetch via Cloudflare Worker proxy and convert to JSON
       if (isMoxfieldUrl(decklistText)) {
         const match = decklistText.trim().match(/moxfield\.com\/decks\/([A-Za-z0-9_-]+)/);
         if (!match) throw new Error('Invalid Moxfield URL');
@@ -118,16 +119,20 @@ export default function useUploadDeck(): UseUploadDeckResult {
         }
         const moxData = await moxResponse.json();
 
-        // Convert to storable JSON
         const { parseMoxfieldResponse } = await import('../helpers/moxfield');
-        decklistToStore = parseMoxfieldResponse(moxData);
+        const previousDecklist = deck.get('decklist') || '';
+        const result = parseMoxfieldResponse(moxData, previousDecklist);
+
+        deck.set('decklist', result.decklistJson);
+        deck.set('moxfieldUrl', decklistText.trim());
+        deck.set('deckUpdatedAt', result.lastUpdatedAt);
+        deck.set('deckChanges', result.cardChanges);
+        // Snapshot current stats so we can calculate "since update"
+        deck.set('winsAtLastUpdate', deck.get('gamesWon') || 0);
+        deck.set('lossesAtLastUpdate', deck.get('gamesLost') || 0);
+      } else {
+        deck.set('decklist', decklistText);
       }
-
-      const Edh = Parse.Object.extend('Edh');
-      const query = new Parse.Query(Edh);
-      const deck = await query.get(selectedDeckId);
-
-      deck.set('decklist', decklistToStore);
 
       await deck.save();
       setSuccess(true);

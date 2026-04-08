@@ -27,20 +27,12 @@ type LeaderboardSlotProps = Player & {
 };
 
 const PodiumLeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
-  nameField,
-  avatar,
   podiumRank,
   onPlayerClick,
-  rank,
-  gamesLost,
-  gamesPlayed,
-  gamesWon,
-  winRate,
-  decklist,
-  objectId,
+  ...player
 }) => {
+  const { nameField, avatar, gamesWon, gamesLost, winRate } = player;
   const { src, height, padding } = podiumData[podiumRank] || {};
-  const playerData = { nameField, avatar, rank, gamesLost, gamesPlayed, gamesWon, winRate, decklist, objectId };
 
   return (
     <>
@@ -51,7 +43,7 @@ const PodiumLeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
         <div className='flex flex-col items-center gap-3 mb-4 overflow-visible'>
           <div
             className='gold-ring-container cursor-pointer hover:scale-105 active:translate-y-[3px]'
-            onClick={() => onPlayerClick(playerData)}
+            onClick={() => onPlayerClick(player)}
           >
             <div className='gold-ring-border' />
             <img
@@ -62,7 +54,7 @@ const PodiumLeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
           </div>
           <h1
             className='h-[38px] lg:h-12 text-center text-sm lg:text-lg flex items-center justify-center text-wrap text-ellipsis overflow-hidden name-shimmer cursor-pointer hover:scale-105 transition-transform'
-            onClick={() => onPlayerClick(playerData)}
+            onClick={() => onPlayerClick(player)}
           >
             {nameField}
           </h1>

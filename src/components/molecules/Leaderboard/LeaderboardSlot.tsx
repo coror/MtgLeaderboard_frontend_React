@@ -12,18 +12,10 @@ const getRarityClass = (rank: number) => {
 };
 
 const LeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
-  rank,
-  avatar,
-  nameField,
   onPlayerClick,
-  gamesLost,
-  gamesPlayed,
-  gamesWon,
-  winRate,
-  decklist,
-  objectId,
+  ...player
 }) => {
-  const playerData = { nameField, avatar, rank, gamesLost, gamesPlayed, gamesWon, winRate, decklist, objectId };
+  const { rank, avatar, nameField, gamesWon, gamesLost, winRate } = player;
 
   return (
     <div className={`leaderboard-card ${getRarityClass(rank)}`}>
@@ -32,7 +24,7 @@ const LeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
 
         <div
           className='gold-ring-sm cursor-pointer hover:scale-110 active:translate-y-[2px] flex-shrink-0'
-          onClick={() => onPlayerClick(playerData)}
+          onClick={() => onPlayerClick(player)}
         >
           <img
             src={avatar || placeholderImage}
@@ -42,7 +34,7 @@ const LeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
 
         <div
           className='flex-1 text-xs lg:text-lg text-left name-shimmer cursor-pointer hover:scale-105 transition-transform'
-          onClick={() => onPlayerClick(playerData)}
+          onClick={() => onPlayerClick(player)}
         >
           {nameField}
         </div>
