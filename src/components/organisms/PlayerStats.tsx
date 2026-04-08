@@ -223,7 +223,7 @@ const PlayerStats: FC<PlayerStatsProps> = ({
 
       <hr className='border-white/10' />
 
-      <div className='space-y-3 max-h-96 overflow-y-auto'>
+      <div className='space-y-3'>
         {sortedMatchups.map((matchup) => (
           <div
             key={matchup.opponentId}
