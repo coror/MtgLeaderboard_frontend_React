@@ -29,61 +29,61 @@ export default function AdminOptions({ onOptionChange }: Props) {
         <>
           <Button
             onClick={() => setActiveComponent('CreateCommanderMatch')}
-            className='w-44'
+            className='w-40 !min-h-10 !py-2 !text-sm'
           >
-            Create Commander Match
+            Create EDH Match
           </Button>
           <Button
             onClick={() => setActiveComponent('CreateNewCommander')}
-            className='w-44'
+            className='w-40 !min-h-10 !py-2 !text-sm'
           >
-            Create New Commander
+            Create New EDH
           </Button>
           <Button
             onClick={() => setActiveComponent('UploadCommanderAvatar')}
-            className='w-44'
+            className='w-40 !min-h-10 !py-2 !text-sm'
           >
-            Upload Commander Avatar
+            Upload EDH Avatar
           </Button>
           <Button
             onClick={() => setActiveComponent('DeleteCommander')}
-            className='w-44'
+            className='w-40 !min-h-10 !py-2 !text-sm'
           >
-            Delete Commander
+            Delete EDH
           </Button>
           <Button
             onClick={() => setActiveComponent('UploadDecklist')}
-            className='w-44'
+            className='w-40 !min-h-10 !py-2 !text-sm'
           >
             Upload Decklist
           </Button>
           <Button
             onClick={() => setActiveComponent('CreatePlayerMatch')}
-            className='w-44'
+            className='w-40 !min-h-10 !py-2 !text-sm'
           >
             Create Player Match
           </Button>
           <Button
             onClick={() => setActiveComponent('CreateNewPlayer')}
-            className='w-44'
+            className='w-40 !min-h-10 !py-2 !text-sm'
           >
             Create New Player
           </Button>
           <Button
             onClick={() => setActiveComponent('UploadPlayerAvatar')}
-            className='w-44'
+            className='w-40 !min-h-10 !py-2 !text-sm'
           >
             Upload Player Avatar
           </Button>
           <Button
             onClick={() => setActiveComponent('DeletePlayer')}
-            className='w-44'
+            className='w-40 !min-h-10 !py-2 !text-sm'
           >
             Delete Player
           </Button>
           <Button
             onClick={() => setActiveComponent('NewUser')}
-            className='w-44'
+            className='w-40 !min-h-10 !py-2 !text-sm'
           >
             New User
           </Button>

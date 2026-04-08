@@ -29,8 +29,12 @@ export default function MainPage() {
         <>
           <MenuButton toggleMenu={toggleMenu} menuOpen={menuOpen} />
           <button
-            onClick={() => setNextMatchOpen(true)}
-            className='fixed top-4 left-4 z-[95] p-2 transition-all duration-300 hover:scale-110 active:scale-95'
+            onClick={() => !menuOpen && setNextMatchOpen(true)}
+            className={`absolute top-4 left-4 z-[95] p-2 transition-all duration-300 ${
+              menuOpen
+                ? 'opacity-30 pointer-events-none'
+                : 'hover:scale-110 active:scale-95'
+            }`}
             aria-label='Next match'
           >
             <GiCrossedSwords size={28} color='#c9a959' />
@@ -44,7 +48,7 @@ export default function MainPage() {
 
       <BackdropModal menuOpen={menuOpen} closeMenu={closeMenu}>
         {userRole === 'admin' && <AdminOptions onOptionChange={setAdminOptionOpen} />}
-        {!adminOptionOpen && <Button onClick={handleLogout}>Logout</Button>}
+        {!adminOptionOpen && <Button onClick={handleLogout} className='w-40 !min-h-10 !py-2 !text-sm'>Logout</Button>}
       </BackdropModal>
 
       <main className='flex flex-col items-center pt-16 z-10 overflow-visible'>

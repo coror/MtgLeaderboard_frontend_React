@@ -82,10 +82,10 @@ export default function useNextMatch() {
         }
       }
 
-      // 4. Sort: lowest totalSum first (catch up inactive commanders), then fewest h2h (equalize matchups)
+      // 4. Sort: fewest h2h first (equalize all matchups), then lowest totalSum (spread new decks across opponents)
       pairs.sort((a, b) => {
-        if (a.totalSum !== b.totalSum) return a.totalSum - b.totalSum;
-        return a.h2h - b.h2h;
+        if (a.h2h !== b.h2h) return a.h2h - b.h2h;
+        return a.totalSum - b.totalSum;
       });
 
       // 5. Pick randomly from all pairs tied for the best score

@@ -9,4 +9,9 @@ export type Player = {
   winRate: number;
   decklist?: string;
   name?: string;
+  moxfieldUrl?: string;
+  deckUpdatedAt?: string;
+  deckChanges?: string;
+  winsAtLastUpdate?: number;
+  lossesAtLastUpdate?: number;
 };

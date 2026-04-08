@@ -53,6 +53,11 @@ export default function Leaderboard({
             decklist={selectedPlayer.decklist}
             classDB={classDB}
             playerId={selectedPlayer.objectId}
+            moxfieldUrl={selectedPlayer.moxfieldUrl}
+            deckUpdatedAt={selectedPlayer.deckUpdatedAt}
+            deckChanges={selectedPlayer.deckChanges}
+            winsAtLastUpdate={selectedPlayer.winsAtLastUpdate}
+            lossesAtLastUpdate={selectedPlayer.lossesAtLastUpdate}
           />
         )}
       </BackdropModal>

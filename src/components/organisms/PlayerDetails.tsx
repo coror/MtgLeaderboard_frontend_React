@@ -16,6 +16,11 @@ interface PlayerDetailsProps {
   decklist?: string;
   classDB: string;
   playerId?: string;
+  moxfieldUrl?: string;
+  deckUpdatedAt?: string;
+  deckChanges?: string;
+  winsAtLastUpdate?: number;
+  lossesAtLastUpdate?: number;
 }
 
 const PlayerDetails: FC<PlayerDetailsProps> = ({
@@ -29,6 +34,11 @@ const PlayerDetails: FC<PlayerDetailsProps> = ({
   decklist,
   classDB,
   playerId,
+  moxfieldUrl,
+  deckUpdatedAt,
+  deckChanges,
+  winsAtLastUpdate,
+  lossesAtLastUpdate,
 }) => {
   const [showDeckList, setShowDecklist] = useState<boolean>(false);
   const [showStats, setShowStats] = useState<boolean>(false);
@@ -68,6 +78,14 @@ const PlayerDetails: FC<PlayerDetailsProps> = ({
           isLoading={isLoading}
           error={error}
           onBack={closeStats}
+          deckUpdatedAt={deckUpdatedAt}
+          deckChanges={deckChanges}
+          gamesWon={gamesWon}
+          gamesLost={gamesLost}
+          winsAtLastUpdate={winsAtLastUpdate}
+          lossesAtLastUpdate={lossesAtLastUpdate}
+          moxfieldUrl={moxfieldUrl}
+          playerId={playerId}
         />
       )}
       {!showDeckList && !showStats && (
@@ -164,14 +182,15 @@ const PlayerDetails: FC<PlayerDetailsProps> = ({
               value={gamesPlayed}
               accent='text-[#ffffff]'
             />
-            <Stat label='Wins' value={gamesWon} accent='text-[#3C6127]' />
-            <Stat label='Losses' value={gamesLost} accent='text-[#b05050]' />
+            <Stat label='Wins' value={gamesWon} accent='text-[#e8d5a3]' />
+            <Stat label='Losses' value={gamesLost} accent='text-[#8a7060]' />
             <Stat
               label='Win Rate'
               value={`${winRate}%`}
               accent='text-[#c9a959]'
             />
           </div>
+
         </div>
       )}
     </div>
