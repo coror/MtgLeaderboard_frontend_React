@@ -4,6 +4,7 @@ import Parse from 'parse/dist/parse.min.js';
 
 import { useAuth } from '../store/auth-context';
 import { Player } from '../models/player';
+import { resolveAvatarUrl } from '../helpers/parseAvatar';
 
 export default function useLeaderBoardData(classDB: string, nameField: string) {
   const { sessionToken } = useAuth();
@@ -20,22 +21,23 @@ export default function useLeaderBoardData(classDB: string, nameField: string) {
     const query = new Parse.Query(className);
     query.ascending('rank');
     query.include('avatar');
+    const fields = ['rank', 'avatar', nameField, 'winRate', 'gamesWon', 'gamesLost', 'gamesPlayed'];
+    if (className === 'Edh') {
+      fields.push('moxfieldUrl', 'deckUpdatedAt', 'deckChanges', 'winsAtLastUpdate', 'lossesAtLastUpdate');
+    }
+    query.select(fields);
 
     const result = await query.find({ useMasterKey: false });
 
     return result.map((data: Parse.Object) => ({
       objectId: data.id,
       rank: data.get('rank'),
-      avatar:
-        data.get('avatar') && data.get('avatar').get('avatar')
-          ? data.get('avatar').get('avatar').url()
-          : '',
+      avatar: resolveAvatarUrl(data),
       nameField: data.get(nameField),
       winRate: data.get('winRate'),
       gamesWon: data.get('gamesWon'),
       gamesLost: data.get('gamesLost'),
       gamesPlayed: data.get('gamesPlayed'),
-      decklist: data.get('decklist'),
       moxfieldUrl: data.get('moxfieldUrl'),
       deckUpdatedAt: data.get('deckUpdatedAt'),
       deckChanges: data.get('deckChanges'),
