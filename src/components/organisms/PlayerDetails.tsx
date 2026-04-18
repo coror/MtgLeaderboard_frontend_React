@@ -1,4 +1,6 @@
 import { useState, FC } from 'react';
+// @ts-expect-error it works, but i dont know why it shows no module found
+import Parse from 'parse/dist/parse.min.js';
 import DeckViewer from './DeckViewer';
 import PlayerStats from './PlayerStats';
 import Button from '../atoms/Button';
@@ -13,7 +15,6 @@ interface PlayerDetailsProps {
   gamesPlayed: number;
   gamesWon: number;
   winRate: number;
-  decklist?: string;
   classDB: string;
   playerId?: string;
   moxfieldUrl?: string;
@@ -31,7 +32,6 @@ const PlayerDetails: FC<PlayerDetailsProps> = ({
   gamesPlayed,
   gamesWon,
   winRate,
-  decklist,
   classDB,
   playerId,
   moxfieldUrl,
@@ -41,11 +41,29 @@ const PlayerDetails: FC<PlayerDetailsProps> = ({
   lossesAtLastUpdate,
 }) => {
   const [showDeckList, setShowDecklist] = useState<boolean>(false);
+  const [decklistData, setDecklistData] = useState<string | null>(null);
+  const [decklistLoading, setDecklistLoading] = useState(false);
   const [showStats, setShowStats] = useState<boolean>(false);
   const { stats, isLoading, error, fetchStats, resetStats } = usePlayerStats();
 
-  function handleShowDecklist(): void {
-    setShowDecklist((state) => !state);
+  async function handleShowDecklist(): Promise<void> {
+    if (decklistData) {
+      setShowDecklist(true);
+      return;
+    }
+    if (!playerId) return;
+    setDecklistLoading(true);
+    try {
+      const query = new Parse.Query(classDB);
+      query.select(['decklist']);
+      const obj = await query.get(playerId);
+      setDecklistData(obj.get('decklist') || null);
+      setShowDecklist(true);
+    } catch (err) {
+      console.error('Error fetching decklist:', err);
+    } finally {
+      setDecklistLoading(false);
+    }
   }
 
   function closeDeckViewer(): void {
@@ -66,10 +84,10 @@ const PlayerDetails: FC<PlayerDetailsProps> = ({
 
   return (
     <div>
-      {showDeckList && classDB === 'Edh' && decklist && (
-        <DeckViewer decklist={decklist} onBack={closeDeckViewer} />
+      {showDeckList && classDB === 'Edh' && decklistData && (
+        <DeckViewer decklist={decklistData} onBack={closeDeckViewer} />
       )}
-      {showDeckList && !decklist && <p>No decklist for this deck</p>}
+      {showDeckList && !decklistData && <p>No decklist for this deck</p>}
       {showStats && (classDB === 'EdhPlayer' || classDB === 'Edh') && (
         <PlayerStats
           playerName={nameField}
@@ -160,7 +178,7 @@ const PlayerDetails: FC<PlayerDetailsProps> = ({
           {/* Decklist Button */}
           {classDB === 'Edh' && (
             <div className='flex justify-center'>
-              <Button onClick={handleShowDecklist} className='w-full max-w-xs'>
+              <Button onClick={handleShowDecklist} loading={decklistLoading} className='w-full max-w-xs'>
                 View Decklist
               </Button>
             </div>

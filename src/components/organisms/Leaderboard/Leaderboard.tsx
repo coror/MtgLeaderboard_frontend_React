@@ -50,7 +50,6 @@ export default function Leaderboard({
             gamesPlayed={selectedPlayer.gamesPlayed}
             gamesWon={selectedPlayer.gamesWon}
             winRate={selectedPlayer.winRate}
-            decklist={selectedPlayer.decklist}
             classDB={classDB}
             playerId={selectedPlayer.objectId}
             moxfieldUrl={selectedPlayer.moxfieldUrl}

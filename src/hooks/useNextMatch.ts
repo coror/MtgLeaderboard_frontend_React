@@ -1,6 +1,7 @@
 import { useState } from 'react';
 // @ts-expect-error it works, but i dont know why it shows no module found
 import Parse from 'parse/dist/parse.min.js';
+import { resolveAvatarUrl } from '../helpers/parseAvatar';
 
 interface Commander {
   objectId: string;
@@ -27,19 +28,21 @@ export default function useNextMatch() {
     setSuggestion(null);
 
     try {
-      // 1. Fetch all commanders
-      const query = new Parse.Query('Edh');
-      query.ascending('rank');
-      query.include('avatar');
-      const results = await query.find();
+      // 1. Fetch commanders and all matchups in parallel (2 requests instead of N+1)
+      const commanderQuery = new Parse.Query('Edh');
+      commanderQuery.ascending('rank');
+      commanderQuery.include('avatar');
+      commanderQuery.select(['deckName', 'avatar', 'gamesPlayed']);
+
+      const [results, allMatchups] = await Promise.all([
+        commanderQuery.find(),
+        Parse.Cloud.run('getAllMatchups'),
+      ]);
 
       const commanders: Commander[] = results.map((d: Parse.Object) => ({
         objectId: d.id,
         name: d.get('deckName') as string,
-        avatar:
-          d.get('avatar') && d.get('avatar').get('avatar')
-            ? d.get('avatar').get('avatar').url()
-            : '',
+        avatar: resolveAvatarUrl(d),
         gamesPlayed: (d.get('gamesPlayed') as number) || 0,
       }));
 
@@ -48,25 +51,14 @@ export default function useNextMatch() {
         return;
       }
 
-      // 2. Fetch matchup data for each commander
+      // 2. Build matchup map from the single bulk response
       const matchupMap: Record<string, Record<string, number>> = {};
-      for (const cmd of commanders) {
-        matchupMap[cmd.objectId] = {};
-      }
 
-      const statsPromises = commanders.map((cmd) =>
-        Parse.Cloud.run('getAllMatchupsForDeck', { edhId: cmd.objectId })
-      );
-      const allStats = await Promise.all(statsPromises);
-
-      for (let i = 0; i < commanders.length; i++) {
-        const stats = allStats[i];
-        if (stats?.matchups) {
-          for (const matchup of stats.matchups) {
-            matchupMap[commanders[i].objectId][matchup.opponentId] =
-              matchup.gamesPlayed;
-          }
-        }
+      for (const m of allMatchups) {
+        if (!matchupMap[m.deckOneId]) matchupMap[m.deckOneId] = {};
+        if (!matchupMap[m.deckTwoId]) matchupMap[m.deckTwoId] = {};
+        matchupMap[m.deckOneId][m.deckTwoId] = m.gamesPlayed;
+        matchupMap[m.deckTwoId][m.deckOneId] = m.gamesPlayed;
       }
 
       // 3. Build all pairs, scored by:
