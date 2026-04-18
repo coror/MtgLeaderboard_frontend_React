@@ -53,7 +53,8 @@ const PodiumLeaderboardSlot: React.FC<LeaderboardSlotProps> = ({
             />
           </div>
           <h1
-            className='h-[38px] lg:h-12 text-center text-sm lg:text-lg flex items-center justify-center text-wrap text-ellipsis overflow-hidden name-shimmer cursor-pointer hover:scale-105 transition-transform'
+            className='h-[38px] lg:h-12 text-center text-sm lg:text-lg flex items-center justify-center name-shimmer cursor-pointer hover:scale-105 transition-transform leading-tight px-1'
+            style={nameField.length > 22 ? { fontSize: '0.65rem' } : undefined}
             onClick={() => onPlayerClick(player)}
           >
             {nameField}
